@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
+<!-- Mirrored from template.walkingpixels.com/chromatron/goodies.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:30:09 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>Goodies | Chromatron HTML5 Admin Backend</title>
+		<meta name="description" content="">
+		<meta name="author" content="Walking Pixels | www.walkingpixels.com">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- jQuery Snippet Styles -->
+		<link rel='stylesheet' type='text/css' href='css/plugins/jquery.snippet.css'>
+		
+		<!-- Styles -->
+		<link rel='stylesheet' type='text/css' href='css/chromatron-blue.css'>
+		
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="img/icons/favicon.html">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.html">
+		
+		<!-- JS Libs -->
+		<script src="../../ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="js/libs/jquery.js"><\/script>')</script>
+		<script src="js/libs/modernizr.js"></script>
+		<script src="js/libs/selectivizr.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				
+				// Tooltips for nav badge
+				$('.main-navigation .badge').tooltip({
+					placement: 'bottom'
+				});
+				
+				// Tooltips for widgets
+				$('.widget [title]').tooltip({
+					placement: 'left'
+				});
+				
+				// Tooltips for content
+				$('.content-block [title]').tooltip({
+					placement: 'top'
+				});
+				
+				// Close button for widgets
+				$('.widget').alert();
+				
+				// Remove tooltip when widget is closed
+				$('.widget').bind('close', function () {
+					$(this).find('.close').tooltip('destroy');
+				})
+				
+				// Tabs
+				$('.demoTabs a').click(function (e) {
+					e.preventDefault();
+					$(this).tab('show');
+				})
+				
+				// Tickets
+				$('#ticketsDemo .ticket-data-activity a').click(function (e) {
+					e.preventDefault();
+				})
+				
+				// Smart Wizard
+				$('#wizard').smartWizard();
+				
+			});
+		</script>
+		
+		<script type="text/javascript">
+			//var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-2"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
+		</script>
+	</head>
+	<body>
+		
+		<!-- Main page container -->
+		<div class="container-fluid">
+		
+			<!-- Left (navigation) side -->
+			<section class="navigation-block">
+			
+				<!-- Main page header -->
+				<header>
+				
+					<!-- Main page logo -->
+					<h1><a class="brand" href="login.html" title="Back to Homepage">Chromatron Responsive Admin Backend built with Twitter Bootstrap</a></h1>
+					
+					<!-- Main page headline -->
+					<p>A cathode ray tube awesomeness</p>
+					
+				</header>
+				<!-- /Main page header -->
+				
+				<!-- User profile -->
+				<section class="user-profile">
+					<figure>
+						<img alt="John Pixel avatar" src="http://placekitten.com/50/50">
+						<figcaption>
+							<strong><a href="#" class="">John Pixel</a></strong>
+							<em>Administrator</em>
+							<ul>
+								<li><a class="btn btn-primary btn-flat" href="#" title="View www.example.com">view website</a></li>
+								<li><a class="btn btn-primary btn-flat" href="#" title="Securely logout from application">logout</a></li>
+							</ul>
+						</figcaption>
+					</figure>
+				</section>
+				<!-- /User profile -->
+				
+				<!-- Responsive navigation -->
+				<a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-heart"></span> Goodies</a>
+				
+				<!-- Main navigation -->
+				<nav class="main-navigation nav-collapse" role="navigation">
+					<ul>
+						<li><a href="index.html" class="no-submenu"><span class="fam-house"></span>Dashboard</a></li>
+						<li><a href="forms.html" class="no-submenu"><span class="fam-application-form"></span>Forms</a></li>
+						<li><a href="charts.html" class="no-submenu"><span class="fam-chart-line"></span>Charts</a></li>
+						<li><a href="tables.html" class="no-submenu"><span class="fam-application-view-columns"></span>Tables</a></li>
+						<li>
+							<a href="#"><span class="fam-picture"></span>Gallery<span class="badge" title="5 new image uploaded">5</span></a>
+							<ul>
+								<li><a href="gallery.html">Car Gallery</a></li>
+								<li><a href="gallery.html">Food Gallery</a></li>
+								<li><a href="gallery.html">Art Gallery</a></li>
+								<li><a href="gallery.html">Animal Gallery</a></li>
+								<li><a href="gallery.html">Super long name to see how it collapse</a></li>
+							</ul>
+						</li>
+						<li><a href="file-explorer.html" class="no-submenu"><span class="fam-briefcase"></span>File explorer</a></li>
+						<li><a href="calendar.html" class="no-submenu"><span class="fam-calendar-view-day"></span>Calendar<span class="badge" title="27 tasks this week">27</span></a></li>
+						<li><a href="ui-buttons.html" class="no-submenu"><span class="fam-rosette"></span>UI & Buttons</a></li>
+						<li><a href="typo.html" class="no-submenu"><span class="fam-text-padding-left"></span>Typography</a></li>
+						<li><a href="grid.html" class="no-submenu"><span class="fam-cog"></span>Grid</a></li>
+						<li class="current">
+							<a href="#"><span class="fam-heart"></span>Goodies</a>
+							<ul>
+								<li><a href="goodies.html">Goodies</a></li>
+								<li><a href="401.html">Error 401</a></li>
+								<li><a href="403.html">Error 403</a></li>
+								<li><a href="404.html">Error 404</a></li>
+								<li><a href="500.html">Error 500</a></li>
+								<li><a href="503.html">Error 503</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+				<!-- /Main navigation -->
+				
+				<!-- Side note with nested style -->
+				<section class="side-note nested">
+					<h2>Nested side note</h2>
+					<p>Lorem ipsum dolor sit amet, conse ctetur adipiscing elit. Maec enas id augue ac metu aliquam.</p>
+					<p>Sed pharetra placerat est suscipit sagittis. Phasellus <a href="#">aliquam</a> males uada blandit. Donec adipiscing sem erat.</p>
+				</section>
+				<!-- /Side note with nested style -->
+				
+				<!-- Side note -->
+				<section class="side-note">
+					<h2>Clean side note</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus.</p>
+					<p class="separator">Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+					<p class="separator">Phasellus aliquam malesuada blandit. Donec adipiscing sem erat.</p>
+					<a class="btn btn-flat btn-primary pull-right" href="#" title="This is my title!">Read more</a>
+				</section>
+				<!-- /Side note -->
+				
+				<!-- Side note -->
+				<section class="side-note">
+					<div class="thumbnail">
+						<img src="http://placekitten.com/221/120" alt="Sample Image">	
+					</div>
+					<h2>Side note with image</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis. Phasellus aliquam malesuada blandit. Donec adipiscing sem erat.</p>
+					<a class="btn pull-right" href="#" title="This is my title!">Event details</a>
+				</section>
+				<!-- /Side note -->
+				
+				<!-- Side note with separator -->
+				<section class="side-note separator">
+					<h2>Side note with separator</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+					<ul>
+						<li><strong>Sed pharetra placerat</strong></li>
+						<li><em>Phasellus aliquam malesuada</em></li>
+						<li>Maecenas id augue</li>
+						<li>Consectetur <a href="#">adipiscing</a> elit</li>
+						<li>Lorem ipsum dolor</li>
+					</ul>
+				</section>
+				<!-- /Side note with separator -->
+				
+			</section>
+			<!-- /Left (navigation) side -->
+			
+			<!-- Right (content) side -->
+			<section class="content-block" role="main">
+			
+				<!-- Widget container -->
+				<div class="widgets-container">
+				
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget">&times;</a>
+						<span>increase</span>
+						<p><strong>+35,18<sup>%</sup></strong> +2489 new visitors</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in decrease">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<span>decrease</span>
+						<p><strong>-12,50<sup>%</sup></strong> -311 new orders</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget" >&times;</a>
+						<span>7</span>
+						<p><strong>Tasks</strong> +3 New Tasks</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget Box -->
+					<div class="widget alert fade in text-only">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<p><strong>Text Only App</strong> +29 Lorem Ipsum</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Add new widget box -->
+					<div class="widget add-new-widget">
+						<a href="#">
+							<strong><span class="awe-plus-sign"></span> Add Widget</strong>
+						</a>
+					</div>
+					<!-- /Add new widget box -->
+					
+				</div>
+				<!-- /Widget container -->
+				
+				<!-- Breadcrumbs -->
+				<ul class="breadcrumb">
+					<li><a href="#"><span class="awe-home"></span> Home</a></li>
+					<li><a href="#">Chromatron template</a></li>
+					<li class="active">Goodies</li>
+				</ul>
+				<!-- Breadcrumbs -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example default data block -->
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Default data block style</h2>
+								<ul class="data-header-actions">
+									<li><a class="btn btn-alt btn-inverse" href="#">Export</a></li>
+								</ul>
+							</header>
+							<section>
+								<p>First grid layer is built with <code>.data-block</code> cells. Second one works inside of data blocks. Use fluid Bootstrap grid classes with data-block cell to build your own layout. Each <code>.data-block</code> comes with optional components, you can remove <code>&lt;footer&gt;</code> and <code>&lt;header&gt;</code> if needed or turn whole block into more complex widget.</p>
+								<p>You can choose from 2 different styles for each data block. Default style is clean with minimum styling. For more prominent look use class <code>.nested</code>.</p>
+								<p>Check following blocks for example configuration.</p>
+								
+								<!-- Example emoticons -->
+								<p>
+									<span class="emo-confuse" title=".emo-confuse"></span>
+									<span class="emo-cool" title=".emo-cool"></span>
+									<span class="emo-cry" title=".emo-cry"></span>
+									<span class="emo-evilgrin" title=".emo-evilgrin"></span>
+									<span class="emo-fat" title=".emo-fat"></span>
+									<span class="emo-grin" title=".emo-grin"></span>
+									<span class="emo-happy" title=".emo-happy"></span>
+									<span class="emo-mad" title=".emo-mad"></span>
+									<span class="emo-neutral" title=".emo-neutral"></span>
+									<span class="emo-red" title=".emo-red"></span>
+									<span class="emo-roll" title=".emo-roll"></span>
+									<span class="emo-slim" title=".emo-slim"></span>
+									<span class="emo-smile" title=".emo-smile"></span>
+									<span class="emo-surprised" title=".emo-surprised"></span>
+									<span class="emo-tongue" title=".emo-tongue"></span>
+									<span class="emo-unhappy" title=".emo-unhappy"></span>
+									<span class="emo-waii" title=".emo-waii"></span>
+									<span class="emo-wink" title=".emo-wink"></span>
+									<span class="emo-yell" title=".emo-yell"></span>
+								</p>
+								<p>
+									<span class="emo-8ball" title=".emo-8ball"></span>
+									<span class="emo-basketball" title=".emo-basketball"></span>
+									<span class="emo-football" title=".emo-football"></span>
+									<span class="emo-golf" title=".emo-golf"></span>
+									<span class="emo-raquet" title=".emo-raquet"></span>
+									<span class="emo-rocket" title=".emo-rocket"></span>
+									<span class="emo-soccer" title=".emo-soccer"></span>
+									<span class="emo-tennis" title=".emo-tennis"></span>
+									<span class="emo-shuttlecock" title=".emo-shuttlecock"></span>
+									<span class="emo-bomb" title=".emo-bomb"></span>
+									<span class="emo-bug" title=".emo-bug"></span>
+									<span class="emo-heart" title=".emo-heart"></span>
+								</p>
+							</section>
+							<footer class="info">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et maecenas id augue ac metus tempus aliquam. Sed pharetra placerat suscipit sagittis.</p>
+							</footer>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Example nested data block -->
+					<!-- Data block -->
+					<article class="span6 data-block nested">
+						<div class="data-container">
+							<header>
+								<h2>Nested data block style</h2>
+								<ul class="data-header-actions">
+									<li><span class="loading" title="Loading, please wait&hellip;">Loading&hellip;</span></li>
+								</ul>
+							</header>
+							<section>
+<pre class="html">
+&lt;article class="spanX data-block"&gt;
+	&lt;div class="data-container"&gt;
+		&lt;header&gt;
+			&lt;h2&gt;Headline&lt;/h2&gt;
+		&lt;/header&gt;
+		&lt;section&gt;
+			Content
+		&lt;/section&gt;
+		&lt;footer&gt;
+			Footer note
+		&lt;/footer&gt;
+	&lt;/div&gt;
+&lt;/article&gt;
+</pre>
+							</section>
+							<footer class="warning">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et maecenas id augue ac metus tempus aliquam. Sed pharetra placerat suscipit sagittis.</p>
+							</footer>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example stats widget -->
+					<!-- Data block -->
+					<article class="span4 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Statistics</h2>
+							</header>
+							<section>
+								<ul class="stats">
+									<li>
+										<strong class="stats-count">17</strong>
+										<p>New registrations</p>
+										<a class="btn btn-alt btn-primary stats-view" href="#" title="View new registrations">View</a>
+									</li>
+									<li>
+										<strong class="stats-count">89</strong>
+										<p>New visitors</p>
+										<a class="btn btn-alt btn-primary stats-view" title="View new visitros" href="#">View</a>
+									</li>
+									<li>
+										<strong class="stats-count">346</strong>
+										<p>New sales</p>
+										<a class="btn btn-alt btn-primary stats-view" title="View new sales" href="#">View</a>
+									</li>
+									<li>
+										<strong class="stats-count">266</strong>
+										<p>New orders</p>
+										<a class="btn btn-alt btn-primary stats-view" href="#" title="View new orders">View</a>
+									</li>
+									<li>
+										<strong class="stats-count">1024</strong>
+										<p>New requests</p>
+										<a class="btn btn-alt btn-primary stats-view" title="View new requests" href="#">View</a>
+									</li>
+								</ul>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Example TODO data block -->
+					<!-- Data block -->
+					<article class="span4 data-block todo-block nested">
+						<div class="data-container">
+							<header>
+								<h2><span class="awe-edit"></span> Simple TODO list</h2>
+							</header>
+							<section>
+								<form>
+									<table class="table">
+										<tbody>
+											<tr class="done">
+												<td><input type="checkbox" value="done" checked></td>
+												<td>
+													<p>doItNow(); does not work as expected</p>
+													<span>completed <time>Apr 12</time></span>
+												</td>
+											</tr>
+											<tr>
+												<td><input type="checkbox" value="done"></td>
+												<td>
+													<p>buy some more socks</p>
+													<span>due <time>Apr 12</time></span>
+												</td>
+											</tr>
+											<tr>
+												<td><input type="checkbox" value="done"></td>
+												<td>
+													<p><span class="label label-important">Important</span> meeting at 10:30 am</p>
+													<span>due <time>Apr 12</time></span>
+												</td>
+											</tr>
+											<tr>
+												<td><input type="checkbox" value="done"></td>
+												<td>
+													<p>take out the trash</p>
+													<span>due <time>Apr 17</time></span>
+												</td>
+											</tr>
+											<tr>
+												<td><input type="checkbox" value="done"></td>
+												<td>
+													<p><span class="label label-success">Party</span> Erick birthday</p>
+													<span>due <time>Apr 22</time></span>
+												</td>
+											</tr>
+											<tr>
+												<td><input type="checkbox" value="done"></td>
+												<td>
+													<p>return books to the library</p>
+													<span>due <time>May 02</time></span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Example accordion data block -->
+					<!-- Data block -->
+					<article class="span4 data-block accordion-block">
+						<div class="data-container">
+							<div id="accordionName" class="accordion">
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" href="#accordionTabOne" data-parent="#accordionName" data-toggle="collapse">First accordion tab <span class="caret"></span></a>
+									</div>
+									<div id="accordionTabOne" class="accordion-body collapse in">
+										<div class="accordion-inner">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" href="#accordionTabTwo" data-parent="#accordionName" data-toggle="collapse">Second accordion tab <span class="caret"></span></a>
+									</div>
+									<div id="accordionTabTwo" class="accordion-body collapse">
+										<div class="accordion-inner">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" href="#accordionTabThree" data-parent="#accordionName" data-toggle="collapse">Third accordion tab <span class="caret"></span></a>
+									</div>
+									<div id="accordionTabThree" class="accordion-body collapse">
+										<div class="accordion-inner">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example tickets -->
+					<!-- Data block -->
+					<article class="span12 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Tickets</h2>
+								<ul class="data-header-actions">
+									<li>
+										<form class="form-search">
+											<div class="control-group">
+												<div class="controls">
+													<input class="search-query" type="text">
+													<button class="btn" type="submit">Search</button>
+												</div>
+											</div>
+										</form>
+									</li>
+								</ul>
+							</header>
+							<section>
+							
+								<!-- Tickets container -->
+								<ul id="ticketsDemo" class="tickets">
+								
+									<!-- Tickets header -->
+									<li class="ticket-header">
+										<ul>
+											<li class="ticket-header-ticket">Ticket</li>
+											<li class="ticket-header-activity">Activity</li>
+											<li class="ticket-header-user">User</li>
+											<li class="ticket-header-priority">Priority</li>
+											<li class="ticket-header-age">Age</li>
+										</ul>
+									</li>
+									<!-- /Tickets header -->
+									
+									<!-- Tickets data -->
+									<li class="ticket-data">
+									
+										<!-- Tickets overview -->
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13664</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket1">Vestibulum luctus aliquam feugiat. Donec porta</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Duke Smith</strong>Best Deals Ltd.
+												</li>
+												<li class="ticket-data-priority"><span class="label label-important">High</span></li>
+												<li class="ticket-data-age">16 hours</li>
+											</ul>
+										</div>
+										<!-- /Tickets overview -->
+										
+										<!-- Tickets details -->
+										<div class="ticket-details collapse fade" id="ticket1">
+											<h4>Donec porta interdum placerat</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>16 hours ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>11 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt>Reported by:</dt>
+												<dd><strong>Jamie</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+										<!-- /Tickets details -->
+										
+									</li>
+									<!-- /Tickets data -->
+									
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13663</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket2">Nulla aliquam sapien semper mauris consectetur</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Mathew Kulas</strong>Adept Ltd.</li>
+												<li class="ticket-data-priority"><span class="label label-important">High</span></li>
+												<li class="ticket-data-age">22 hours</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket2">
+											<h4>Nulla aliquam sapien semper mauris consectetur suscipit</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>22 hours ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>22 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Mathew</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Vivamus sit amet sapien est. Vestibulum at mattis orci. Duis sit amet tincidunt nisi. Morbi at porttitor nunc. Aliquam lorem massa, dictum vel consequat vitae, sodales nec lectus. Nam metus libero, mollis nec iaculis sit amet, eleifend ac orci. Sed mollis mollis luctus.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13662</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket3">Sed pharetra placerat est suscipit sagittis</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Ted Rollin</strong>Systel, Inc.</li>
+												<li class="ticket-data-priority"><span class="label label-warning">Medium</span></li>
+												<li class="ticket-data-age">1 day</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket3">
+											<h4>Sed pharetra placerat est suscipit sagittis</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>1 day ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>23 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Ted Rollin</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Javier Zulauf</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Quisque ut eleifend lorem. Ut bibendum lobortis ante, in blandit quam aliquet eget. Donec tortor risus, vestibulum id dictum laoreet, condimentum vel nisi. Ut euismod laoreet justo vel iaculis. Phasellus at lacus eget magna laoreet euismod et vitae elit.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13661</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket4">Quisque ac nisl vitae sapien porta luctus eget sed</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Hugh Tilman</strong>Sunix Consulting</li>
+												<li class="ticket-data-priority"><span class="label label-warning">Medium</span></li>
+												<li class="ticket-data-age">2 days</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket4">
+											<h4>Quisque ac nisl vitae sapien porta luctus eget sed dui</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>2 days ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>11 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Hugh Tilman</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Duis viverra quam tempor felis suscipit sit amet interdum erat pulvinar. Nulla nec quam quis mi pharetra tincidunt et in neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris a cursus velit.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13660</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket5">Etiam ipsum justo, venenatis a facilisis vel</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Selena Cartier</strong>Sunix Consulting</li>
+												<li class="ticket-data-priority"><span class="label label-warning">Medium</span></li>
+												<li class="ticket-data-age">2 days</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket5">
+											<h4>Etiam ipsum justo, venenatis a facilisis vel, posuere a ligula</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>2 days ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>22 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Selena</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13659</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket6">Vivamus sit amet sapien est</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Javier Zulauf</strong>Systectio USA</li>
+												<li class="ticket-data-priority"><span class="label label-success">Low</span></li>
+												<li class="ticket-data-age">3 days</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket6">
+											<h4>Vivamus sit amet sapien est</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>3 days ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>11 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Javier Zulauf</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Aenean magna massa, condimentum id tristique eu, accumsan vel enim. Morbi et risus vel quam convallis eleifend non nec neque. Sed pellentesque malesuada interdum. Nunc malesuada nulla in velit posuere porta. Ut nec turpis nibh, ut luctus magna.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13658</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket7">Donec porta interdum placerat!</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Matt Muench</strong>Systems GmbH</li>
+												<li class="ticket-data-priority"><span class="label label-success">Low</span></li>
+												<li class="ticket-data-age">3 days</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket7">
+											<h4>Donec porta interdum placerat!</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>3 days ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>20 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Mathew</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Aliquam gravida sapien sit amet quam consectetur vitae vehicula dolor tempor. Etiam vitae purus sem. Aenean imperdiet, ante a interdum vehicula, justo nulla rutrum dolor, a adipiscing turpis orci vitae nisi. Cras sit amet tortor a ligula feugiat placerat sit amet porttitor magna.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+									<li class="ticket-data">
+										<div class="ticket-overview">
+											<ul>
+												<li class="ticket-data-label">#13657</li>
+												<li class="ticket-data-activity">
+													<a href="#" data-toggle="collapse" data-parent="#ticketsDemo" data-target="#ticket8">Curabitur varius suscipit nibh, eu venenatis lectus</a>
+													<p>New Ticket</p>
+												</li>
+												<li class="ticket-data-user"><strong>Max Granata</strong>Adobell, Inc</li>
+												<li class="ticket-data-priority"><span class="label label-success">Low</span></li>
+												<li class="ticket-data-age">3 days</li>
+											</ul>
+										</div>
+										<div class="ticket-details collapse fade" id="ticket8">
+											<h4>Curabitur varius suscipit nibh, eu venenatis lectus sodales sit amet</h4>
+											<dl>
+												<dt>Opened:</dt>
+												<dd><strong>3 days ago</strong></dd>
+												<dt>Last updated:</dt>
+												<dd><strong>11 hours ago</strong></dd>
+												<dt>Milestone:</dt>
+												<dd><strong>N/A</strong></dd>
+												<dt class="clear">Reported by:</dt>
+												<dd><strong>Max Granata</strong></dd>
+												<dt>Assigned to:</dt>
+												<dd><strong>Anybody</strong></dd>
+												<dt>Tags:</dt>
+												<dd><strong>N/A</strong></dd>
+											</dl>
+											<h5>Description</h5>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at nisi orci, eget congue orci. Aliquam dictum venenatis erat, vel porta massa pellentesque et. Sed blandit, odio sit amet sollicitudin iaculis, quam nisi sodales enim, ut blandit enim nisi in urna.</p>
+											<a href="#" class="btn btn-alt btn-primary">Update ticket</a>
+											<a href="#" class="btn btn-alt">Close ticket</a>
+										</div>
+									</li>
+								</ul>
+							</section>
+							<footer>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et maecenas id augue ac metus tempus aliquam. Sed pharetra placerat suscipit sagittis.</p>
+							</footer>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example accordion in data block -->
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Accordion inside data block</h2>
+							</header>
+							<section>
+								<p>Just add <code>data-toggle="collapse"</code> and a <code>data-target</code> to element to automatically assign control of a collapsible element. The <code>data-target</code> attribute accepts a css selector to apply the collapse to. Be sure to add the class <code>collapse</code> to the collapsible element. If you'd like it to default open, add the additional class <code>in</code>.</p>
+								<div id="accordion1" class="accordion">
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" href="#collapseOne" data-parent="#accordion1" data-toggle="collapse"> Collapsible Group Item #1 <span class="caret"></span></a>
+										</div>
+										<div id="collapseOne" class="accordion-body collapse">
+											<div class="accordion-inner">Anim  cliche reprehenderit, enim eiusmod high life  terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda  et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+										</div>
+									</div>
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" href="#collapseTwo" data-parent="#accordion1" data-toggle="collapse"> Collapsible Group Item #2 <span class="caret"></span></a>
+										</div>
+										<div id="collapseTwo" class="accordion-body collapse">
+											<div class="accordion-inner">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+										</div>
+									</div>
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											<a class="accordion-toggle" href="#collapseThree" data-parent="#accordion1" data-toggle="collapse"> Collapsible Group Item #3 <span class="caret"></span></a>
+										</div>
+										<div id="collapseThree" class="accordion-body collapse">
+											<div class="accordion-inner">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Example tabs -->
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Tabular navigation</h2>
+								<ul class="data-header-actions tabs">
+									<li class="demoTabs"><a href="#one">First</a></li>
+									<li class="demoTabs active"><a href="#two">Second</a></li>
+								</ul>
+							</header>
+							<section class="tab-content">
+							
+								<!-- Tab #one -->
+								<div class="tab-pane" id="one">
+									<h3>First tab</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis a leo tempor elementum. Nunc odio quam, imperdiet sit amet imperdiet non, ultricies ut ligula. In feugiat rhoncus nunc non sagittis. Nam non quam quam, ut imperdiet lectus. Phasellus vestibulum metus egestas arcu gravida ut interdum lorem mollis. Praesent ut est mi, at ornare nisl. Vestibulum tincidunt ornare ullamcorper.</p>
+								</div>
+								<!-- /Tab #one -->
+								
+								<!-- Tab #two -->
+								<div class="tab-pane active" id="two">
+								
+									<!-- Second level tabs -->
+									<div class="tabbable tabs-left">
+										<ul class="nav nav-tabs">
+											<li class="active"><a href="#tab1" data-toggle="tab">No&deg;1</a></li>
+											<li><a href="#tab2" data-toggle="tab">No&deg;2</a></li>
+										</ul>
+										<div class="tab-note">
+											<p>Aenean facilisis ligula eget orci adipiscing varius.</p>
+										</div>
+										<div class="tab-content">
+											<div class="tab-pane active" id="tab1">
+												<h3>Second tab No&deg;1</h3>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis a leo tempor elementum. Nunc odio quam, imperdiet sit amet imperdiet non, ultricies ut ligula. In feugiat rhoncus nunc non sagittis. Nam non quam quam, ut imperdiet lectus. Phasellus vestibulum metus egestas arcu gravida ut interdum lorem mollis. Praesent ut est mi, at ornare nisl. Vestibulum tincidunt ornare ullamcorper.</p>
+											</div>
+											<div class="tab-pane" id="tab2">
+												<h3>Second tab No&deg;2</h3>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse felis a leo tempor elementum. Nunc odio quam, imperdiet sit amet imperdiet non, ultricies ut ligula. In feugiat rhoncus nunc non sagittis. Nam non quam quam, ut imperdiet lectus. Phasellus vestibulum metus egestas arcu gravida ut interdum lorem mollis. Praesent ut est mi, at ornare nisl. Vestibulum tincidunt ornare ullamcorper.</p>
+											</div>
+										</div>
+									</div>
+									<!-- Second level tabs -->
+										
+								</div>
+								<!-- /Tab #two -->
+									
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example simple wizard -->
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+
+							<!-- Wizard -->
+							<header>
+								<h2>Wizard</h2>
+							</header>
+							<section id="wizard" class="wizard">
+								<ul>
+									<li>
+										<a href="#step-1">
+											<span class="stepDesc">Register</span>
+										</a>
+									</li>
+									<li>
+										<a href="#step-2">
+											<span class="stepDesc">Next step</span>
+										</a>
+									</li>
+									<li>
+										<a href="#step-3">
+											<span class="stepDesc">Next step</span>
+										</a>
+									</li>
+									<li>
+										<a href="#step-4">
+											<span class="stepDesc">Confirmation<span>
+										</a>
+									</li>
+								</ul>
+
+								<div id="step-1">
+									<h2 class="StepTitle">This is first step</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat dapibus tortor quis sodales.</p>
+									<p>Mauris convallis lobortis justo a facilisis. Aenean mollis lacus ac nunc bibendum tempus. Proin laoreet, ante id convallis aliquet, leo orci placerat nisi, nec suscipit mi tortor at enim. Mauris eu augue a lectus tempus sagittis. Fusce lacinia suscipit velit, quis commodo eros tincidunt fringilla.</p>
+								</div>
+								
+								<div id="step-2">
+									<h2 class="StepTitle">Second step content</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat dapibus tortor quis sodales.</p>
+									<p>Mauris convallis lobortis justo a facilisis. Aenean mollis lacus ac nunc bibendum tempus. Proin laoreet, ante id convallis aliquet, leo orci placerat nisi, nec suscipit mi tortor at enim. Mauris eu augue a lectus tempus sagittis. Fusce lacinia suscipit velit, quis commodo eros tincidunt fringilla.</p>
+
+								</div>
+								
+								<div id="step-3">
+									<h2 class="StepTitle">This is third step</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat dapibus tortor quis sodales.</p>
+									<p>Mauris convallis lobortis justo a facilisis. Aenean mollis lacus ac nunc bibendum tempus. Proin laoreet, ante id convallis aliquet, leo orci placerat nisi, nec suscipit mi tortor at enim. Mauris eu augue a lectus tempus sagittis. Fusce lacinia suscipit velit, quis commodo eros tincidunt fringilla.</p>
+								</div>
+								
+								<div id="step-4">
+									<h2 class="StepTitle">Fourth step content</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat dapibus tortor quis sodales.</p>
+									<p>Mauris convallis lobortis justo a facilisis. Aenean mollis lacus ac nunc bibendum tempus. Proin laoreet, ante id convallis aliquet, leo orci placerat nisi, nec suscipit mi tortor at enim. Mauris eu augue a lectus tempus sagittis. Fusce lacinia suscipit velit, quis commodo eros tincidunt fringilla.</p>
+								</div>
+							</section>
+							<!-- /Wizard -->
+
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Example event/entry log layout -->
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Event logs</h2>
+							</header>
+							<section>
+								
+								<div class="entry">
+									<h4 class="entry-header"><span class="fam-database-save"></span> System update #112563 <time datetime="2012-09-18">2012-09-18</time></h4>
+									<p class="entry-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+									<p class="entry-details">Posted by <a href="#">John Pixel</a></p>
+								</div>
+								
+								<div class="entry">
+									<h4 class="entry-header"><span class="fam-database-save"></span> System update #112562 <time datetime="2012-09-18">2012-09-18</time></h4>
+									<p class="entry-content">Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam.</p>
+									<p class="entry-details">Posted by <a href="#">John Pixel</a></p>
+								</div>
+								
+								<div class="entry">
+									<h4 class="entry-header"><a href="#"><span class="fam-bomb"></span> Security violation</a> <time datetime="2012-09-18">2012-09-18</time></h4>
+									<p class="entry-content">Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+									<p class="entry-details">Posted by <a href="#">John Pixel</a></p>
+								</div>
+								
+								<div class="entry">
+									<h4 class="entry-header"><a href="#"><span class="fam-flag-blue"></span> Daily dackup completed</a></h4>
+									<p class="entry-content">Sed pharetra placerat est suscipit sagittis. Phasellus aliquam malesuada blandit.</p>
+									<p class="entry-details">Posted <time datetime="2012-09-18" title="2012-09-18">today</time> by <a href="#">John Pixel</a></p>
+								</div>
+								
+								<div class="entry">
+									<h4 class="entry-header"><span class="fam-application-xp-terminal"></span> Xonos 5.25 module successfully installed</h4>
+									<p class="entry-content">Phasellus aliquam malesuada blandit, consectetur adipiscing elit.</p>
+									<p class="entry-details">Posted <time datetime="2012-09-18" title="2012-09-18">today</time> by <a href="#">John Pixel</a></p>
+								</div>
+								
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example icons -->
+					<!-- Data block -->
+					<article class="span12 data-block accordion-block">
+						<div class="data-container">
+							<div id="icons" class="accordion">
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" href="#awesome" data-parent="#icons" data-toggle="collapse">Icons with Font Awesome <span class="caret"></span></a>
+									</div>
+									<div id="awesome" class="accordion-body collapse">
+										<div class="accordion-inner">
+											<p>Font Awesome is iconic font designed for use with Twitter Bootstrap with over 220 icons. You can still use original icons by removing Font Awesome from LESS and recompiling it. For more info and updates vist <a href="http://fortawesome.github.com/Font-Awesome/" target="_blank">official Font Awesome page</a>.</p>
+											<h3>Web Application Icons</h3>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-adjust"></span> awe-adjust</li>
+														<li><span class="awe-asterisk"></span> awe-asterisk</li>
+														<li><span class="awe-ban-circle"></span> awe-ban-circle</li>
+														<li><span class="awe-bar-chart"></span> awe-bar-chart</li>
+														<li><span class="awe-barcode"></span> awe-barcode</li>
+														<li><span class="awe-beaker"></span> awe-beaker</li>
+														<li><span class="awe-bell"></span> awe-bell</li>
+														<li><span class="awe-bolt"></span> awe-bolt</li>
+														<li><span class="awe-book"></span> awe-book</li>
+														<li><span class="awe-bookmark"></span> awe-bookmark</li>
+														<li><span class="awe-bookmark-empty"></span> awe-bookmark-empty</li>
+														<li><span class="awe-briefcase"></span> awe-briefcase</li>
+														<li><span class="awe-bullhorn"></span> awe-bullhorn</li>
+														<li><span class="awe-calendar"></span> awe-calendar</li>
+														<li><span class="awe-camera"></span> awe-camera</li>
+														<li><span class="awe-camera-retro"></span> awe-camera-retro</li>
+														<li><span class="awe-certificate"></span> awe-certificate</li>
+														<li><span class="awe-check"></span> awe-check</li>
+														<li><span class="awe-check-empty"></span> awe-check-empty</li>
+														<li><span class="awe-cloud"></span> awe-cloud</li>
+														<li><span class="awe-cog"></span> awe-cog</li>
+														<li><span class="awe-cogs"></span> awe-cogs</li>
+														<li><span class="awe-comment"></span> awe-comment</li>
+														<li><span class="awe-comment-alt"></span> awe-comment-alt</li>
+														<li><span class="awe-comments"></span> awe-comments</li>
+														<li><span class="awe-comments-alt"></span> awe-comments-alt</li>
+														<li><span class="awe-credit-card"></span> awe-credit-card</li>
+														<li><span class="awe-dashboard"></span> awe-dashboard</li>
+														<li><span class="awe-download"></span> awe-download</li>
+														<li><span class="awe-download-alt"></span> awe-download-alt</li>
+														<li><span class="awe-edit"></span> awe-edit</li>
+														<li><span class="awe-envelope"></span> awe-envelope</li>
+														<li><span class="awe-envelope-alt"></span> awe-envelope-alt</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-exclamation-sign"></span> awe-exclamation-sign</li>
+														<li><span class="awe-external-link"></span> awe-external-link</li>
+														<li><span class="awe-eye-close"></span> awe-eye-close</li>
+														<li><span class="awe-eye-open"></span> awe-eye-open</li>
+														<li><span class="awe-facetime-video"></span> awe-facetime-video</li>
+														<li><span class="awe-film"></span> awe-film</li>
+														<li><span class="awe-filter"></span> awe-filter</li>
+														<li><span class="awe-fire"></span> awe-fire</li>
+														<li><span class="awe-flag"></span> awe-flag</li>
+														<li><span class="awe-folder-close"></span> awe-folder-close</li>
+														<li><span class="awe-folder-open"></span> awe-folder-open</li>
+														<li><span class="awe-gift"></span> awe-gift</li>
+														<li><span class="awe-glass"></span> awe-glass</li>
+														<li><span class="awe-globe"></span> awe-globe</li>
+														<li><span class="awe-group"></span> awe-group</li>
+														<li><span class="awe-hdd"></span> awe-hdd</li>
+														<li><span class="awe-headphones"></span> awe-headphones</li>
+														<li><span class="awe-heart"></span> awe-heart</li>
+														<li><span class="awe-heart-empty"></span> awe-heart-empty</li>
+														<li><span class="awe-home"></span> awe-home</li>
+														<li><span class="awe-inbox"></span> awe-inbox</li>
+														<li><span class="awe-info-sign"></span> awe-info-sign</li>
+														<li><span class="awe-key"></span> awe-key</li>
+														<li><span class="awe-leaf"></span> awe-leaf</li>
+														<li><span class="awe-legal"></span> awe-legal</li>
+														<li><span class="awe-lemon"></span> awe-lemon</li>
+														<li><span class="awe-lock"></span> awe-lock</li>
+														<li><span class="awe-unlock"></span> awe-unlock</li>
+														<li><span class="awe-magic"></span> awe-magic</li>
+														<li><span class="awe-magnet"></span> awe-magnet</li>
+														<li><span class="awe-map-marker"></span> awe-map-marker</li>
+														<li><span class="awe-minus"></span> awe-minus</li>
+														<li><span class="awe-minus-sign"></span> awe-minus-sign</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-money"></span> awe-money</li>
+														<li><span class="awe-move"></span> awe-move</li>
+														<li><span class="awe-music"></span> awe-music</li>
+														<li><span class="awe-off"></span> awe-off</li>
+														<li><span class="awe-ok"></span> awe-ok</li>
+														<li><span class="awe-ok-circle"></span> awe-ok-circle</li>
+														<li><span class="awe-ok-sign"></span> awe-ok-sign</li>
+														<li><span class="awe-pencil"></span> awe-pencil</li>
+														<li><span class="awe-picture"></span> awe-picture</li>
+														<li><span class="awe-plane"></span> awe-plane</li>
+														<li><span class="awe-plus"></span> awe-plus</li>
+														<li><span class="awe-plus-sign"></span> awe-plus-sign</li>
+														<li><span class="awe-print"></span> awe-print</li>
+														<li><span class="awe-pushpin"></span> awe-pushpin</li>
+														<li><span class="awe-qrcode"></span> awe-qrcode</li>
+														<li><span class="awe-question-sign"></span> awe-question-sign</li>
+														<li><span class="awe-random"></span> awe-random</li>
+														<li><span class="awe-refresh"></span> awe-refresh</li>
+														<li><span class="awe-remove"></span> awe-remove</li>
+														<li><span class="awe-remove-circle"></span> awe-remove-circle</li>
+														<li><span class="awe-remove-sign"></span> awe-remove-sign</li>
+														<li><span class="awe-reorder"></span> awe-reorder</li>
+														<li><span class="awe-resize-horizontal"></span> awe-resize-horizontal</li>
+														<li><span class="awe-resize-vertical"></span> awe-resize-vertical</li>
+														<li><span class="awe-retweet"></span> awe-retweet</li>
+														<li><span class="awe-road"></span> awe-road</li>
+														<li><span class="awe-rss"></span> awe-rss</li>
+														<li><span class="awe-screenshot"></span> awe-screenshot</li>
+														<li><span class="awe-search"></span> awe-search</li>
+														<li><span class="awe-share"></span> awe-share</li>
+														<li><span class="awe-share-alt"></span> awe-share-alt</li>
+														<li><span class="awe-shopping-cart"></span> awe-shopping-cart</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-signal"></span> awe-signal</li>
+														<li><span class="awe-signin"></span> awe-signin</li>
+														<li><span class="awe-signout"></span> awe-signout</li>
+														<li><span class="awe-sitemap"></span> awe-sitemap</li>
+														<li><span class="awe-sort"></span> awe-sort</li>
+														<li><span class="awe-sort-down"></span> awe-sort-down</li>
+														<li><span class="awe-sort-up"></span> awe-sort-up</li>
+														<li><span class="awe-star"></span> awe-star</li>
+														<li><span class="awe-star-empty"></span> awe-star-empty</li>
+														<li><span class="awe-star-half"></span> awe-star-half</li>
+														<li><span class="awe-tag"></span> awe-tag</li>
+														<li><span class="awe-tags"></span> awe-tags</li>
+														<li><span class="awe-tasks"></span> awe-tasks</li>
+														<li><span class="awe-thumbs-down"></span> awe-thumbs-down</li>
+														<li><span class="awe-thumbs-up"></span> awe-thumbs-up</li>
+														<li><span class="awe-time"></span> awe-time</li>
+														<li><span class="awe-tint"></span> awe-tint</li>
+														<li><span class="awe-trash"></span> awe-trash</li>
+														<li><span class="awe-trophy"></span> awe-trophy</li>
+														<li><span class="awe-truck"></span> awe-truck</li>
+														<li><span class="awe-umbrella"></span> awe-umbrella</li>
+														<li><span class="awe-upload"></span> awe-upload</li>
+														<li><span class="awe-upload-alt"></span> awe-upload-alt</li>
+														<li><span class="awe-user"></span> awe-user</li>
+														<li><span class="awe-user-md"></span> awe-user-md</li>
+														<li><span class="awe-volume-off"></span> awe-volume-off</li>
+														<li><span class="awe-volume-down"></span> awe-volume-down</li>
+														<li><span class="awe-volume-up"></span> awe-volume-up</li>
+														<li><span class="awe-warning-sign"></span> awe-warning-sign</li>
+														<li><span class="awe-wrench"></span> awe-wrench</li>
+														<li><span class="awe-zoom-in"></span> awe-zoom-in</li>
+														<li><span class="awe-zoom-out"></span> awe-zoom-out</li>
+													</ul>
+												</div>
+											</div>
+											<h3>Text Editor Icons</h3>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-file"></span> awe-file</li>
+														<li><span class="awe-cut"></span> awe-cut</li>
+														<li><span class="awe-copy"></span> awe-copy</li>
+														<li><span class="awe-paste"></span> awe-paste</li>
+														<li><span class="awe-save"></span> awe-save</li>
+														<li><span class="awe-undo"></span> awe-undo</li>
+														<li><span class="awe-repeat"></span> awe-repeat</li>
+														<li><span class="awe-paper-clip"></span> awe-paper-clip</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-text-height"></span> awe-text-height</li>
+														<li><span class="awe-text-width"></span> awe-text-width</li>
+														<li><span class="awe-align-left"></span> awe-align-left</li>
+														<li><span class="awe-align-center"></span> awe-align-center</li>
+														<li><span class="awe-align-right"></span> awe-align-right</li>
+														<li><span class="awe-align-justify"></span> awe-align-justify</li>
+														<li><span class="awe-indent-left"></span> awe-indent-left</li>
+														<li><span class="awe-indent-right"></span> awe-indent-right</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-font"></span> awe-font</li>
+														<li><span class="awe-bold"></span> awe-bold</li>
+														<li><span class="awe-italic"></span> awe-italic</li>
+														<li><span class="awe-strikethrough"></span> awe-strikethrough</li>
+														<li><span class="awe-underline"></span> awe-underline</li>
+														<li><span class="awe-link"></span> awe-link</li>
+														<li><span class="awe-columns"></span> awe-columns</li>
+														<li><span class="awe-table"></span> awe-table</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-th-large"></span> awe-th-large</li>
+														<li><span class="awe-th"></span> awe-th</li>
+														<li><span class="awe-th-list"></span> awe-th-list</li>
+														<li><span class="awe-list"></span> awe-list</li>
+														<li><span class="awe-list-ol"></span> awe-list-ol</li>
+														<li><span class="awe-list-ul"></span> awe-list-ul</li>
+														<li><span class="awe-list-alt"></span> awe-list-alt</li>
+													</ul>
+												</div>
+											</div>
+											<h3>Directional Icons</h3>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-arrow-down"></span> awe-arrow-down</li>
+														<li><span class="awe-arrow-left"></span> awe-arrow-left</li>
+														<li><span class="awe-arrow-right"></span> awe-arrow-right</li>
+														<li><span class="awe-arrow-up"></span> awe-arrow-up</li>
+														<li><span class="awe-chevron-down"></span> awe-chevron-down</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-circle-arrow-down"></span> awe-circle-arrow-down</li>
+														<li><span class="awe-circle-arrow-left"></span> awe-circle-arrow-left</li>
+														<li><span class="awe-circle-arrow-right"></span> awe-circle-arrow-right</li>
+														<li><span class="awe-circle-arrow-up"></span> awe-circle-arrow-up</li>
+														<li><span class="awe-chevron-left"></span> awe-chevron-left</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-caret-down"></span> awe-caret-down</li>
+														<li><span class="awe-caret-left"></span> awe-caret-left</li>
+														<li><span class="awe-caret-right"></span> awe-caret-right</li>
+														<li><span class="awe-caret-up"></span> awe-caret-up</li>
+														<li><span class="awe-chevron-right"></span> awe-chevron-right</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-hand-down"></span> awe-hand-down</li>
+														<li><span class="awe-hand-left"></span> awe-hand-left</li>
+														<li><span class="awe-hand-right"></span> awe-hand-right</li>
+														<li><span class="awe-hand-up"></span> awe-hand-up</li>
+														<li><span class="awe-chevron-up"></span> awe-chevron-up</li>
+													</ul>
+												</div>
+											</div>
+											<h3>Video Player Icons</h3>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-play-circle"></span> awe-play-circle</li>
+														<li><span class="awe-play"></span> awe-play</li>
+														<li><span class="awe-pause"></span> awe-pause</li>
+														<li><span class="awe-stop"></span> awe-stop</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-step-backward"></span> awe-step-backward</li>
+														<li><span class="awe-fast-backward"></span> awe-fast-backward</li>
+														<li><span class="awe-backward"></span> awe-backward</li>
+														<li><span class="awe-forward"></span> awe-forward</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-fast-forward"></span> awe-fast-forward</li>
+														<li><span class="awe-step-forward"></span> awe-step-forward</li>
+														<li><span class="awe-eject"></span> awe-eject</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-fullscreen"></span> awe-fullscreen</li>
+														<li><span class="awe-resize-full"></span> awe-resize-full</li>
+														<li><span class="awe-resize-small"></span> awe-resize-small</li>
+													</ul>
+												</div>
+											</div>
+											<h3>Social Icons</h3>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-phone"></span> awe-phone</li>
+														<li><span class="awe-phone-sign"></span> awe-phone-sign</li>
+														<li><span class="awe-facebook"></span> awe-facebook</li>
+														<li><span class="awe-facebook-sign"></span> awe-facebook-sign</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-twitter"></span> awe-twitter</li>
+														<li><span class="awe-twitter-sign"></span> awe-twitter-sign</li>
+														<li><span class="awe-github"></span> awe-github</li>
+														<li><span class="awe-github-sign"></span> awe-github-sign</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-linkedin"></span> awe-linkedin</li>
+														<li><span class="awe-linkedin-sign"></span> awe-linkedin-sign</li>
+														<li><span class="awe-pinterest"></span> awe-pinterest</li>
+														<li><span class="awe-pinterest-sign"></span> awe-pinterest-sign</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="awe-google-plus"></span> awe-google-plus</li>
+														<li><span class="awe-google-plus-sign"></span> awe-google-plus-sign</li>
+														<li><span class="awe-sign-blank"></span> awe-sign-blank</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" href="#fff" data-parent="#icons" data-toggle="collapse">FamFamFam icon set <span class="caret"></span></a>
+									</div>
+									<div id="fff" class="accordion-body collapse">
+										<div class="accordion-inner">
+											<p>FamFamFam Silk icons is very popular free icon set with over 1000 icons. This icon set uses same logic as default including LESS config. You can download all icons from <a href="http://www.famfamfam.com/" target="_blank">official FamFamFam page</a>.</p>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="fam-application-view-list"></span> fam-application-view-list</li>
+														<li><span class="fam-database-go"></span> fam-database-go</li>
+														<li><span class="fam-tag-blue-delete"></span> fam-tag-blue-delete</li>
+														<li><span class="fam-application-view-columns"></span> fam-application-view-columns</li>
+														<li><span class="fam-calculator-delete"></span> fam-calculator-delete</li>
+														<li><span class="fam-wrench"></span> fam-wrench</li>
+														<li><span class="fam-page-key"></span> fam-page-key</li>
+														<li><span class="fam-date"></span> fam-date</li>
+														<li><span class="fam-bell-error"></span> fam-bell-error</li>
+														<li><span class="fam-building-edit"></span> fam-building-edit</li>
+														<li><span class="fam-table-row-insert"></span> fam-table-row-insert</li>
+														<li><span class="fam-palette"></span> fam-palette</li>
+														<li><span class="fam-application-tile-horizontal"></span> fam-application-tile-horizontal</li>
+														<li><span class="fam-emoticon-tongue"></span> fam-emoticon-tongue</li>
+														<li><span class="fam-database-lightning"></span> fam-database-lightning</li>
+														<li><span class="fam-picture"></span> fam-picture</li>
+														<li><span class="fam-application-view-icons"></span> fam-application-view-icons</li>
+														<li><span class="fam-folder-camera"></span> fam-folder-camera</li>
+														<li><span class="fam-text-padding-right"></span> fam-text-padding-right</li>
+														<li><span class="fam-image-link"></span> fam-image-link</li>
+														<li><span class="fam-error-add"></span> fam-error-add</li>
+														<li><span class="fam-tux"></span> fam-tux</li>
+														<li><span class="fam-page-attach"></span> fam-page-attach</li>
+														<li><span class="fam-group-delete"></span> fam-group-delete</li>
+														<li><span class="fam-plugin-disabled"></span> fam-plugin-disabled</li>
+														<li><span class="fam-application-view-tile"></span> fam-application-view-tile</li>
+														<li><span class="fam-chart-bar-add"></span> fam-chart-bar-add</li>
+														<li><span class="fam-chart-pie-add"></span> fam-chart-pie-add</li>
+														<li><span class="fam-chart-pie-link"></span> fam-chart-pie-link</li>
+														<li><span class="fam-database-save"></span> fam-database-save</li>
+														<li><span class="fam-bullet-orange"></span> fam-bullet-orange</li>
+														<li><span class="fam-layout-error"></span> fam-layout-error</li>
+														<li><span class="fam-control-play-blue"></span> fam-control-play-blue</li>
+														<li><span class="fam-transmit-blue"></span> fam-transmit-blue</li>
+														<li><span class="fam-cart-error"></span> fam-cart-error</li>
+														<li><span class="fam-control-repeat-blue"></span> fam-control-repeat-blue</li>
+														<li><span class="fam-page-lightning"></span> fam-page-lightning</li>
+														<li><span class="fam-folder-page"></span> fam-folder-page</li>
+														<li><span class="fam-application-form-delete"></span> fam-application-form-delete</li>
+														<li><span class="fam-map-add"></span> fam-map-add</li>
+														<li><span class="fam-bullet-red"></span> fam-bullet-red</li>
+														<li><span class="fam-bullet-black"></span> fam-bullet-black</li>
+														<li><span class="fam-calendar-view-day"></span> fam-calendar-view-day</li>
+														<li><span class="fam-add"></span> fam-add</li>
+														<li><span class="fam-error"></span> fam-error</li>
+														<li><span class="fam-group-go"></span> fam-group-go</li>
+														<li><span class="fam-page-white-key"></span> fam-page-white-key</li>
+														<li><span class="fam-user-add"></span> fam-user-add</li>
+														<li><span class="fam-page"></span> fam-page</li>
+														<li><span class="fam-cart-add"></span> fam-cart-add</li>
+														<li><span class="fam-chart-curve-link"></span> fam-chart-curve-link</li>
+														<li><span class="fam-pill-add"></span> fam-pill-add</li>
+														<li><span class="fam-comments-add"></span> fam-comments-add</li>
+														<li><span class="fam-page-white-find"></span> fam-page-white-find</li>
+														<li><span class="fam-page-find"></span> fam-page-find</li>
+														<li><span class="fam-database-refresh"></span> fam-database-refresh</li>
+														<li><span class="fam-book-error"></span> fam-book-error</li>
+														<li><span class="fam-application-osx-terminal"></span> fam-application-osx-terminal</li>
+														<li><span class="fam-bricks"></span> fam-bricks</li>
+														<li><span class="fam-page-white"></span> fam-page-white</li>
+														<li><span class="fam-pill"></span> fam-pill</li>
+														<li><span class="fam-user-orange"></span> fam-user-orange</li>
+														<li><span class="fam-overlays"></span> fam-overlays</li>
+														<li><span class="fam-application-get"></span> fam-application-get</li>
+														<li><span class="fam-arrow-redo"></span> fam-arrow-redo</li>
+														<li><span class="fam-vcard-delete"></span> fam-vcard-delete</li>
+														<li><span class="fam-comments"></span> fam-comments</li>
+														<li><span class="fam-database-table"></span> fam-database-table</li>
+														<li><span class="fam-page-white-ruby"></span> fam-page-white-ruby</li>
+														<li><span class="fam-calendar-link"></span> fam-calendar-link</li>
+														<li><span class="fam-table-multiple"></span> fam-table-multiple</li>
+														<li><span class="fam-email"></span> fam-email</li>
+														<li><span class="fam-application-add"></span> fam-application-add</li>
+														<li><span class="fam-application-delete"></span> fam-application-delete</li>
+														<li><span class="fam-resultset-previous"></span> fam-resultset-previous</li>
+														<li><span class="fam-bin-empty"></span> fam-bin-empty</li>
+														<li><span class="fam-report"></span> fam-report</li>
+														<li><span class="fam-building-go"></span> fam-building-go</li>
+														<li><span class="fam-picture-go"></span> fam-picture-go</li>
+														<li><span class="fam-application-form-magnify"></span> fam-application-form-magnify</li>
+														<li><span class="fam-status-online"></span> fam-status-online</li>
+														<li><span class="fam-chart-curve-delete"></span> fam-chart-curve-delete</li>
+														<li><span class="fam-book-delete"></span> fam-book-delete</li>
+														<li><span class="fam-page-white-wrench"></span> fam-page-white-wrench</li>
+														<li><span class="fam-feed-disk"></span> fam-feed-disk</li>
+														<li><span class="fam-report-add"></span> fam-report-add</li>
+														<li><span class="fam-user-gray"></span> fam-user-gray</li>
+														<li><span class="fam-book-next"></span> fam-book-next</li>
+														<li><span class="fam-building-link"></span> fam-building-link</li>
+														<li><span class="fam-date-delete"></span> fam-date-delete</li>
+														<li><span class="fam-accept"></span> fam-accept</li>
+														<li><span class="fam-female"></span> fam-female</li>
+														<li><span class="fam-link-delete"></span> fam-link-delete</li>
+														<li><span class="fam-world"></span> fam-world</li>
+														<li><span class="fam-map"></span> fam-map</li>
+														<li><span class="fam-arrow-up"></span> fam-arrow-up</li>
+														<li><span class="fam-table-go"></span> fam-table-go</li>
+														<li><span class="fam-arrow-turn-left"></span> fam-arrow-turn-left</li>
+														<li><span class="fam-email-attach"></span> fam-email-attach</li>
+														<li><span class="fam-lock-delete"></span> fam-lock-delete</li>
+														<li><span class="fam-database-add"></span> fam-database-add</li>
+														<li><span class="fam-group-key"></span> fam-group-key</li>
+														<li><span class="fam-folder-error"></span> fam-folder-error</li>
+														<li><span class="fam-image-edit"></span> fam-image-edit</li>
+														<li><span class="fam-arrow-branch"></span> fam-arrow-branch</li>
+														<li><span class="fam-exclamation"></span> fam-exclamation</li>
+														<li><span class="fam-database-gear"></span> fam-database-gear</li>
+														<li><span class="fam-creditcards"></span> fam-creditcards</li>
+														<li><span class="fam-chart-pie-edit"></span> fam-chart-pie-edit</li>
+														<li><span class="fam-picture-save"></span> fam-picture-save</li>
+														<li><span class="fam-feed-error"></span> fam-feed-error</li>
+														<li><span class="fam-asterisk-orange"></span> fam-asterisk-orange</li>
+														<li><span class="fam-bullet-star"></span> fam-bullet-star</li>
+														<li><span class="fam-textfield-key"></span> fam-textfield-key</li>
+														<li><span class="fam-building-delete"></span> fam-building-delete</li>
+														<li><span class="fam-folder-user"></span> fam-folder-user</li>
+														<li><span class="fam-help"></span> fam-help</li>
+														<li><span class="fam-picture-empty"></span> fam-picture-empty</li>
+														<li><span class="fam-page-white-picture"></span> fam-page-white-picture</li>
+														<li><span class="fam-lock-open"></span> fam-lock-open</li>
+														<li><span class="fam-cart-put"></span> fam-cart-put</li>
+														<li><span class="fam-time-go"></span> fam-time-go</li>
+														<li><span class="fam-page-paintbrush"></span> fam-page-paintbrush</li>
+														<li><span class="fam-user"></span> fam-user</li>
+														<li><span class="fam-time"></span> fam-time</li>
+														<li><span class="fam-pill-delete"></span> fam-pill-delete</li>
+														<li><span class="fam-cart-delete"></span> fam-cart-delete</li>
+														<li><span class="fam-date-add"></span> fam-date-add</li>
+														<li><span class="fam-pill-go"></span> fam-pill-go</li>
+														<li><span class="fam-calendar-view-month"></span> fam-calendar-view-month</li>
+														<li><span class="fam-application-form"></span> fam-application-form</li>
+														<li><span class="fam-chart-curve-edit"></span> fam-chart-curve-edit</li>
+														<li><span class="fam-book-go"></span> fam-book-go</li>
+														<li><span class="fam-feed-key"></span> fam-feed-key</li>
+														<li><span class="fam-control-eject"></span> fam-control-eject</li>
+														<li><span class="fam-sitemap-color"></span> fam-sitemap-color</li>
+														<li><span class="fam-world-edit"></span> fam-world-edit</li>
+														<li><span class="fam-application-xp"></span> fam-application-xp</li>
+														<li><span class="fam-application-side-boxes"></span> fam-application-side-boxes</li>
+														<li><span class="fam-page-edit"></span> fam-page-edit</li>
+														<li><span class="fam-comment"></span> fam-comment</li>
+														<li><span class="fam-folder-bug"></span> fam-folder-bug</li>
+														<li><span class="fam-page-white-edit"></span> fam-page-white-edit</li>
+														<li><span class="fam-rosette"></span> fam-rosette</li>
+														<li><span class="fam-date-magnify"></span> fam-date-magnify</li>
+														<li><span class="fam-page-white-coldfusion"></span> fam-page-white-coldfusion</li>
+														<li><span class="fam-box"></span> fam-box</li>
+														<li><span class="fam-control-play"></span> fam-control-play</li>
+														<li><span class="fam-arrow-refresh"></span> fam-arrow-refresh</li>
+														<li><span class="fam-folder-go"></span> fam-folder-go</li>
+														<li><span class="fam-lock-edit"></span> fam-lock-edit</li>
+														<li><span class="fam-stop"></span> fam-stop</li>
+														<li><span class="fam-bullet-go"></span> fam-bullet-go</li>
+														<li><span class="fam-page-white-paint"></span> fam-page-white-paint</li>
+														<li><span class="fam-database"></span> fam-database</li>
+														<li><span class="fam-house-link"></span> fam-house-link</li>
+														<li><span class="fam-map-edit"></span> fam-map-edit</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="fam-sitemap"></span> fam-sitemap</li>
+														<li><span class="fam-book-key"></span> fam-book-key</li>
+														<li><span class="fam-calendar-edit"></span> fam-calendar-edit</li>
+														<li><span class="fam-chart-bar"></span> fam-chart-bar</li>
+														<li><span class="fam-chart-organisation-add"></span> fam-chart-organisation-add</li>
+														<li><span class="fam-application-cascade"></span> fam-application-cascade</li>
+														<li><span class="fam-database-connect"></span> fam-database-connect</li>
+														<li><span class="fam-emoticon-surprised"></span> fam-emoticon-surprised</li>
+														<li><span class="fam-application-side-contract"></span> fam-application-side-contract</li>
+														<li><span class="fam-arrow-rotate-clockwise"></span> fam-arrow-rotate-clockwise</li>
+														<li><span class="fam-door"></span> fam-door</li>
+														<li><span class="fam-plugin-add"></span> fam-plugin-add</li>
+														<li><span class="fam-cog"></span> fam-cog</li>
+														<li><span class="fam-page-white-magnify"></span> fam-page-white-magnify</li>
+														<li><span class="fam-male"></span> fam-male</li>
+														<li><span class="fam-printer"></span> fam-printer</li>
+														<li><span class="fam-control-repeat"></span> fam-control-repeat</li>
+														<li><span class="fam-compress"></span> fam-compress</li>
+														<li><span class="fam-bomb"></span> fam-bomb</li>
+														<li><span class="fam-disk"></span> fam-disk</li>
+														<li><span class="fam-lightbulb-delete"></span> fam-lightbulb-delete</li>
+														<li><span class="fam-lock"></span> fam-lock</li>
+														<li><span class="fam-application-put"></span> fam-application-put</li>
+														<li><span class="fam-page-white-c"></span> fam-page-white-c</li>
+														<li><span class="fam-page-white-php"></span> fam-page-white-php</li>
+														<li><span class="fam-feed-add"></span> fam-feed-add</li>
+														<li><span class="fam-link-break"></span> fam-link-break</li>
+														<li><span class="fam-lock-add"></span> fam-lock-add</li>
+														<li><span class="fam-film-go"></span> fam-film-go</li>
+														<li><span class="fam-report-edit"></span> fam-report-edit</li>
+														<li><span class="fam-cart-edit"></span> fam-cart-edit</li>
+														<li><span class="fam-tag-blue-edit"></span> fam-tag-blue-edit</li>
+														<li><span class="fam-chart-bar-error"></span> fam-chart-bar-error</li>
+														<li><span class="fam-report-delete"></span> fam-report-delete</li>
+														<li><span class="fam-picture-key"></span> fam-picture-key</li>
+														<li><span class="fam-find"></span> fam-find</li>
+														<li><span class="fam-folder-find"></span> fam-folder-find</li>
+														<li><span class="fam-pilcrow"></span> fam-pilcrow</li>
+														<li><span class="fam-chart-bar-delete"></span> fam-chart-bar-delete</li>
+														<li><span class="fam-bell-go"></span> fam-bell-go</li>
+														<li><span class="fam-printer-add"></span> fam-printer-add</li>
+														<li><span class="fam-arrow-undo"></span> fam-arrow-undo</li>
+														<li><span class="fam-layout-edit"></span> fam-layout-edit</li>
+														<li><span class="fam-error-go"></span> fam-error-go</li>
+														<li><span class="fam-building"></span> fam-building</li>
+														<li><span class="fam-chart-line"></span> fam-chart-line</li>
+														<li><span class="fam-house-go"></span> fam-house-go</li>
+														<li><span class="fam-page-white-horizontal"></span> fam-page-white-horizontal</li>
+														<li><span class="fam-email-open-image"></span> fam-email-open-image</li>
+														<li><span class="fam-bullet-feed"></span> fam-bullet-feed</li>
+														<li><span class="fam-film-add"></span> fam-film-add</li>
+														<li><span class="fam-text-linespacing"></span> fam-text-linespacing</li>
+														<li><span class="fam-map-go"></span> fam-map-go</li>
+														<li><span class="fam-application-side-tree"></span> fam-application-side-tree</li>
+														<li><span class="fam-heart-add"></span> fam-heart-add</li>
+														<li><span class="fam-new"></span> fam-new</li>
+														<li><span class="fam-email-link"></span> fam-email-link</li>
+														<li><span class="fam-pencil-add"></span> fam-pencil-add</li>
+														<li><span class="fam-bullet-arrow-top"></span> fam-bullet-arrow-top</li>
+														<li><span class="fam-book-edit"></span> fam-book-edit</li>
+														<li><span class="fam-plugin"></span> fam-plugin</li>
+														<li><span class="fam-cancel"></span> fam-cancel</li>
+														<li><span class="fam-application-edit"></span> fam-application-edit</li>
+														<li><span class="fam-page-white-stack"></span> fam-page-white-stack</li>
+														<li><span class="fam-map-magnify"></span> fam-map-magnify</li>
+														<li><span class="fam-plugin-link"></span> fam-plugin-link</li>
+														<li><span class="fam-printer-empty"></span> fam-printer-empty</li>
+														<li><span class="fam-paste-word"></span> fam-paste-word</li>
+														<li><span class="fam-lightning-delete"></span> fam-lightning-delete</li>
+														<li><span class="fam-link-edit"></span> fam-link-edit</li>
+														<li><span class="fam-arrow-divide"></span> fam-arrow-divide</li>
+														<li><span class="fam-email-add"></span> fam-email-add</li>
+														<li><span class="fam-database-delete"></span> fam-database-delete</li>
+														<li><span class="fam-bullet-white"></span> fam-bullet-white</li>
+														<li><span class="fam-bullet-arrow-down"></span> fam-bullet-arrow-down</li>
+														<li><span class="fam-calendar-view-week"></span> fam-calendar-view-week</li>
+														<li><span class="fam-application-home"></span> fam-application-home</li>
+														<li><span class="fam-color-swatch"></span> fam-color-swatch</li>
+														<li><span class="fam-bullet-arrow-up"></span> fam-bullet-arrow-up</li>
+														<li><span class="fam-feed-magnify"></span> fam-feed-magnify</li>
+														<li><span class="fam-table-sort"></span> fam-table-sort</li>
+														<li><span class="fam-page-delete"></span> fam-page-delete</li>
+														<li><span class="fam-control-end"></span> fam-control-end</li>
+														<li><span class="fam-page-white-width"></span> fam-page-white-width</li>
+														<li><span class="fam-page-white-csharp"></span> fam-page-white-csharp</li>
+														<li><span class="fam-database-edit"></span> fam-database-edit</li>
+														<li><span class="fam-building-error"></span> fam-building-error</li>
+														<li><span class="fam-picture-link"></span> fam-picture-link</li>
+														<li><span class="fam-text-padding-left"></span> fam-text-padding-left</li>
+														<li><span class="fam-arrow-right"></span> fam-arrow-right</li>
+														<li><span class="fam-cross"></span> fam-cross</li>
+														<li><span class="fam-time-delete"></span> fam-time-delete</li>
+														<li><span class="fam-page-refresh"></span> fam-page-refresh</li>
+														<li><span class="fam-emoticon-wink"></span> fam-emoticon-wink</li>
+														<li><span class="fam-application-view-detail"></span> fam-application-view-detail</li>
+														<li><span class="fam-bullet-pink"></span> fam-bullet-pink</li>
+														<li><span class="fam-pictures"></span> fam-pictures</li>
+														<li><span class="fam-report-word"></span> fam-report-word</li>
+														<li><span class="fam-application-xp-terminal"></span> fam-application-xp-terminal</li>
+														<li><span class="fam-chart-curve-error"></span> fam-chart-curve-error</li>
+														<li><span class="fam-date-error"></span> fam-date-error</li>
+														<li><span class="fam-report-link"></span> fam-report-link</li>
+														<li><span class="fam-heart-delete"></span> fam-heart-delete</li>
+														<li><span class="fam-table-key"></span> fam-table-key</li>
+														<li><span class="fam-chart-line-add"></span> fam-chart-line-add</li>
+														<li><span class="fam-building-key"></span> fam-building-key</li>
+														<li><span class="fam-folder-brick"></span> fam-folder-brick</li>
+														<li><span class="fam-bin-closed"></span> fam-bin-closed</li>
+														<li><span class="fam-chart-pie"></span> fam-chart-pie</li>
+														<li><span class="fam-timeline-marker"></span> fam-timeline-marker</li>
+														<li><span class="fam-bullet-delete"></span> fam-bullet-delete</li>
+														<li><span class="fam-comment-delete"></span> fam-comment-delete</li>
+														<li><span class="fam-bullet-key"></span> fam-bullet-key</li>
+														<li><span class="fam-page-white-powerpoint"></span> fam-page-white-powerpoint</li>
+														<li><span class="fam-magifier-zoom-out"></span> fam-magifier-zoom-out</li>
+														<li><span class="fam-layout-link"></span> fam-layout-link</li>
+														<li><span class="fam-group"></span> fam-group</li>
+														<li><span class="fam-textfield-rename"></span> fam-textfield-rename</li>
+														<li><span class="fam-cart-go"></span> fam-cart-go</li>
+														<li><span class="fam-page-white-swoosh"></span> fam-page-white-swoosh</li>
+														<li><span class="fam-folder-wrench"></span> fam-folder-wrench</li>
+														<li><span class="fam-paintcan"></span> fam-paintcan</li>
+														<li><span class="fam-page-white-compressed"></span> fam-page-white-compressed</li>
+														<li><span class="fam-folder-add"></span> fam-folder-add</li>
+														<li><span class="fam-control-equalizer-blue"></span> fam-control-equalizer-blue</li>
+														<li><span class="fam-hourglass"></span> fam-hourglass</li>
+														<li><span class="fam-book-link"></span> fam-book-link</li>
+														<li><span class="fam-application-side-list"></span> fam-application-side-list</li>
+														<li><span class="fam-email-edit"></span> fam-email-edit</li>
+														<li><span class="fam-page-white-cd"></span> fam-page-white-cd</li>
+														<li><span class="fam-hourglass-add"></span> fam-hourglass-add</li>
+														<li><span class="fam-user-delete"></span> fam-user-delete</li>
+														<li><span class="fam-page-add"></span> fam-page-add</li>
+														<li><span class="fam-calculator-link"></span> fam-calculator-link</li>
+														<li><span class="fam-control-pause"></span> fam-control-pause</li>
+														<li><span class="fam-lightning"></span> fam-lightning</li>
+														<li><span class="fam-arrow-join"></span> fam-arrow-join</li>
+														<li><span class="fam-hourglass-go"></span> fam-hourglass-go</li>
+														<li><span class="fam-arrow-out"></span> fam-arrow-out</li>
+														<li><span class="fam-briefcase"></span> fam-briefcase</li>
+														<li><span class="fam-image"></span> fam-image</li>
+														<li><span class="fam-printer-delete"></span> fam-printer-delete</li>
+														<li><span class="fam-arrow-in"></span> fam-arrow-in</li>
+														<li><span class="fam-application-go"></span> fam-application-go</li>
+														<li><span class="fam-wrench-orange"></span> fam-wrench-orange</li>
+														<li><span class="fam-film-save"></span> fam-film-save</li>
+														<li><span class="fam-page-white-tux"></span> fam-page-white-tux</li>
+														<li><span class="fam-world-add"></span> fam-world-add</li>
+														<li><span class="fam-user-suit"></span> fam-user-suit</li>
+														<li><span class="fam-calendar"></span> fam-calendar</li>
+														<li><span class="fam-chart-curve"></span> fam-chart-curve</li>
+														<li><span class="fam-paintbrush"></span> fam-paintbrush</li>
+														<li><span class="fam-pencil-delete"></span> fam-pencil-delete</li>
+														<li><span class="fam-layout"></span> fam-layout</li>
+														<li><span class="fam-plugin-error"></span> fam-plugin-error</li>
+														<li><span class="fam-date-go"></span> fam-date-go</li>
+														<li><span class="fam-control-stop"></span> fam-control-stop</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="fam-application-tile-vertical"></span> fam-application-tile-vertical</li>
+														<li><span class="fam-world-go"></span> fam-world-go</li>
+														<li><span class="fam-newspaper"></span> fam-newspaper</li>
+														<li><span class="fam-arrow-refresh-small"></span> fam-arrow-refresh-small</li>
+														<li><span class="fam-key-go"></span> fam-key-go</li>
+														<li><span class="fam-plugin-edit"></span> fam-plugin-edit</li>
+														<li><span class="fam-tag-pink"></span> fam-tag-pink</li>
+														<li><span class="fam-table-error"></span> fam-table-error</li>
+														<li><span class="fam-chart-curve-add"></span> fam-chart-curve-add</li>
+														<li><span class="fam-flag-pink"></span> fam-flag-pink</li>
+														<li><span class="fam-tag-yellow"></span> fam-tag-yellow</li>
+														<li><span class="fam-application-link"></span> fam-application-link</li>
+														<li><span class="fam-page-white-camera"></span> fam-page-white-camera</li>
+														<li><span class="fam-arrow-merge"></span> fam-arrow-merge</li>
+														<li><span class="fam-email-delete"></span> fam-email-delete</li>
+														<li><span class="fam-book-previous"></span> fam-book-previous</li>
+														<li><span class="fam-tag-purple"></span> fam-tag-purple</li>
+														<li><span class="fam-page-red"></span> fam-page-red</li>
+														<li><span class="fam-cut-red"></span> fam-cut-red</li>
+														<li><span class="fam-page-white-lightning"></span> fam-page-white-lightning</li>
+														<li><span class="fam-application-split"></span> fam-application-split</li>
+														<li><span class="fam-text-columns"></span> fam-text-columns</li>
+														<li><span class="fam-flag-orange"></span> fam-flag-orange</li>
+														<li><span class="fam-chart-line-error"></span> fam-chart-line-error</li>
+														<li><span class="fam-cake"></span> fam-cake</li>
+														<li><span class="fam-control-eject-blue"></span> fam-control-eject-blue</li>
+														<li><span class="fam-chart-organisation-delete"></span> fam-chart-organisation-delete</li>
+														<li><span class="fam-folder"></span> fam-folder</li>
+														<li><span class="fam-bullet-picture"></span> fam-bullet-picture</li>
+														<li><span class="fam-report-go"></span> fam-report-go</li>
+														<li><span class="fam-database-link"></span> fam-database-link</li>
+														<li><span class="fam-picture-edit"></span> fam-picture-edit</li>
+														<li><span class="fam-flag-yellow"></span> fam-flag-yellow</li>
+														<li><span class="fam-table-add"></span> fam-table-add</li>
+														<li><span class="fam-image-delete"></span> fam-image-delete</li>
+														<li><span class="fam-calculator-error"></span> fam-calculator-error</li>
+														<li><span class="fam-tag-blue"></span> fam-tag-blue</li>
+														<li><span class="fam-cog-edit"></span> fam-cog-edit</li>
+														<li><span class="fam-folder-page-white"></span> fam-folder-page-white</li>
+														<li><span class="fam-emoticon-grin"></span> fam-emoticon-grin</li>
+														<li><span class="fam-vcard-edit"></span> fam-vcard-edit</li>
+														<li><span class="fam-bullet-error"></span> fam-bullet-error</li>
+														<li><span class="fam-flag-blue"></span> fam-flag-blue</li>
+														<li><span class="fam-page-green"></span> fam-page-green</li>
+														<li><span class="fam-building-add"></span> fam-building-add</li>
+														<li><span class="fam-folder-table"></span> fam-folder-table</li>
+														<li><span class="fam-page-excel"></span> fam-page-excel</li>
+														<li><span class="fam-map-delete"></span> fam-map-delete</li>
+														<li><span class="fam-table-link"></span> fam-table-link</li>
+														<li><span class="fam-images"></span> fam-images</li>
+														<li><span class="fam-page-white-text-width"></span> fam-page-white-text-width</li>
+														<li><span class="fam-comment-add"></span> fam-comment-add</li>
+														<li><span class="fam-book-open"></span> fam-book-open</li>
+														<li><span class="fam-folder-database"></span> fam-folder-database</li>
+														<li><span class="fam-group-edit"></span> fam-group-edit</li>
+														<li><span class="fam-comment-edit"></span> fam-comment-edit</li>
+														<li><span class="fam-rainbow"></span> fam-rainbow</li>
+														<li><span class="fam-arrow-switch"></span> fam-arrow-switch</li>
+														<li><span class="fam-control-start-blue"></span> fam-control-start-blue</li>
+														<li><span class="fam-text-padding-top"></span> fam-text-padding-top</li>
+														<li><span class="fam-calendar-add"></span> fam-calendar-add</li>
+														<li><span class="fam-folder-key"></span> fam-folder-key</li>
+														<li><span class="fam-book-addresses"></span> fam-book-addresses</li>
+														<li><span class="fam-lightning-add"></span> fam-lightning-add</li>
+														<li><span class="fam-feed-delete"></span> fam-feed-delete</li>
+														<li><span class="fam-film"></span> fam-film</li>
+														<li><span class="fam-page-white-medal"></span> fam-page-white-medal</li>
+														<li><span class="fam-page-white-h"></span> fam-page-white-h</li>
+														<li><span class="fam-tag-orange"></span> fam-tag-orange</li>
+														<li><span class="fam-table-lightning"></span> fam-table-lightning</li>
+														<li><span class="fam-folder-edit"></span> fam-folder-edit</li>
+														<li><span class="fam-user-red"></span> fam-user-red</li>
+														<li><span class="fam-comments-delete"></span> fam-comments-delete</li>
+														<li><span class="fam-world-delete"></span> fam-world-delete</li>
+														<li><span class="fam-flag-purple"></span> fam-flag-purple</li>
+														<li><span class="fam-feed-link"></span> fam-feed-link</li>
+														<li><span class="fam-page-save"></span> fam-page-save</li>
+														<li><span class="fam-bullet-add"></span> fam-bullet-add</li>
+														<li><span class="fam-layout-delete"></span> fam-layout-delete</li>
+														<li><span class="fam-page-white-office"></span> fam-page-white-office</li>
+														<li><span class="fam-control-fastforward-blue"></span> fam-control-fastforward-blue</li>
+														<li><span class="fam-bell"></span> fam-bell</li>
+														<li><span class="fam-bullet-toggle-minus"></span> fam-bullet-toggle-minus</li>
+														<li><span class="fam-user-edit"></span> fam-user-edit</li>
+														<li><span class="fam-layout-add"></span> fam-layout-add</li>
+														<li><span class="fam-folder-bell"></span> fam-folder-bell</li>
+														<li><span class="fam-chart-bar-link"></span> fam-chart-bar-link</li>
+														<li><span class="fam-feed-go"></span> fam-feed-go</li>
+														<li><span class="fam-page-white-database"></span> fam-page-white-database</li>
+														<li><span class="fam-email-go"></span> fam-email-go</li>
+														<li><span class="fam-chart-line-link"></span> fam-chart-line-link</li>
+														<li><span class="fam-application"></span> fam-application</li>
+														<li><span class="fam-flag-red"></span> fam-flag-red</li>
+														<li><span class="fam-flag-green"></span> fam-flag-green</li>
+														<li><span class="fam-zoom-out"></span> fam-zoom-out</li>
+														<li><span class="fam-cart"></span> fam-cart</li>
+														<li><span class="fam-date-previous"></span> fam-date-previous</li>
+														<li><span class="fam-lightbulb-add"></span> fam-lightbulb-add</li>
+														<li><span class="fam-cog-add"></span> fam-cog-add</li>
+														<li><span class="fam-key-add"></span> fam-key-add</li>
+														<li><span class="fam-page-white-visualstudio"></span> fam-page-white-visualstudio</li>
+														<li><span class="fam-application-view-gallery"></span> fam-application-view-gallery</li>
+														<li><span class="fam-arrow-left"></span> fam-arrow-left</li>
+														<li><span class="fam-magnifier"></span> fam-magnifier</li>
+														<li><span class="fam-picture-error"></span> fam-picture-error</li>
+														<li><span class="fam-user-comment"></span> fam-user-comment</li>
+														<li><span class="fam-film-link"></span> fam-film-link</li>
+														<li><span class="fam-image-add"></span> fam-image-add</li>
+														<li><span class="fam-page-white-zip"></span> fam-page-white-zip</li>
+														<li><span class="fam-zoom"></span> fam-zoom</li>
+														<li><span class="fam-vcard-add"></span> fam-vcard-add</li>
+														<li><span class="fam-layers"></span> fam-layers</li>
+														<li><span class="fam-page-white-error"></span> fam-page-white-error</li>
+														<li><span class="fam-chart-organisation"></span> fam-chart-organisation</li>
+														<li><span class="fam-picture-add"></span> fam-picture-add</li>
+														<li><span class="fam-folder-star"></span> fam-folder-star</li>
+														<li><span class="fam-tag-green"></span> fam-tag-green</li>
+														<li><span class="fam-layout-sidebar"></span> fam-layout-sidebar</li>
+														<li><span class="fam-page-white-vector"></span> fam-page-white-vector</li>
+														<li><span class="fam-music"></span> fam-music</li>
+														<li><span class="fam-thumb-up"></span> fam-thumb-up</li>
+														<li><span class="fam-email-error"></span> fam-email-error</li>
+														<li><span class="fam-control-stop-blue"></span> fam-control-stop-blue</li>
+														<li><span class="fam-user-green"></span> fam-user-green</li>
+														<li><span class="fam-chart-curve-go"></span> fam-chart-curve-go</li>
+														<li><span class="fam-date-next"></span> fam-date-next</li>
+														<li><span class="fam-group-error"></span> fam-group-error</li>
+														<li><span class="fam-star"></span> fam-star</li>
+														<li><span class="fam-lock-go"></span> fam-lock-go</li>
+														<li><span class="fam-page-copy"></span> fam-page-copy</li>
+														<li><span class="fam-resultset-first"></span> fam-resultset-first</li>
+														<li><span class="fam-email-open"></span> fam-email-open</li>
+														<li><span class="fam-group-gear"></span> fam-group-gear</li>
+														<li><span class="fam-cog-error"></span> fam-cog-error</li>
+														<li><span class="fam-report-disk"></span> fam-report-disk</li>
+														<li><span class="fam-page-white-star"></span> fam-page-white-star</li>
+														<li><span class="fam-tag-blue-add"></span> fam-tag-blue-add</li>
+														<li><span class="fam-page-go"></span> fam-page-go</li>
+														<li><span class="fam-date-link"></span> fam-date-link</li>
+														<li><span class="fam-hourglass-link"></span> fam-hourglass-link</li>
+														<li><span class="fam-tag-red"></span> fam-tag-red</li>
+														<li><span class="fam-report-magnify"></span> fam-report-magnify</li>
+														<li><span class="fam-key"></span> fam-key</li>
+														<li><span class="fam-page-white-get"></span> fam-page-white-get</li>
+														<li><span class="fam-table-save"></span> fam-table-save</li>
+														<li><span class="fam-disconnect"></span> fam-disconnect</li>
+														<li><span class="fam-book"></span> fam-book</li>
+														<li><span class="fam-bullet-yellow"></span> fam-bullet-yellow</li>
+														<li><span class="fam-chart-pie-delete"></span> fam-chart-pie-delete</li>
+														<li><span class="fam-page-white-add"></span> fam-page-white-add</li>
+														<li><span class="fam-resultset-next"></span> fam-resultset-next</li>
+														<li><span class="fam-page-white-paste"></span> fam-page-white-paste</li>
+														<li><span class="fam-cursor"></span> fam-cursor</li>
+														<li><span class="fam-report-picture"></span> fam-report-picture</li>
+														<li><span class="fam-page-world"></span> fam-page-world</li>
+														<li><span class="fam-page-white-code"></span> fam-page-white-code</li>
+														<li><span class="fam-anchor"></span> fam-anchor</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="fam-page-paste"></span> fam-page-paste</li>
+														<li><span class="fam-door-in"></span> fam-door-in</li>
+														<li><span class="fam-page-white-cplusplus"></span> fam-page-white-cplusplus</li>
+														<li><span class="fam-group-link"></span> fam-group-link</li>
+														<li><span class="fam-page-white-copy"></span> fam-page-white-copy</li>
+														<li><span class="fam-lightbulb-off"></span> fam-lightbulb-off</li>
+														<li><span class="fam-text-align-justify"></span> fam-text-align-justify</li>
+														<li><span class="fam-chart-line-delete"></span> fam-chart-line-delete</li>
+														<li><span class="fam-table-edit"></span> fam-table-edit</li>
+														<li><span class="fam-application-double"></span> fam-application-double</li>
+														<li><span class="fam-film-key"></span> fam-film-key</li>
+														<li><span class="fam-page-white-gear"></span> fam-page-white-gear</li>
+														<li><span class="fam-application-form-edit"></span> fam-application-form-edit</li>
+														<li><span class="fam-bullet-blue"></span> fam-bullet-blue</li>
+														<li><span class="fam-arrow-turn-right"></span> fam-arrow-turn-right</li>
+														<li><span class="fam-chart-pie-error"></span> fam-chart-pie-error</li>
+														<li><span class="fam-page-white-world"></span> fam-page-white-world</li>
+														<li><span class="fam-page-gear"></span> fam-page-gear</li>
+														<li><span class="fam-table-row-delete"></span> fam-table-row-delete</li>
+														<li><span class="fam-link"></span> fam-link</li>
+														<li><span class="fam-bell-delete"></span> fam-bell-delete</li>
+														<li><span class="fam-feed-edit"></span> fam-feed-edit</li>
+														<li><span class="fam-textfield"></span> fam-textfield</li>
+														<li><span class="fam-clock"></span> fam-clock</li>
+														<li><span class="fam-application-osx"></span> fam-application-osx</li>
+														<li><span class="fam-bullet-arrow-bottom"></span> fam-bullet-arrow-bottom</li>
+														<li><span class="fam-text-padding-bottom"></span> fam-text-padding-bottom</li>
+														<li><span class="fam-folder-link"></span> fam-folder-link</li>
+														<li><span class="fam-key-delete"></span> fam-key-delete</li>
+														<li><span class="fam-calculator-add"></span> fam-calculator-add</li>
+														<li><span class="fam-delete"></span> fam-delete</li>
+														<li><span class="fam-application-side-expand"></span> fam-application-side-expand</li>
+														<li><span class="fam-chart-bar-edit"></span> fam-chart-bar-edit</li>
+														<li><span class="fam-bullet-disk"></span> fam-bullet-disk</li>
+														<li><span class="fam-time-add"></span> fam-time-add</li>
+														<li><span class="fam-tag"></span> fam-tag</li>
+														<li><span class="fam-bell-link"></span> fam-bell-link</li>
+														<li><span class="fam-page-white-delete"></span> fam-page-white-delete</li>
+														<li><span class="fam-arrow-down"></span> fam-arrow-down</li>
+														<li><span class="fam-control-pause-blue"></span> fam-control-pause-blue</li>
+														<li><span class="fam-control-rewind"></span> fam-control-rewind</li>
+														<li><span class="fam-page-white-freehand"></span> fam-page-white-freehand</li>
+														<li><span class="fam-database-error"></span> fam-database-error</li>
+														<li><span class="fam-magnifier-zoom-in"></span> fam-magnifier-zoom-in</li>
+														<li><span class="fam-plugin-go"></span> fam-plugin-go</li>
+														<li><span class="fam-chart-line-edit"></span> fam-chart-line-edit</li>
+														<li><span class="fam-door-out"></span> fam-door-out</li>
+														<li><span class="fam-page-white-flash"></span> fam-page-white-flash</li>
+														<li><span class="fam-calendar-delete"></span> fam-calendar-delete</li>
+														<li><span class="fam-table-relationship"></span> fam-table-relationship</li>
+														<li><span class="fam-bullet-toggle-plus"></span> fam-bullet-toggle-plus</li>
+														<li><span class="fam-folder-explore"></span> fam-folder-explore</li>
+														<li><span class="fam-page-white-text"></span> fam-page-white-text</li>
+														<li><span class="fam-control-fastforward"></span> fam-control-fastforward</li>
+														<li><span class="fam-table"></span> fam-table</li>
+														<li><span class="fam-picture-delete"></span> fam-picture-delete</li>
+														<li><span class="fam-control-rewind-blue"></span> fam-control-rewind-blue</li>
+														<li><span class="fam-film-edit"></span> fam-film-edit</li>
+														<li><span class="fam-lightning-go"></span> fam-lightning-go</li>
+														<li><span class="fam-link-go"></span> fam-link-go</li>
+														<li><span class="fam-cart-remove"></span> fam-cart-remove</li>
+														<li><span class="fam-transmit"></span> fam-transmit</li>
+														<li><span class="fam-feed"></span> fam-feed</li>
+														<li><span class="fam-status-offline"></span> fam-status-offline</li>
+														<li><span class="fam-emoticon-happy"></span> fam-emoticon-happy</li>
+														<li><span class="fam-table-delete"></span> fam-table-delete</li>
+														<li><span class="fam-tick"></span> fam-tick</li>
+														<li><span class="fam-page-white-word"></span> fam-page-white-word</li>
+														<li><span class="fam-vcard"></span> fam-vcard</li>
+														<li><span class="fam-arrow-inout"></span> fam-arrow-inout</li>
+														<li><span class="fam-link-error"></span> fam-link-error</li>
+														<li><span class="fam-application-lightning"></span> fam-application-lightning</li>
+														<li><span class="fam-folder-feed"></span> fam-folder-feed</li>
+														<li><span class="fam-page-word"></span> fam-page-word</li>
+														<li><span class="fam-folder-delete"></span> fam-folder-delete</li>
+														<li><span class="fam-zoom-in"></span> fam-zoom-in</li>
+														<li><span class="fam-page-white-code-red"></span> fam-page-white-code-red</li>
+														<li><span class="fam-application-error"></span> fam-application-error</li>
+														<li><span class="fam-bin"></span> fam-bin</li>
+														<li><span class="fam-plugin-delete"></span> fam-plugin-delete</li>
+														<li><span class="fam-application-form-add"></span> fam-application-form-add</li>
+														<li><span class="fam-calculator-edit"></span> fam-calculator-edit</li>
+														<li><span class="fam-report-key"></span> fam-report-key</li>
+														<li><span class="fam-control-end-blue"></span> fam-control-end-blue</li>
+														<li><span class="fam-bullet-wrench"></span> fam-bullet-wrench</li>
+														<li><span class="fam-page-white-actionscript"></span> fam-page-white-actionscript</li>
+														<li><span class="fam-heart"></span> fam-heart</li>
+														<li><span class="fam-folder-picture"></span> fam-folder-picture</li>
+														<li><span class="fam-folder-palette"></span> fam-folder-palette</li>
+														<li><span class="fam-film-error"></span> fam-film-error</li>
+														<li><span class="fam-eye"></span> fam-eye</li>
+														<li><span class="fam-cut"></span> fam-cut</li>
+														<li><span class="fam-textfield-add"></span> fam-textfield-add</li>
+														<li><span class="fam-paste-plain"></span> fam-paste-plain</li>
+														<li><span class="fam-folder-lightbulb"></span> fam-folder-lightbulb</li>
+														<li><span class="fam-cog-delete"></span> fam-cog-delete</li>
+														<li><span class="fam-hourglass-delete"></span> fam-hourglass-delete</li>
+														<li><span class="fam-error-delete"></span> fam-error-delete</li>
+														<li><span class="fam-folder-magnify"></span> fam-folder-magnify</li>
+														<li><span class="fam-cog-go"></span> fam-cog-go</li>
+														<li><span class="fam-page-error"></span> fam-page-error</li>
+														<li><span class="fam-database-key"></span> fam-database-key</li>
+														<li><span class="fam-information"></span> fam-information</li>
+														<li><span class="fam-group-add"></span> fam-group-add</li>
+														<li><span class="fam-bullet-green"></span> fam-bullet-green</li>
+														<li><span class="fam-page-white-cup"></span> fam-page-white-cup</li>
+														<li><span class="fam-page-white-dvd"></span> fam-page-white-dvd</li>
+														<li><span class="fam-pencil"></span> fam-pencil</li>
+														<li><span class="fam-control-equalizer"></span> fam-control-equalizer</li>
+														<li><span class="fam-resultset-last"></span> fam-resultset-last</li>
+														<li><span class="fam-date-edit"></span> fam-date-edit</li>
+														<li><span class="fam-arrow-rotate-anticlockwise"></span> fam-arrow-rotate-anticlockwise</li>
+														<li><span class="fam-table-gear"></span> fam-table-gear</li>
+														<li><span class="fam-folder-image"></span> fam-folder-image</li>
+														<li><span class="fam-book-add"></span> fam-book-add</li>
+														<li><span class="fam-page-white-put"></span> fam-page-white-put</li>
+														<li><span class="fam-layout-content"></span> fam-layout-content</li>
+														<li><span class="fam-status-busy"></span> fam-status-busy</li>
+														<li><span class="fam-link-add"></span> fam-link-add</li>
+														<li><span class="fam-lightbulb"></span> fam-lightbulb</li>
+														<li><span class="fam-connect"></span> fam-connect</li>
+														<li><span class="fam-layout-header"></span> fam-layout-header</li>
+														<li><span class="fam-pencil-go"></span> fam-pencil-go</li>
+														<li><span class="fam-color-wheel"></span> fam-color-wheel</li>
+														<li><span class="fam-emoticon-waii"></span> fam-emoticon-waii</li>
+														<li><span class="fam-asterisk-yellow"></span> fam-asterisk-yellow</li>
+														<li><span class="fam-table-refresh"></span> fam-table-refresh</li>
+														<li><span class="fam-page-white-excel"></span> fam-page-white-excel</li>
+														<li><span class="fam-door-open"></span> fam-door-open</li>
+														<li><span class="fam-bell-add"></span> fam-bell-add</li>
+														<li><span class="fam-page-white-go"></span> fam-page-white-go</li>
+														<li><span class="fam-disk-multiple"></span> fam-disk-multiple</li>
+														<li><span class="fam-thumb-down"></span> fam-thumb-down</li>
+														<li><span class="fam-page-code"></span> fam-page-code</li>
+														<li><span class="fam-bullet-purple"></span> fam-bullet-purple</li>
+														<li><span class="fam-lock-break"></span> fam-lock-break</li>
+														<li><span class="fam-printer-error"></span> fam-printer-error</li>
+														<li><span class="fam-emoticon-evilgrin"></span> fam-emoticon-evilgrin</li>
+														<li><span class="fam-status-away"></span> fam-status-away</li>
+														<li><span class="fam-calculator"></span> fam-calculator</li>
+														<li><span class="fam-report-user"></span> fam-report-user</li>
+														<li><span class="fam-page-white-acrobat"></span> fam-page-white-acrobat</li>
+														<li><span class="fam-house"></span> fam-house</li>
+														<li><span class="fam-emoticon-unhappy"></span> fam-emoticon-unhappy</li>
+														<li><span class="fam-page-white-link"></span> fam-page-white-link</li>
+														<li><span class="fam-film-delete"></span> fam-film-delete</li>
+														<li><span class="fam-control-start"></span> fam-control-start</li>
+														<li><span class="fam-user-female"></span> fam-user-female</li>
+														<li><span class="fam-page-white-paintbrush"></span> fam-page-white-paintbrush</li>
+														<li><span class="fam-application-key"></span> fam-application-key</li>
+														<li><span class="fam-world-link"></span> fam-world-link</li>
+														<li><span class="fam-folder-heart"></span> fam-folder-heart</li>
+														<li><span class="fam-page-link"></span> fam-page-link</li>
+														<li><span class="fam-attach"></span> fam-attach</li>
+														<li><span class="fam-emoticon-smile"></span> fam-emoticon-smile</li>
+														<li><span class="fam-user-go"></span> fam-user-go</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle" href="#bootstrap" data-parent="#icons" data-toggle="collapse">Bootstrap icon set <span class="caret"></span></a>
+									</div>
+									<div id="bootstrap" class="accordion-body collapse">
+										<div class="accordion-inner">
+											<p>140 default Boostrap icons, available in dark gray (default) and white, provided by <a href="http://glyphicons.com/" target="_blank">Glyphicons</a>.</p>
+											<div class="row-fluid">
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="icon-glass"></span> icon-glass</li>
+														<li><span class="icon-music"></span> icon-music</li>
+														<li><span class="icon-search"></span> icon-search</li>
+														<li><span class="icon-envelope"></span> icon-envelope</li>
+														<li><span class="icon-heart"></span> icon-heart</li>
+														<li><span class="icon-star"></span> icon-star</li>
+														<li><span class="icon-star-empty"></span> icon-star-empty</li>
+														<li><span class="icon-user"></span> icon-user</li>
+														<li><span class="icon-film"></span> icon-film</li>
+														<li><span class="icon-th-large"></span> icon-th-large</li>
+														<li><span class="icon-th"></span> icon-th</li>
+														<li><span class="icon-th-list"></span> icon-th-list</li>
+														<li><span class="icon-ok"></span> icon-ok</li>
+														<li><span class="icon-remove"></span> icon-remove</li>
+														<li><span class="icon-zoom-in"></span> icon-zoom-in</li>
+														<li><span class="icon-zoom-out"></span> icon-zoom-out</li>
+														<li><span class="icon-off"></span> icon-off</li>
+														<li><span class="icon-signal"></span> icon-signal</li>
+														<li><span class="icon-cog"></span> icon-cog</li>
+														<li><span class="icon-trash"></span> icon-trash</li>
+														<li><span class="icon-home"></span> icon-home</li>
+														<li><span class="icon-file"></span> icon-file</li>
+														<li><span class="icon-time"></span> icon-time</li>
+														<li><span class="icon-road"></span> icon-road</li>
+														<li><span class="icon-download-alt"></span> icon-download-alt</li>
+														<li><span class="icon-download"></span> icon-download</li>
+														<li><span class="icon-upload"></span> icon-upload</li>
+														<li><span class="icon-inbox"></span> icon-inbox</li>
+														<li><span class="icon-play-circle"></span> icon-play-circle</li>
+														<li><span class="icon-repeat"></span> icon-repeat</li>
+														<li><span class="icon-refresh"></span> icon-refresh</li>
+														<li><span class="icon-list-alt"></span> icon-list-alt</li>
+														<li><span class="icon-lock"></span> icon-lock</li>
+														<li><span class="icon-flag"></span> icon-flag</li>
+														<li><span class="icon-headphones"></span> icon-headphones</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="icon-volume-off"></span> icon-volume-off</li>
+														<li><span class="icon-volume-down"></span> icon-volume-down</li>
+														<li><span class="icon-volume-up"></span> icon-volume-up</li>
+														<li><span class="icon-qrcode"></span> icon-qrcode</li>
+														<li><span class="icon-barcode"></span> icon-barcode</li>
+														<li><span class="icon-tag"></span> icon-tag</li>
+														<li><span class="icon-tags"></span> icon-tags</li>
+														<li><span class="icon-book"></span> icon-book</li>
+														<li><span class="icon-bookmark"></span> icon-bookmark</li>
+														<li><span class="icon-print"></span> icon-print</li>
+														<li><span class="icon-camera"></span> icon-camera</li>
+														<li><span class="icon-font"></span> icon-font</li>
+														<li><span class="icon-bold"></span> icon-bold</li>
+														<li><span class="icon-italic"></span> icon-italic</li>
+														<li><span class="icon-text-height"></span> icon-text-height</li>
+														<li><span class="icon-text-width"></span> icon-text-width</li>
+														<li><span class="icon-align-left"></span> icon-align-left</li>
+														<li><span class="icon-align-center"></span> icon-align-center</li>
+														<li><span class="icon-align-right"></span> icon-align-right</li>
+														<li><span class="icon-align-justify"></span> icon-align-justify</li>
+														<li><span class="icon-list"></span> icon-list</li>
+														<li><span class="icon-indent-left"></span> icon-indent-left</li>
+														<li><span class="icon-indent-right"></span> icon-indent-right</li>
+														<li><span class="icon-facetime-video"></span> icon-facetime-video</li>
+														<li><span class="icon-picture"></span> icon-picture</li>
+														<li><span class="icon-pencil"></span> icon-pencil</li>
+														<li><span class="icon-map-marker"></span> icon-map-marker</li>
+														<li><span class="icon-adjust"></span> icon-adjust</li>
+														<li><span class="icon-tint"></span> icon-tint</li>
+														<li><span class="icon-edit"></span> icon-edit</li>
+														<li><span class="icon-share"></span> icon-share</li>
+														<li><span class="icon-check"></span> icon-check</li>
+														<li><span class="icon-move"></span> icon-move</li>
+														<li><span class="icon-step-backward"></span> icon-step-backward</li>
+														<li><span class="icon-fast-backward"></span> icon-fast-backward</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="icon-backward"></span> icon-backward</li>
+														<li><span class="icon-play"></span> icon-play</li>
+														<li><span class="icon-pause"></span> icon-pause</li>
+														<li><span class="icon-stop"></span> icon-stop</li>
+														<li><span class="icon-forward"></span> icon-forward</li>
+														<li><span class="icon-fast-forward"></span> icon-fast-forward</li>
+														<li><span class="icon-step-forward"></span> icon-step-forward</li>
+														<li><span class="icon-eject"></span> icon-eject</li>
+														<li><span class="icon-chevron-left"></span> icon-chevron-left</li>
+														<li><span class="icon-chevron-right"></span> icon-chevron-right</li>
+														<li><span class="icon-plus-sign"></span> icon-plus-sign</li>
+														<li><span class="icon-minus-sign"></span> icon-minus-sign</li>
+														<li><span class="icon-remove-sign"></span> icon-remove-sign</li>
+														<li><span class="icon-ok-sign"></span> icon-ok-sign</li>
+														<li><span class="icon-question-sign"></span> icon-question-sign</li>
+														<li><span class="icon-info-sign"></span> icon-info-sign</li>
+														<li><span class="icon-screenshot"></span> icon-screenshot</li>
+														<li><span class="icon-remove-circle"></span> icon-remove-circle</li>
+														<li><span class="icon-ok-circle"></span> icon-ok-circle</li>
+														<li><span class="icon-ban-circle"></span> icon-ban-circle</li>
+														<li><span class="icon-arrow-left"></span> icon-arrow-left</li>
+														<li><span class="icon-arrow-right"></span> icon-arrow-right</li>
+														<li><span class="icon-arrow-up"></span> icon-arrow-up</li>
+														<li><span class="icon-arrow-down"></span> icon-arrow-down</li>
+														<li><span class="icon-share-alt"></span> icon-share-alt</li>
+														<li><span class="icon-resize-full"></span> icon-resize-full</li>
+														<li><span class="icon-resize-small"></span> icon-resize-small</li>
+														<li><span class="icon-plus"></span> icon-plus</li>
+														<li><span class="icon-minus"></span> icon-minus</li>
+														<li><span class="icon-asterisk"></span> icon-asterisk</li>
+														<li><span class="icon-exclamation-sign"></span> icon-exclamation-sign</li>
+														<li><span class="icon-gift"></span> icon-gift</li>
+														<li><span class="icon-leaf"></span> icon-leaf</li>
+														<li><span class="icon-fire"></span> icon-fire</li>
+														<li><span class="icon-eye-open"></span> icon-eye-open</li>
+													</ul>
+												</div>
+												<div class="span3">
+													<ul class="unstyled">
+														<li><span class="icon-eye-close"></span> icon-eye-close</li>
+														<li><span class="icon-warning-sign"></span> icon-warning-sign</li>
+														<li><span class="icon-plane"></span> icon-plane</li>
+														<li><span class="icon-calendar"></span> icon-calendar</li>
+														<li><span class="icon-random"></span> icon-random</li>
+														<li><span class="icon-comment"></span> icon-comment</li>
+														<li><span class="icon-magnet"></span> icon-magnet</li>
+														<li><span class="icon-chevron-up"></span> icon-chevron-up</li>
+														<li><span class="icon-chevron-down"></span> icon-chevron-down</li>
+														<li><span class="icon-retweet"></span> icon-retweet</li>
+														<li><span class="icon-shopping-cart"></span> icon-shopping-cart</li>
+														<li><span class="icon-folder-close"></span> icon-folder-close</li>
+														<li><span class="icon-folder-open"></span> icon-folder-open</li>
+														<li><span class="icon-resize-vertical"></span> icon-resize-vertical</li>
+														<li><span class="icon-resize-horizontal"></span> icon-resize-horizontal</li>
+														<li><span class="icon-hdd"></span> icon-hdd</li>
+														<li><span class="icon-bullhorn"></span> icon-bullhorn</li>
+														<li><span class="icon-bell"></span> icon-bell</li>
+														<li><span class="icon-certificate"></span> icon-certificate</li>
+														<li><span class="icon-thumbs-up"></span> icon-thumbs-up</li>
+														<li><span class="icon-thumbs-down"></span> icon-thumbs-down</li>
+														<li><span class="icon-hand-right"></span> icon-hand-right</li>
+														<li><span class="icon-hand-left"></span> icon-hand-left</li>
+														<li><span class="icon-hand-up"></span> icon-hand-up</li>
+														<li><span class="icon-hand-down"></span> icon-hand-down</li>
+														<li><span class="icon-circle-arrow-right"></span> icon-circle-arrow-right</li>
+														<li><span class="icon-circle-arrow-left"></span> icon-circle-arrow-left</li>
+														<li><span class="icon-circle-arrow-up"></span> icon-circle-arrow-up</li>
+														<li><span class="icon-circle-arrow-down"></span> icon-circle-arrow-down</li>
+														<li><span class="icon-globe"></span> icon-globe</li>
+														<li><span class="icon-wrench"></span> icon-wrench</li>
+														<li><span class="icon-tasks"></span> icon-tasks</li>
+														<li><span class="icon-filter"></span> icon-filter</li>
+														<li><span class="icon-briefcase"></span> icon-briefcase</li>
+														<li><span class="icon-fullscreen"></span> icon-fullscreen</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+			
+			</section>
+			<!-- /Right (content) side -->
+			
+		</div>
+		<!-- /Main page container -->
+		
+		<!-- Scripts -->
+		<script src="js/navigation.js"></script>
+		
+		<!-- Bootstrap scripts -->
+		<!--
+		<script src="js/bootstrap/bootstrap-tooltip.js"></script>
+		<script src="js/bootstrap/bootstrap-dropdown.js"></script>
+		<script src="js/bootstrap/bootstrap-tab.js"></script>
+		<script src="js/bootstrap/bootstrap-button.js"></script>
+		<script src="js/bootstrap/bootstrap-alert.js"></script>
+		<script src="js/bootstrap/bootstrap-popover.js"></script>
+		<script src="js/bootstrap/bootstrap-collapse.js"></script>
+		<script src="js/bootstrap/bootstrap-modal.js"></script>
+		<script src="js/bootstrap/bootstrap-transition.js"></script>
+		-->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+		
+		<!-- Block TODO list -->
+		<script>
+			$(document).ready(function() {
+				
+				$('.todo-block input[type="checkbox"]').click(function(){
+					$(this).closest('tr').toggleClass('done');
+				});
+				$('.todo-block input[type="checkbox"]:checked').closest('tr').addClass('done');
+				
+			});
+		</script>
+		
+		<!-- jQuery Snippet -->
+		<script src="js/plugins/snippet/jquery.snippet.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+			
+				$('pre.html').snippet('html',{style:"rand01"});
+			
+			});
+		</script>
+
+		<script type="text/javascript" src="js/plugins/smartWizard/jquery.smartWizard-2.0.js"></script>
+		
+	</body>
+
+<!-- Mirrored from template.walkingpixels.com/chromatron/goodies.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:30:10 GMT -->
+</html>

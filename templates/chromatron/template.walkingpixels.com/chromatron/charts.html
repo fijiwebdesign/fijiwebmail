@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
+<!-- Mirrored from template.walkingpixels.com/chromatron/charts.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:29:49 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>Data visualization | Chromatron HTML5 Admin Backend</title>
+		<meta name="description" content="">
+		<meta name="author" content="Walking Pixels | www.walkingpixels.com">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- jQuery Visualize Styles -->
+		<link rel='stylesheet' type='text/css' href='css/plugins/jquery.visualize.css'>
+		
+		<!-- Styles -->
+		<link rel='stylesheet' type='text/css' href='css/chromatron-green.css'>
+		
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="img/icons/favicon.html">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.html">
+		
+		<!-- JS Libs -->
+		<script src="../../ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="js/libs/jquery.js"><\/script>')</script>
+		<script src="js/libs/modernizr.js"></script>
+		<script src="js/libs/selectivizr.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				
+				// Tooltips for nav badge
+				$('.main-navigation .badge').tooltip({
+					placement: 'bottom'
+				});
+				
+				// Tooltips for widgets
+				$('.widget [title]').tooltip({
+					placement: 'left'
+				});
+				
+				// Close button for widgets
+				$('.widget').alert();
+				
+				// Remove tooltip when widget is closed
+				$('.widget').bind('close', function () {
+					$(this).find('.close').tooltip('destroy');
+				})
+				
+			});
+		</script>
+		
+		<script type="text/javascript">
+			//var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-2"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
+		</script>
+	</head>
+	<body>
+		
+		<!-- Main page container -->
+		<div class="container-fluid">
+		
+			<!-- Left (navigation) side -->
+			<section class="navigation-block">
+			
+				<!-- Main page header -->
+				<header>
+				
+					<!-- Main page logo -->
+					<h1><a class="brand" href="login.html" title="Back to Homepage">Chromatron Responsive Admin Backend built with Twitter Bootstrap</a></h1>
+					
+					<!-- Main page headline -->
+					<p>A cathode ray tube awesomeness</p>
+					
+				</header>
+				<!-- /Main page header -->
+				
+				<!-- User profile -->
+				<section class="user-profile">
+					<figure>
+						<img alt="John Pixel avatar" src="http://placekitten.com/50/50">
+						<figcaption>
+							<strong><a href="#" class="">John Pixel</a></strong>
+							<em>Administrator</em>
+							<ul>
+								<li><a class="btn btn-primary btn-flat" href="#" title="View www.example.com">view website</a></li>
+								<li><a class="btn btn-primary btn-flat" href="#" title="Securely logout from application">logout</a></li>
+							</ul>
+						</figcaption>
+					</figure>
+				</section>
+				<!-- /User profile -->
+				
+				<!-- Responsive navigation -->
+				<a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-chart-line"></span> Charts</a>
+				
+				<!-- Main navigation -->
+				<nav class="main-navigation nav-collapse" role="navigation">
+					<ul>
+						<li><a href="index.html" class="no-submenu"><span class="fam-house"></span>Dashboard</a></li>
+						<li><a href="forms.html" class="no-submenu"><span class="fam-application-form"></span>Forms</a></li>
+						<li class="current"><a href="charts.html" class="no-submenu"><span class="fam-chart-line"></span>Charts</a></li>
+						<li><a href="tables.html" class="no-submenu"><span class="fam-application-view-columns"></span>Tables</a></li>
+						<li>
+							<a href="#"><span class="fam-picture"></span>Gallery<span class="badge" title="5 new image uploaded">5</span></a>
+							<ul>
+								<li><a href="gallery.html">Car Gallery</a></li>
+								<li><a href="gallery.html">Food Gallery</a></li>
+								<li><a href="gallery.html">Art Gallery</a></li>
+								<li><a href="gallery.html">Animal Gallery</a></li>
+								<li><a href="gallery.html">Super long name to see how it collapse</a></li>
+							</ul>
+						</li>
+						<li><a href="file-explorer.html" class="no-submenu"><span class="fam-briefcase"></span>File explorer</a></li>
+						<li><a href="calendar.html" class="no-submenu"><span class="fam-calendar-view-day"></span>Calendar<span class="badge" title="27 tasks this week">27</span></a></li>
+						<li><a href="ui-buttons.html" class="no-submenu"><span class="fam-rosette"></span>UI & Buttons</a></li>
+						<li><a href="typo.html" class="no-submenu"><span class="fam-text-padding-left"></span>Typography</a></li>
+						<li><a href="grid.html" class="no-submenu"><span class="fam-cog"></span>Grid</a></li>
+						<li>
+							<a href="#"><span class="fam-heart"></span>Goodies</a>
+							<ul>
+								<li><a href="goodies.html">Goodies</a></li>
+								<li><a href="401.html">Error 401</a></li>
+								<li><a href="403.html">Error 403</a></li>
+								<li><a href="404.html">Error 404</a></li>
+								<li><a href="500.html">Error 500</a></li>
+								<li><a href="503.html">Error 503</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+				<!-- /Main navigation -->
+				
+				<!-- Side note with nested style -->
+				<section class="side-note nested">
+					<h2>Nested side note</h2>
+					<p>Lorem ipsum dolor sit amet, conse ctetur adipiscing elit. Maec enas id augue ac metu aliquam.</p>
+					<p>Sed pharetra placerat est suscipit sagittis. Phasellus <a href="#">aliquam</a> males uada blandit. Donec adipiscing sem erat.</p>
+				</section>
+				<!-- /Side note with nested style -->
+				
+			</section>
+			<!-- /Left (navigation) side -->
+			
+			<!-- Right (content) side -->
+			<section class="content-block" role="main">
+			
+				<!-- Widget container -->
+				<div class="widgets-container">
+				
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget">&times;</a>
+						<span>increase</span>
+						<p><strong>+35,18<sup>%</sup></strong> +2489 new visitors</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in decrease">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<span>decrease</span>
+						<p><strong>-12,50<sup>%</sup></strong> -311 new orders</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget" >&times;</a>
+						<span>7</span>
+						<p><strong>Tasks</strong> +3 New Tasks</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget Box -->
+					<div class="widget alert fade in text-only">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<p><strong>Text Only App</strong> +29 Lorem Ipsum</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Add new widget box -->
+					<div class="widget add-new-widget">
+						<a href="#">
+							<strong><span class="awe-plus-sign"></span> Add Widget</strong>
+						</a>
+					</div>
+					<!-- /Add new widget box -->
+					
+				</div>
+				<!-- /Widget container -->
+				
+				<!-- Breadcrumbs -->
+				<ul class="breadcrumb">
+					<li><a href="#"><span class="awe-home"></span> Home</a></li>
+					<li><a href="#">Chromatron template</a></li>
+					<li class="active">Data visualization</li>
+				</ul>
+				<!-- Breadcrumbs -->
+				
+				<!-- Page header -->
+				<article class="page-header">
+					<h1>Data visualization</h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam blandit, dolor mollis adipiscing elementum, ipsum turpis euismod tellus, vitae mollis velit leo id nisi. Morbi non lectus turpis, eu interdum orci. In at rutrum nisi. Donec sit amet urna purus, at eleifend ipsum. Sed magna enim, tempor eu tincidunt vitae, dictum tristique arcu.</p>
+				</article>
+				<!-- /Page header -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example jQuery Visualize -->
+					<!-- Data block -->
+					<article class="span12 data-block">
+						<div class="data-container">
+							<header>
+								<h2>jQuery Visualize</h2>
+							</header>
+							<section>
+								<p>jQuery Visualize plugin for accessible charts and graphs that uses JavaScript to scrape data from an HTML table and generate bar, line, area, and pie chart visualizations using the HTML5 canvas element. This technique provides a simple way to generate charts, but more importantly, because it bases the chart on data already in the page in an HTML table element, it is accessible to people who browse the web with a screen reader or other assistive technology, or with browsers that don't fully support JavaScript or HTML5 Canvas.</p>
+								
+								<table data-chart="line">
+									<caption>Employee Sales by Department</caption>
+									<thead>
+										<tr>
+											<td></td>
+											<th scope="col">food</th>
+											<th scope="col">auto</th>
+											<th scope="col">household</th>
+											<th scope="col">furniture</th>
+											<th scope="col">kitchen</th>
+											<th scope="col">bath</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">Mary</th>
+											<td>190</td>
+											<td>160</td>
+											<td>40</td>
+											<td>120</td>
+											<td>30</td>
+											<td>70</td>
+										</tr>
+										<tr>
+											<th scope="row">Tom</th>
+											<td>3</td>
+											<td>40</td>
+											<td>30</td>
+											<td>45</td>
+											<td>35</td>
+											<td>49</td>
+										</tr>
+									</tbody>
+								</table>
+								
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Data block -->
+					<article class="span4 data-block nested">
+						<div class="data-container">
+							<section>
+								<table data-chart="pie">
+									<caption>Employee Sales by Department</caption>
+									<thead>
+										<tr>
+											<td></td>
+											<th scope="col">food</th>
+											<th scope="col">auto</th>
+											<th scope="col">household</th>
+											<th scope="col">furniture</th>
+											<th scope="col">kitchen</th>
+											<th scope="col">bath</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">Mary</th>
+											<td>190</td>
+											<td>160</td>
+											<td>40</td>
+											<td>120</td>
+											<td>30</td>
+											<td>70</td>
+										</tr>
+										<tr>
+											<th scope="row">Tom</th>
+											<td>3</td>
+											<td>40</td>
+											<td>30</td>
+											<td>45</td>
+											<td>35</td>
+											<td>49</td>
+										</tr>
+									</tbody>
+								</table>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Data block -->
+					<article class="span4 data-block nested">
+						<div class="data-container">
+							<section>
+								<table data-chart="bar">
+									<caption>Employee Sales by Department</caption>
+									<thead>
+										<tr>
+											<td></td>
+											<th scope="col">food</th>
+											<th scope="col">auto</th>
+											<th scope="col">household</th>
+											<th scope="col">furniture</th>
+											<th scope="col">kitchen</th>
+											<th scope="col">bath</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">Mary</th>
+											<td>190</td>
+											<td>160</td>
+											<td>40</td>
+											<td>120</td>
+											<td>30</td>
+											<td>70</td>
+										</tr>
+										<tr>
+											<th scope="row">Tom</th>
+											<td>3</td>
+											<td>40</td>
+											<td>30</td>
+											<td>45</td>
+											<td>35</td>
+											<td>49</td>
+										</tr>
+									</tbody>
+								</table>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Data block -->
+					<article class="span4 data-block nested">
+						<div class="data-container">
+							<section>
+								<table data-chart="area">
+									<caption>Employee Sales by Department</caption>
+									<thead>
+										<tr>
+											<td></td>
+											<th scope="col">food</th>
+											<th scope="col">auto</th>
+											<th scope="col">household</th>
+											<th scope="col">furniture</th>
+											<th scope="col">kitchen</th>
+											<th scope="col">bath</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">Mary</th>
+											<td>190</td>
+											<td>160</td>
+											<td>40</td>
+											<td>120</td>
+											<td>30</td>
+											<td>70</td>
+										</tr>
+										<tr>
+											<th scope="row">Tom</th>
+											<td>3</td>
+											<td>40</td>
+											<td>30</td>
+											<td>45</td>
+											<td>35</td>
+											<td>49</td>
+										</tr>
+									</tbody>
+								</table>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example jQuery Flot -->
+					<!-- Data block -->
+					<article class="span12 data-block">
+						<div class="data-container">
+							<header>
+								<h2>jQuery Flot Charts</h2>
+							</header>
+							<section>
+								<p>Flot is a pure Javascript plotting library for jQuery. It produces graphical plots of arbitrary datasets on-the-fly client-side. The focus is on simple usage (all settings are optional), attractive looks and interactive features like zooming and mouse tracking. The plugin works with Internet Explorer 6+, Firefox 2.x+, Safari 3.0+, Opera 9.5+ and Konqueror 4.x+ with the HTML canvas tag (the excanvas Javascript emulation helper is used for IE < 9).</p>
+								<p>More Flot Chart <a href="http://people.iola.dk/olau/flot/examples/" target="_blank">examples</a>.</p>
+								<div id="demo-1" class="flot"></div>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Data block -->
+					<article class="span4 data-block nested">
+						<div class="data-container">
+							<header>
+								<h2>Various graph types</h2>
+							</header>
+							<section>
+								<div id="demo-2" class="flot"></div>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Data block -->
+					<article class="span4 data-block nested">
+						<div class="data-container">
+							<header>
+								<h2>Pie chart</h2>
+							</header>
+							<section>
+								<div id="demo-3" class="flot"></div>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+					<!-- Data block -->
+					<article class="span4 data-block nested">
+						<div class="data-container">
+							<header>
+								<h2>Tooltips and mouse tracking</h2>
+							</header>
+							<section>
+								<div id="demo-4" class="flot"></div>
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+					
+					
+				</div>
+				<!-- /Grid row -->
+			
+			</section>
+			<!-- /Right (content) side -->
+			
+		</div>
+		<!-- /Main page container -->
+		
+		<!-- Scripts -->
+		<script src="js/navigation.js"></script>
+		
+		<!-- Bootstrap scripts -->
+		<!--
+		<script src="js/bootstrap/bootstrap-tooltip.js"></script>
+		<script src="js/bootstrap/bootstrap-dropdown.js"></script>
+		<script src="js/bootstrap/bootstrap-alert.js"></script>
+		<script src="js/bootstrap/bootstrap-collapse.js"></script>
+		<script src="js/bootstrap/bootstrap-transition.js"></script>
+		-->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+		
+		<!-- jQuery Visualize -->
+		<!--[if lte IE 8]>
+			<script language="javascript" type="text/javascript" src="js/plugins/visualize/excanvas.js"></script>
+		<![endif]-->
+		<script src="js/plugins/visualize/jquery.visualize.min.js"></script>
+		<script src="js/plugins/visualize/jquery.visualize.tooltip.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+			
+				$('table').each(function() {
+					var chartType = ''; // Set chart type
+					var chartWidth = $(this).parent().width()*0.9; // Set chart width to 90% of its parent
+					
+					if(chartWidth < 350) {
+						var chartHeight = chartWidth;
+					}else{
+						var chartHeight = chartWidth*0.25;
+					}
+					
+					if ($(this).attr('data-chart')) { // If exists chart-chart attribute
+						chartType = $(this).attr('data-chart'); // Get chart type from data-chart attribute
+					} else {
+						chartType = 'area'; // If data-chart attribute is not set, use 'area' type as default. Options: 'bar', 'area', 'pie', 'line'
+					}
+					
+					if(chartType == 'line' || chartType == 'pie') {
+						$(this).hide().visualize({
+							type: chartType,
+							width: chartWidth,
+							height: chartHeight,
+							colors: ['#ae432e','#77ab13','#088ec8','#f89406','#33363B','#33363b','#b29559','#6bd5b1','#66c9ee'],
+							lineDots: 'double',
+							interaction: true,
+							multiHover: 5,
+							tooltip: true,
+							tooltiphtml: function(data) {
+								var html ='';
+								for(var i=0; i<data.point.length; i++){
+									html += '<p class="tooltip chart_tooltip"><div class="tooltip-inner"><strong>'+data.point[i].value+'</strong> '+data.point[i].yLabels[0]+'</div></p>';
+								}	
+								return html;
+							}
+						});
+					} else {
+						$(this).hide().visualize({
+							type: chartType,
+							width: chartWidth,
+							height: chartHeight,
+							colors: ['#ae432e','#77ab13','#088ec8','#f89406','#33363B','#33363b','#b29559','#6bd5b1','#66c9ee'],
+						});
+					}
+				});
+			
+			});
+		</script>
+		
+		<!-- jQuery Flot Charts -->
+		<!--[if lte IE 8]>
+			<script language="javascript" type="text/javascript" src="js/plugins/flot/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="js/plugins/flot/jquery.flot.js"></script>
+		<script src="js/plugins/flot/jquery.flot.pie.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+			
+				// Demo #2
+				var d1 = [];
+				for (var i = 0; i < 14; i += 0.5)
+					d1.push([i, Math.sin(i)]);
+				
+				var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+				
+				var d3 = [];
+				for (var i = 0; i < 14; i += 0.5)
+					d3.push([i, Math.cos(i)]);
+				
+				var d4 = [];
+				for (var i = 0; i < 14; i += 0.1)
+					d4.push([i, Math.sqrt(i * 10)]);
+				
+				var d5 = [];
+				for (var i = 0; i < 14; i += 0.5)
+					d5.push([i, Math.sqrt(i)]);
+				
+				var d6 = [];
+				for (var i = 0; i < 14; i += 0.5 + Math.random())
+					d6.push([i, Math.sqrt(2*i + Math.sin(i) + 5)]);
+						
+				$.plot($("#demo-2"), [
+					{
+						data: d1,
+						lines: { show: true, fill: true }
+					},
+					{
+						data: d2,
+						bars: { show: true }
+					},
+						{
+					data: d3,
+						points: { show: true }
+					},
+					{
+						data: d4,
+						lines: { show: true }
+					},
+					{
+						data: d5,
+						lines: { show: true },
+						points: { show: true }
+					},
+					{
+						data: d6,
+						lines: { show: true, steps: true }
+					}
+				], {
+					grid: { backgroundColor: '#ffffff' }
+				});
+				
+				// Demo #3
+				var data = [];
+				var series = Math.floor(Math.random()*6)+3;
+				for( var i = 0; i<series; i++){
+					data[i] = { label: (i+1)+"000 &euro;", data: Math.floor(Math.random()*100)+1 }
+				}
+				
+				$.plot($("#demo-3"), data, {
+					series: {
+						pie: {
+							innerRadius: 0.5,
+							show: true
+						}
+					},
+					grid: { backgroundColor: '#ffffff' }
+				});
+				
+				// Demo #4
+				var sin = [], cos = [];
+				for (var i = 0; i < 14; i += 0.5) {
+					sin.push([i, Math.sin(i)]);
+					cos.push([i, Math.cos(i)]);
+				}
+				
+				var plot = $.plot($("#demo-4"),
+					[ { data: sin, label: "sin(x)"}, { data: cos, label: "cos(x)" } ], {
+						series: {
+							lines: { show: true },
+							points: { show: true }
+						},
+						grid: { hoverable: true, clickable: true, backgroundColor: '#ffffff' },
+						yaxis: { min: -1.2, max: 1.2 }
+					});
+				
+				function showTooltip(x, y, contents) {
+					$('<div id="tooltip"><div class="tooltip-inner">' + contents + '</div></div>').css( {
+						position: 'absolute',
+						display: 'none',
+						top: y + 10,
+						left: x + 10
+					}).appendTo("body").fadeIn(200);
+				}
+				
+				var previousPoint = null;
+				$("#demo-4").bind("plothover", function (event, pos, item) {
+					$("#x").text(pos.x.toFixed(2));
+					$("#y").text(pos.y.toFixed(2));
+				
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+				
+								$("#tooltip").remove();
+								var x = item.datapoint[0].toFixed(2),
+									y = item.datapoint[1].toFixed(2);
+				
+								showTooltip(item.pageX, item.pageY,
+								item.series.label + " of " + x + " = " + y);
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;
+						}
+				});
+				
+				$("#demo-4").bind("plotclick", function (event, pos, item) {
+					if (item) {
+						$("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+						plot.highlight(item.series, item.datapoint);
+					}
+				});
+				
+				// Demo #1
+				// we use an inline data source in the example, usually data would be fetched from a server
+				var data = [], totalPoints = 300;
+				function getRandomData() {
+					if (data.length > 0)
+						data = data.slice(1);
+				
+					// do a random walk
+					while (data.length < totalPoints) {
+						var prev = data.length > 0 ? data[data.length - 1] : 50;
+						var y = prev + Math.random() * 10 - 5;
+						if (y < 0)
+							y = 0;
+						if (y > 100)
+							y = 100;
+						data.push(y);
+					}
+				
+					// zip the generated y values with the x values
+					var res = [];
+					for (var i = 0; i < data.length; ++i)
+						res.push([i, data[i]])
+					return res;
+				}
+				
+				// setup control widget
+				var updateInterval = 30;
+				$("#updateInterval").val(updateInterval).change(function () {
+					var v = $(this).val();
+					if (v && !isNaN(+v)) {
+						updateInterval = +v;
+					if (updateInterval < 1)
+						updateInterval = 1;
+					if (updateInterval > 2000)
+						updateInterval = 2000;
+					$(this).val("" + updateInterval);
+					}
+				});
+				
+				// setup plot
+				var options = {
+					series: { shadowSize: 0, color: '#389abe' }, // drawing is faster without shadows
+					yaxis: { min: 0, max: 100 },
+					xaxis: { show: false },
+					grid: { backgroundColor: '#ffffff' }
+				};
+				var plot = $.plot($("#demo-1"), [ getRandomData() ], options);
+				
+				function update() {
+					plot.setData([ getRandomData() ]);
+					// since the axes don't change, we don't need to call plot.setupGrid()
+					plot.draw();
+					setTimeout(update, updateInterval);
+				}
+				
+				update();
+			
+			});
+		</script>
+		
+	</body>
+
+<!-- Mirrored from template.walkingpixels.com/chromatron/charts.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:29:57 GMT -->
+</html>

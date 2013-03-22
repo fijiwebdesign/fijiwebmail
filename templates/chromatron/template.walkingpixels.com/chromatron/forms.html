@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
+<!-- Mirrored from template.walkingpixels.com/chromatron/forms.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:29:35 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>Form elements | Chromatron HTML5 Admin Backend</title>
+		<meta name="description" content="">
+		<meta name="author" content="Walking Pixels | www.walkingpixels.com">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		
+		<!-- jQuery TagsInput Styles -->
+		<link rel='stylesheet' type='text/css' href='css/plugins/jquery.tagsinput.css'>
+		
+		<!-- jQuery jWYSIWYG Styles -->
+		<link rel='stylesheet' type='text/css' href='css/plugins/jquery.jwysiwyg.css'>
+		
+		<!-- Bootstrap wysihtml5 Styles -->
+		<link rel='stylesheet' type='text/css' href='css/plugins/bootstrap-wysihtml5.css'>
+		
+		<!-- Styles -->
+		<link rel='stylesheet' type='text/css' href='css/chromatron-dark.css'>
+		
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="img/icons/favicon.html">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.html">
+		
+		<!-- JS Libs -->
+		<script src="../../ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="js/libs/jquery.js"><\/script>')</script>
+		<script src="js/libs/modernizr.js"></script>
+		<script src="js/libs/selectivizr.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				
+				// Tooltips for nav badge
+				$('.main-navigation .badge').tooltip({
+					placement: 'bottom'
+				});
+				
+				// Tooltips for widgets
+				$('.widget [title]').tooltip({
+					placement: 'left'
+				});
+				
+				// Close button for widgets
+				$('.widget').alert();
+				
+				// Remove tooltip when widget is closed
+				$('.widget').bind('close', function () {
+					$(this).find('.close').tooltip('destroy');
+				})
+				
+				// Tabs
+				$('.demoTabs a').click(function (e) {
+					e.preventDefault();
+					$(this).tab('show');
+				})
+				
+			});
+		</script>
+		
+		<script type="text/javascript">
+			//var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-2"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
+		</script>
+	</head>
+	<body class="fixed-layout">
+		
+		<!-- Main page container -->
+		<div class="container">
+		
+			<!-- Left (navigation) side -->
+			<section class="navigation-block">
+			
+				<!-- Main page header -->
+				<header>
+				
+					<!-- Main page logo -->
+					<h1><a class="brand" href="login.html" title="Back to Homepage">Chromatron Responsive Admin Backend built with Twitter Bootstrap</a></h1>
+					
+					<!-- Main page headline -->
+					<p>A cathode ray tube awesomeness</p>
+					
+				</header>
+				<!-- /Main page header -->
+				
+				<!-- User profile -->
+				<section class="user-profile">
+					<figure>
+						<img alt="John Pixel avatar" src="http://placekitten.com/50/50">
+						<figcaption>
+							<strong><a href="#" class="">John Pixel</a></strong>
+							<em>Administrator</em>
+							<ul>
+								<li><a class="btn btn-primary btn-flat" href="#" title="View www.example.com">view website</a></li>
+								<li><a class="btn btn-primary btn-flat" href="#" title="Securely logout from application">logout</a></li>
+							</ul>
+						</figcaption>
+					</figure>
+				</section>
+				<!-- /User profile -->
+				
+				<!-- Responsive navigation -->
+				<a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-application-form"></span> Forms</a>
+				
+				<!-- Main navigation -->
+				<nav class="main-navigation nav-collapse" role="navigation">
+					<ul>
+						<li><a href="index.html" class="no-submenu"><span class="fam-house"></span>Dashboard</a></li>
+						<li class="current"><a href="forms.html" class="no-submenu"><span class="fam-application-form"></span>Forms</a></li>
+						<li><a href="charts.html" class="no-submenu"><span class="fam-chart-line"></span>Charts</a></li>
+						<li><a href="tables.html" class="no-submenu"><span class="fam-application-view-columns"></span>Tables</a></li>
+						<li>
+							<a href="#"><span class="fam-picture"></span>Gallery<span class="badge" title="5 new image uploaded">5</span></a>
+							<ul>
+								<li><a href="gallery.html">Car Gallery</a></li>
+								<li><a href="gallery.html">Food Gallery</a></li>
+								<li><a href="gallery.html">Art Gallery</a></li>
+								<li><a href="gallery.html">Animal Gallery</a></li>
+								<li><a href="gallery.html">Super long name to see how it collapse</a></li>
+							</ul>
+						</li>
+						<li><a href="file-explorer.html" class="no-submenu"><span class="fam-briefcase"></span>File explorer</a></li>
+						<li><a href="calendar.html" class="no-submenu"><span class="fam-calendar-view-day"></span>Calendar<span class="badge" title="27 tasks this week">27</span></a></li>
+						<li><a href="ui-buttons.html" class="no-submenu"><span class="fam-rosette"></span>UI & Buttons</a></li>
+						<li><a href="typo.html" class="no-submenu"><span class="fam-text-padding-left"></span>Typography</a></li>
+						<li><a href="grid.html" class="no-submenu"><span class="fam-cog"></span>Grid</a></li>
+						<li>
+							<a href="#"><span class="fam-heart"></span>Goodies</a>
+							<ul>
+								<li><a href="goodies.html">Goodies</a></li>
+								<li><a href="401.html">Error 401</a></li>
+								<li><a href="403.html">Error 403</a></li>
+								<li><a href="404.html">Error 404</a></li>
+								<li><a href="500.html">Error 500</a></li>
+								<li><a href="503.html">Error 503</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+				<!-- /Main navigation -->
+				
+				<!-- Side note -->
+				<section class="side-note">
+					<h2>Clean side note</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus.</p>
+					<p class="separator">Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+					<p class="separator">Phasellus aliquam malesuada blandit. Donec adipiscing sem erat.</p>
+					<a class="btn btn-flat btn-primary pull-right" href="#" title="This is my title!">Read more</a>
+				</section>
+				<!-- /Side note -->
+				
+				<!-- Side note with separator -->
+				<section class="side-note separator">
+					<h2>Side note with separator</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis.</p>
+					<ul>
+						<li><strong>Sed pharetra placerat</strong></li>
+						<li><em>Phasellus aliquam malesuada</em></li>
+						<li>Maecenas id augue</li>
+						<li>Consectetur <a href="#">adipiscing</a> elit</li>
+						<li>Lorem ipsum dolor</li>
+					</ul>
+				</section>
+				<!-- /Side note with separator -->
+				
+			</section>
+			<!-- /Left (navigation) side -->
+			
+			<!-- Right (content) side -->
+			<section class="content-block" role="main">
+			
+				<!-- Widget container -->
+				<div class="widgets-container">
+				
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget">&times;</a>
+						<span>increase</span>
+						<p><strong>+35,18<sup>%</sup></strong> +2489 new visitors</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in decrease">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<span>decrease</span>
+						<p><strong>-12,50<sup>%</sup></strong> -311 new orders</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget" >&times;</a>
+						<span>7</span>
+						<p><strong>Tasks</strong> +3 New Tasks</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget Box -->
+					<div class="widget alert fade in text-only">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<p><strong>Text Only App</strong> +29 Lorem Ipsum</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Add new widget box -->
+					<div class="widget add-new-widget">
+						<a href="#">
+							<strong><span class="awe-plus-sign"></span> Add Widget</strong>
+						</a>
+					</div>
+					<!-- /Add new widget box -->
+					
+				</div>
+				<!-- /Widget container -->
+				
+				<!-- Breadcrumbs -->
+				<ul class="breadcrumb">
+					<li><a href="#"><span class="awe-home"></span> Home</a></li>
+					<li><a href="#">Chromatron template</a></li>
+					<li class="active">Form elements</li>
+				</ul>
+				<!-- Breadcrumbs -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Data block -->
+					<article class="span12 data-block nested">
+						<div class="data-container">
+							<header>
+								<h2>Form elements</h2>
+								<ul class="data-header-actions tabs">
+									<li class="demoTabs active"><a href="#horizontal">Horizontal</a></li>
+									<li class="demoTabs"><a href="#vertical">Vertical</a></li>
+									<li class="demoTabs"><a href="#advanced">Advanced forms</a></li>
+								</ul>
+							</header>
+							<section class="tab-content">
+							
+								<!-- Example horizontal forms -->
+								<!-- Tab #horizontal -->
+								<div class="tab-pane active" id="horizontal">
+								
+									<form class="form-horizontal">
+										<fieldset>
+											<legend>Horizontal form</legend>
+											<div class="control-group">
+												<label class="control-label" for="input">Text input</label>
+												<div class="controls">
+													<input id="input" class="input-xlarge" type="text">
+													<p class="help-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="optionsCheckbox">Checkbox</label>
+												<div class="controls">
+													<label class="checkbox">
+														<input id="optionsCheckbox" type="checkbox" value="option1">
+														Curabitur vehicula porttitor suscipit
+													</label>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="optionsRadios">Radio</label>
+												<div class="controls">
+													<label class="radio">
+														<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+														Option one is this and that—be sure to include why it's great
+													</label>
+													<label class="radio">
+														<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+														Option two can be something else and selecting it will deselect option one
+													</label>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="inlineCheckbox">Inline checkbox</label>
+												<div class="controls">
+													<label class="checkbox inline">
+														<input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+													</label>
+													<label class="checkbox inline">
+														<input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+													</label>
+													<label class="checkbox inline">
+														<input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+													</label>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="select">Select list</label>
+												<div class="controls">
+													<select id="select">
+														<option>Google</option>
+														<option>Apple</option>
+														<option>Samsung</option>
+														<option>Intel</option>
+														<option>Microsoft</option>
+														<option>Facebook</option>
+													</select>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="selectMultiple">Multiple select list</label>
+												<div class="controls">
+													<select id="selectMultiple" multiple="multiple">
+														<option>Google</option>
+														<option>Apple</option>
+														<option>Samsung</option>
+														<option>Intel</option>
+														<option>Microsoft</option>
+														<option>Facebook</option>
+													</select>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="textarea">Textarea</label>
+												<div class="controls">
+													<textarea id="textarea" class="input-xlarge" rows="5"></textarea>
+												</div>
+											</div>
+											<div class="form-actions">
+												<button class="btn btn-alt btn-large btn-primary" type="submit">Save changes</button>
+											</div>
+										</fieldset>
+									</form>
+								
+								</div>
+								<!-- Tab #horizontal -->
+								
+								<!-- Example vertical forms -->
+								<!-- Tab #vertical -->
+								<div class="tab-pane" id="vertical">
+								
+									<form>
+										<fieldset>
+											<legend>Vertical form</legend>
+											<div class="control-group">
+												<label class="control-label" for="input">Text input</label>
+												<div class="controls">
+													<input id="input" class="input-xlarge" type="text">
+													<p class="help-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="optionsCheckbox">Checkbox</label>
+												<div class="controls">
+													<label class="checkbox">
+														<input id="optionsCheckbox" type="checkbox" value="option1">
+														Curabitur vehicula porttitor suscipit
+													</label>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="optionsRadios">Radio</label>
+												<div class="controls">
+													<label class="radio">
+														<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+														Option one is this and that—be sure to include why it's great
+													</label>
+													<label class="radio">
+														<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+														Option two can be something else and selecting it will deselect option one
+													</label>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="inlineCheckbox">Inline checkbox</label>
+												<div class="controls">
+													<label class="checkbox inline">
+														<input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+													</label>
+													<label class="checkbox inline">
+														<input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+													</label>
+													<label class="checkbox inline">
+														<input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+													</label>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="select">Select list</label>
+												<div class="controls">
+													<select id="select">
+														<option>Google</option>
+														<option>Apple</option>
+														<option>Samsung</option>
+														<option>Intel</option>
+														<option>Microsoft</option>
+														<option>Facebook</option>
+													</select>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="selectMultiple">Multiple select list</label>
+												<div class="controls">
+													<select id="selectMultiple" multiple="multiple">
+														<option>Google</option>
+														<option>Apple</option>
+														<option>Samsung</option>
+														<option>Intel</option>
+														<option>Microsoft</option>
+														<option>Facebook</option>
+													</select>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="textarea">Textarea</label>
+												<div class="controls">
+													<textarea id="textarea" class="input-xlarge" rows="5"></textarea>
+												</div>
+											</div>
+											<div class="form-actions">
+												<button class="btn btn-alt btn-large btn-primary" type="submit">Save changes</button>
+											</div>
+										</fieldset>
+									</form>
+								
+								</div>
+								<!-- Tab #vertical -->
+								
+								<!-- Example advanced forms -->
+								<!-- Tab #advanced -->
+								<div class="tab-pane" id="advanced">
+								
+									<!-- Grid row -->
+									<div class="row-fluid">
+										
+										<!-- Example search forms -->
+										<div class="span6">
+											<h3>Search form</h3>
+											<p>Add <code>.form-search</code> to the form and <code>.search-query</code> to the <code>input</code>.</p>
+											<form class="form-search well">
+												<div class="control-group">
+													<div class="controls">
+														<input class="search-query" type="text">
+														<button class="btn" type="submit">Search</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										
+										<!-- Example inline forms -->
+										<div class="span6">
+											<h3>Inline form</h3>
+											<p>Add <code>.form-inline</code> for vertical alignment and spacing of form controls.</p>
+											<form class="form-inline well">
+												<div class="control-group">
+													<div class="controls">
+														<input class="input-small" type="text" placeholder="Email">
+														<input class="input-small" type="password" placeholder="Password">
+														<label class="checkbox">
+															<input type="checkbox">
+															Remember me
+														</label>
+														<button class="btn" type="submit">Sign in</button>
+													</div>
+												</div>
+											</form>
+										</div>
+										
+									</div>
+									<!-- /Grid row -->
+									
+									<!-- Grid row -->
+									<div class="row-fluid">
+									
+										<!-- jQuery jWYSIWYG -->
+										<div class="span12">
+											<h2>jQuery jWYSIWYG <small>Classic WYSIWYG editor</small></h2>
+											<p>This jquery plugin is an inline content editor to allow editing rich HTML content on the fly. With a small file size less than 26Kb total and only 18Kb of code, the main concept is to keep it simple, not all users need font coloring or create tables, just the basic.</p>
+											<form>
+												<fieldset>
+													<legend>Textarea with jWYSIWYG editor</legend>
+													<div class="control-group">
+														<div class="controls">
+															<textarea id="textarea3" class="wysiwyg" rows="8"></textarea>
+														</div>
+													</div>
+													<div class="form-actions">
+														<button class="btn btn-primary btn-large" type="submit">Save</button>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										
+									</div>
+									<!-- /Grid row -->
+									
+									<!-- Grid row -->
+									<div class="row-fluid">
+									
+										<!-- Wysihtml5 -->
+										<div class="span12">
+											<h2>Wysihtml5 <small>Simple wysiwyg editors</small></h2>
+											<p>Bootstrap-wysihtml5 is a javascript plugin that makes it easy to create simple, beautiful wysiwyg editors with the help of <a href="https://github.com/xing/wysihtml5" target="_blank">wysihtml5</a>.</p>
+											<form>
+												<fieldset>
+													<legend>Textarea with wysihtml5 editor</legend>
+													<div class="control-group">
+														<div class="controls">
+															<textarea id="textarea4" class="wysihtml5" placeholder="Enter text&hellip;" rows="8"></textarea>
+														</div>
+													</div>
+													<div class="form-actions">
+														<button class="btn btn-alt btn-primary btn-large" type="submit">Save</button>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										
+									</div>
+									<!-- /Grid row -->
+									
+									<!-- Grid row -->
+									<div class="row-fluid">
+									
+										<!-- Colorpicker -->
+										<div class="span4">
+											<h2>Color picker</h2>
+											<p>Simple color picker for Bootstrap framework. Check out the <a href="http://www.eyecon.ro/bootstrap-colorpicker/" target="_blank">official page</a> for more options.</p>
+											<form>
+												<fieldset>
+													<div class="control-group">
+														<div class="controls">
+															<div class="input-append" data-color="rgb(255, 146, 180)" data-color-format="rgb">
+																<input type="text" class="colorpicker input-small" value=""><span class="add-on"><i class="colorpicker-preview" style="background-color: rgb(255, 146, 180)"></i></span>
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										
+										<!-- Datepicker -->
+										<div class="span4">
+											<h2>Date picker</h2>
+											<p>Simple date picker by the same author. Check out the <a href="http://www.eyecon.ro/bootstrap-datepicker/" target="_blank">official page</a> for more options and details.</p>
+											<form>
+												<fieldset>
+													<div class="control-group">
+														<div class="controls">
+															<div class="input-append">
+																<input class="datepicker input-small" value="08/06/2012" type="text"><span class="add-on"><i class="awe-calendar"></i></span>
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										
+										<!-- jQuery TagsInput -->
+										<div class="span4">
+											<h2>jQuery TagsInput</h2>
+											<p>This plugin will turn your boring tag list into a magical input that turns each tag into a style-able object with its own delete link.</p>
+											<form>
+												<fieldset>
+													<div class="control-group">
+														<div class="controls">
+															<input id="inputTag" class="tagsinput" type="text" value="foo,bar,var">
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										
+									</div>
+									<!-- /Grid row -->
+									
+								</div>
+								<!-- Tab #advanced -->
+								
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Appended and prepended add-ons</h2>
+							</header>
+							<section>
+								<form class="form-inline">
+									<div class="control-group">
+										<label class="control-label" for="prependedInput">Prepended add-on</label>
+										<div class="form-controls">
+											<div class="input-prepend">
+												<span class="add-on">password</span><input id="prependedInput" type="password">
+											</div>
+											<p class="help-block">This is block note</p>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label" for="appendedInput">Appended add-on</label>
+										<div class="form-controls">
+											<div class="input-append">
+												<input id="appendedInput" type="text"><span class="add-on">&euro;</span>
+											</div>
+											<span class="note-inline">This is inline note</span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label" for="appendedPrependedInput">Appended and prepended add-ons</label>
+										<div class="form-controls">
+											<div class="input-prepend input-append">
+												<span class="add-on">192.</span><input id="appendedPrependedInput" type="text"><span class="add-on">.255</span>
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="form-controls">
+											<div class="input-prepend input-append">
+												<span class="add-on">IPv4:</span><input id="appendedPrependedInput" class="span2" type="text"><span class="add-on">.168.</span><input id="appendedPrependedInput" class="span2" type="text"><span class="add-on">.255</span>
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="form-controls">
+											<div class="input-append">
+												<input id="appendedPrependedInput" type="text"><button class="btn" type="button">Do it now!</button>
+											</div>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="form-controls">
+											<div class="input-prepend input-append">
+												<span class="add-on">I would like to earn </span><input id="appendedPrependedInput" class="span2" type="text" placeholder="1 200"><button class="btn" type="button">$</button><span class="add-on">per month</span>
+											</div>
+										</div>
+									</div>
+								</form>
+								
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+				
+					<!-- Data block -->
+					<article class="span6 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Special form styling</h2>
+							</header>
+							<section>
+								
+								<form class="form-inline">
+									<fieldset>
+										<div class="control-group">
+											<label class="control-label" for="inputMask">Input mask</label>
+											<div class="controls">
+												<input type="text" data-mask="999-99-999-9999-9">
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label">Uneditable input</label>
+											<div class="form-controls">
+												<span class="uneditable-input">Uneditable input is text masked as input</span>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="disabledInput">Disabled input</label>
+											<div class="form-controls">
+												<input id="disabledInput" class="disabled" type="text" placeholder="Disabled input" disabled>
+											</div>
+										</div>
+										<div class="control-group warning">
+											<label class="control-label" for="inputWarning">Input with warning</label>
+											<div class="form-controls">
+												<input id="inputWarning" type="text">
+												<span class="help-block">This is warning message</span>
+											</div>
+										</div>
+										<div class="control-group error">
+											<label class="control-label" for="inputError">Input with error</label>
+											<div class="form-controls">
+												<input id="inputError" type="text">
+												<span class="help-block">This is error message</span>
+											</div>
+										</div>
+										<div class="control-group success">
+											<label class="control-label" for="inputSuccess">Input with success</label>
+											<div class="form-controls">
+												<input id="inputSuccess" type="text">
+												<span class="help-block">This is success message</span>
+											</div>
+										</div>
+									</fieldset>
+								</form>
+								
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Data block -->
+					<article class="span12 data-block">
+						<div class="data-container">
+							<header>
+								<h2>File & Image input</h2>
+							</header>
+							<section>
+								
+								<!-- Bootstrap file upload plugin -->
+								<form>
+									<fieldset>
+
+										<div class="control-group">
+											<label class="control-label" for="fileInput">File input</label>
+											<div class="controls">
+												<div class="fileupload fileupload-new" data-provides="fileupload">
+													<div class="input-append">
+														<div class="uneditable-input">
+															<i class="icon-file fileupload-exists"></i>
+															<span class="fileupload-preview"></span>
+														</div>
+														<span class="btn btn-alt btn-file">
+																<span class="fileupload-new">Select file</span>
+																<span class="fileupload-exists">Change</span>
+																<input type="file" />
+														</span>
+														<a href="#" class="btn btn-alt btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="fileInput">Image upload widgets</label>
+											<p>When uploading an image, it's possible to show a thumbnail instead of the filename. Size of thumbnail can be adjusted by adding class <code>fileupload-large</code> or <code>fileupload-small</code>. Use class <code>raw</code> for thumbnail without borders.</p>
+
+											<div class="row-fluid">
+												<div class="span6">
+													<div class="fileupload fileupload-new" data-provides="fileupload">
+														<h4>Fixed size thumbnail preview</h4>
+														<div class="fileupload-preview fileupload-large thumbnail"></div>
+														<div>
+															<span class="btn btn-alt btn-file">
+																<span class="fileupload-new">Select image</span>
+																<span class="fileupload-exists">Change</span>
+																<input type="file" />
+															</span>
+															<a href="#" class="btn btn-alt btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+														</div>
+													</div>
+
+													<div class="fileupload fileupload-new" data-provides="fileupload">
+														<div class="fileupload-new fileupload-small thumbnail"><img src="img/sample_content/sample-image-50x50.png" alt="Upload preview"></div>
+														<div class="fileupload-preview fileupload-exists fileupload-small thumbnail"></div>
+														<span class="btn btn-alt btn-file">
+															<span class="fileupload-new">Select image</span>
+															<span class="fileupload-exists">Change</span>
+															<input type="file">
+														</span>
+														<a href="#" class="btn btn-alt btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+													</div>
+												</div>
+
+												<div class="span6">
+													<div class="fileupload fileupload-new" data-provides="fileupload">
+														<h4>Flexible thumbnail preview</h4>
+														<div class="fileupload-new fileupload-large thumbnail"><img src="img/sample_content/sample-image-250x150.png" alt="Upload preview"></div>
+														<div class="fileupload-preview fileupload-exists fileupload-large flexible thumbnail"></div>
+														<div>
+															<span class="btn btn-alt btn-file">
+																<span class="fileupload-new">Select image</span>
+																<span class="fileupload-exists">Change</span>
+																<input type="file">
+															</span>
+															<a class="btn btn-alt btn-danger fileupload-exists" data-dismiss="fileupload" href="#">Remove</a>
+														</div>
+													</div>
+
+													<div class="fileupload fileupload-new" data-provides="fileupload">
+														<div class="fileupload-new fileupload-small thumbnail"><img src="img/sample_content/sample-image-50x50.png" alt="Upload preview"></div>
+														<div class="fileupload-preview fileupload-exists fileupload-small flexible raw thumbnail"></div>
+														<span class="btn btn-alt btn-file">
+															<span class="fileupload-new">Select image</span>
+															<span class="fileupload-exists">Change</span>
+															<input type="file">
+														</span>
+														<a href="#" class="btn btn-alt btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</fieldset>
+								</form>
+								<!-- /Bootstrap file upload plugin -->
+
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Data block -->
+					<article class="span12 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Form elements sizing</h2>
+							</header>
+							<section>
+							
+								<form class="form-inline">
+									<fieldset>
+										<div class="control-group">
+											<div class="form-controls demo">
+												<input class="input-mini" type="text" placeholder=".input-mini">
+												<input class="input-small" type="text" placeholder=".input-small">
+												<input class="input-medium" type="text" placeholder=".input-medium">
+												<input class="span1" type="text" placeholder=".span1">
+												<input class="span2" type="text" placeholder=".span2">
+												<input class="span3" type="text" placeholder=".span3">
+												<input class="span4" type="text" placeholder=".span4">
+												<input class="span5" type="text" placeholder=".span5">
+												<input class="span6" type="text" placeholder=".span6">
+												<input class="span7" type="text" placeholder=".span7">
+												<input class="span8" type="text" placeholder=".span8">
+												<input class="span9" type="text" placeholder=".span9">
+												<input class="span10" type="text" placeholder=".span10">
+												<select class="span1">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span2">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span3">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span4">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span5">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span6">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span7">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span8">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span9">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+												<select class="span10">
+													<option>Google</option>
+													<option>PayPal</option>
+													<option>Microsoft</option>
+													<option>Apple</option>
+													<option>Yahoo</option>
+												</select>
+											</div>
+										</div>
+									</fieldset>
+								</form>
+							
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+			
+			</section>
+			<!-- /Right (content) side -->
+			
+		</div>
+		<!-- /Main page container -->
+		
+		<!-- Scripts -->
+		<script src="js/navigation.js"></script>
+		
+		<!-- Bootstrap scripts -->
+		<!--
+		<script src="js/bootstrap/bootstrap-tooltip.js"></script>
+		<script src="js/bootstrap/bootstrap-dropdown.js"></script>
+		<script src="js/bootstrap/bootstrap-tab.js"></script>
+		<script src="js/bootstrap/bootstrap-button.js"></script>
+		<script src="js/bootstrap/bootstrap-alert.js"></script>
+		<script src="js/bootstrap/bootstrap-popover.js"></script>
+		<script src="js/bootstrap/bootstrap-collapse.js"></script>
+		<script src="js/bootstrap/bootstrap-transition.js"></script>
+		-->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+
+		<!-- Fileupload and Inputmask plugin -->
+		<script src="js/plugins/fileupload/bootstrap-fileupload.js"></script>
+		<script src="js/plugins/inputmask/bootstrap-inputmask.js"></script>
+
+		<!-- jQuery TagsInput -->
+		<script src="js/plugins/tagsInput/jquery.tagsinput.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+			
+				$('.tagsinput').tagsInput();
+			
+			});
+		</script>
+		
+		<!-- jQuery jWYSIWYG -->
+		<script src="js/plugins/jWYSIWYG/jquery.wysiwyg.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				
+				$('.wysiwyg').wysiwyg({
+					controls: {
+						bold          : { visible : true },
+						italic        : { visible : true },
+						underline     : { visible : true },
+						strikeThrough : { visible : true },
+						
+						justifyLeft   : { visible : true },
+						justifyCenter : { visible : true },
+						justifyRight  : { visible : true },
+						justifyFull   : { visible : true },
+			
+						indent  : { visible : true },
+						outdent : { visible : true },
+			
+						subscript   : { visible : true },
+						superscript : { visible : true },
+						
+						undo : { visible : true },
+						redo : { visible : true },
+						
+						insertOrderedList    : { visible : true },
+						insertUnorderedList  : { visible : true },
+						insertHorizontalRule : { visible : true },
+						
+						cut   : { visible : true },
+						copy  : { visible : true },
+						paste : { visible : true }
+					},
+					events: {
+						click: function(event) {
+							if ($("#click-inform:checked").length > 0) {
+								event.preventDefault();
+								alert("You have clicked jWysiwyg content!");
+							}
+						}
+					}
+				});
+				
+			});
+		</script>
+		
+		<!-- Wysihtml5 -->
+		<script src="js/plugins/wysihtml5/wysihtml5-0.3.0.js"></script>
+		<script src="js/plugins/wysihtml5/bootstrap-wysihtml5.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				
+				$('.wysihtml5').wysihtml5();
+				
+			});
+		</script>
+		
+		<!-- Colorpicker -->
+		<script src="js/plugins/colorpicker/bootstrap-colorpicker.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				
+				var preview = $('.colorpicker-preview')[0].style;
+				$('.colorpicker').colorpicker().on('changeColor', function(ev){
+					preview.backgroundColor = ev.color.toHex();
+				});
+				
+			});
+		</script>
+		
+		<!-- Colorpicker -->
+		<script src="js/plugins/datepicker/bootstrap-datepicker.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				
+				$('.datepicker').datepicker({
+					"autoclose": true
+				});
+				
+			});
+		</script>
+
+	</body>
+
+<!-- Mirrored from template.walkingpixels.com/chromatron/forms.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:29:49 GMT -->
+</html>

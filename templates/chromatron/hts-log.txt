@@ -1,0 +1,28 @@
+HTTrack3.46+htsswf+htsjava launched on Thu, 27 Dec 2012 04:28:39 at http://template.walkingpixels.com/chromatron/index.html +*.png +*.gif +*.jpg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2010], %s -->" -%l "en, en, *" http://template.walkingpixels.com/chromatron/index.html -O1 "C:\My Web Sites\chromatron" +*.png +*.gif +*.jpg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+04:29:34	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/img/icons/favicon.ico (from template.walkingpixels.com/chromatron/index.html)
+04:29:34	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/img/icons/apple-touch-icon-114-precomposed.png (from template.walkingpixels.com/chromatron/index.html)
+04:29:34	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/img/icons/apple-touch-icon-72-precomposed.png (from template.walkingpixels.com/chromatron/index.html)
+04:29:34	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/img/icons/apple-touch-icon-57-precomposed.png (from template.walkingpixels.com/chromatron/index.html)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/pre.html (from template.walkingpixels.com/chromatron/ui-buttons.html)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/example@domain.com (from template.walkingpixels.com/chromatron/401.html)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/plugins/jquery.wysiwyg.bg.png (from template.walkingpixels.com/chromatron/css/plugins/jquery.jwysiwyg.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/plugins/jquery.wysiwyg.gif (from template.walkingpixels.com/chromatron/css/plugins/jquery.jwysiwyg.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/buttons.png (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/buttons-disabled.png (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/transp50.png (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/backgrounds.gif (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/delete.gif (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/error.gif (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/done.gif (from template.walkingpixels.com/chromatron/css/plugins/jquery.plupload.queue.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/plupload.png (from template.walkingpixels.com/chromatron/css/plugins/jquery.ui.plupload.css)
+04:30:25	Error: 	"Not Found" (404) at link template.walkingpixels.com/chromatron/css/img/plupload-bw.png (from template.walkingpixels.com/chromatron/css/plugins/jquery.ui.plupload.css)
+
+HTTrack Website Copier/3.46 mirror complete in 1 minutes 46 seconds : 121 links scanned, 103 files written (3334450 bytes overall) [3366693 bytes received at 31761 bytes/sec]
+(17 errors, 0 warnings, 0 messages)

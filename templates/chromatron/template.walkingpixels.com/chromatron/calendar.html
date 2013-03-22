@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
+<!-- Mirrored from template.walkingpixels.com/chromatron/calendar.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:30:03 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>Calendar | Chromatron HTML5 Admin Backend</title>
+		<meta name="description" content="">
+		<meta name="author" content="Walking Pixels | www.walkingpixels.com">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- jQuery FullCalendar Styles -->
+		<link rel='stylesheet' type='text/css' href='css/plugins/jquery.fullcalendar.css'>
+		
+		<!-- Styles -->
+		<link rel='stylesheet' type='text/css' href='css/chromatron-green.css'>
+		
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="img/icons/favicon.html">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.html">
+		<link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.html">
+		
+		<!-- JS Libs -->
+		<script src="../../ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="js/libs/jquery.js"><\/script>')</script>
+		<script src="js/libs/modernizr.js"></script>
+		<script src="js/libs/selectivizr.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				
+				// Tooltips for nav badge
+				$('.main-navigation .badge').tooltip({
+					placement: 'bottom'
+				});
+				
+				// Tooltips for widgets
+				$('.widget [title]').tooltip({
+					placement: 'left'
+				});
+				
+				// Close button for widgets
+				$('.widget').alert();
+				
+				// Remove tooltip when widget is closed
+				$('.widget').bind('close', function () {
+					$(this).find('.close').tooltip('destroy');
+				})
+				
+				// Tabs
+				$('.demoTabs a').click(function (e) {
+					e.preventDefault();
+					$(this).tab('show');
+					$('.fullcalendar-demo, .fullcalendar-gcal').fullCalendar('render'); // Refresh jQuery FullCalendar for hidden tabs
+				})
+				
+			});
+		</script>
+		
+		<script type="text/javascript">
+			//var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-2"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
+		</script>
+	</head>
+	<body class="fixed-layout">
+	
+		<!-- Main page container -->
+		<div class="container">
+		
+			<!-- Left (navigation) side -->
+			<section class="navigation-block">
+			
+				<!-- Main page header -->
+				<header>
+				
+					<!-- Main page logo -->
+					<h1><a class="brand" href="login.html" title="Back to Homepage">Chromatron Responsive Admin Backend built with Twitter Bootstrap</a></h1>
+					
+					<!-- Main page headline -->
+					<p>A cathode ray tube awesomeness</p>
+					
+				</header>
+				<!-- /Main page header -->
+				
+				<!-- User profile -->
+				<section class="user-profile">
+					<figure>
+						<img alt="John Pixel avatar" src="http://placekitten.com/50/50">
+						<figcaption>
+							<strong><a href="#" class="">John Pixel</a></strong>
+							<em>Administrator</em>
+							<ul>
+								<li><a class="btn btn-primary btn-flat" href="#" title="View www.example.com">view website</a></li>
+								<li><a class="btn btn-primary btn-flat" href="#" title="Securely logout from application">logout</a></li>
+							</ul>
+						</figcaption>
+					</figure>
+				</section>
+				<!-- /User profile -->
+				
+				<!-- Responsive navigation -->
+				<a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-calendar-view-day"></span> Calendar</a>
+				
+				<!-- Main navigation -->
+				<nav class="main-navigation nav-collapse" role="navigation">
+					<ul>
+						<li><a href="index.html" class="no-submenu"><span class="fam-house"></span>Dashboard</a></li>
+						<li><a href="forms.html" class="no-submenu"><span class="fam-application-form"></span>Forms</a></li>
+						<li><a href="charts.html" class="no-submenu"><span class="fam-chart-line"></span>Charts</a></li>
+						<li><a href="tables.html" class="no-submenu"><span class="fam-application-view-columns"></span>Tables</a></li>
+						<li>
+							<a href="#"><span class="fam-picture"></span>Gallery<span class="badge" title="5 new image uploaded">5</span></a>
+							<ul>
+								<li><a href="gallery.html">Car Gallery</a></li>
+								<li><a href="gallery.html">Food Gallery</a></li>
+								<li><a href="gallery.html">Art Gallery</a></li>
+								<li><a href="gallery.html">Animal Gallery</a></li>
+								<li><a href="gallery.html">Super long name to see how it collapse</a></li>
+							</ul>
+						</li>
+						<li><a href="file-explorer.html" class="no-submenu"><span class="fam-briefcase"></span>File explorer</a></li>
+						<li class="current"><a href="calendar.html" class="no-submenu"><span class="fam-calendar-view-day"></span>Calendar<span class="badge" title="27 tasks this week">27</span></a></li>
+						<li><a href="ui-buttons.html" class="no-submenu"><span class="fam-rosette"></span>UI & Buttons</a></li>
+						<li><a href="typo.html" class="no-submenu"><span class="fam-text-padding-left"></span>Typography</a></li>
+						<li><a href="grid.html" class="no-submenu"><span class="fam-cog"></span>Grid</a></li>
+						<li>
+							<a href="#"><span class="fam-heart"></span>Goodies</a>
+							<ul>
+								<li><a href="goodies.html">Goodies</a></li>
+								<li><a href="401.html">Error 401</a></li>
+								<li><a href="403.html">Error 403</a></li>
+								<li><a href="404.html">Error 404</a></li>
+								<li><a href="500.html">Error 500</a></li>
+								<li><a href="503.html">Error 503</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+				<!-- /Main navigation -->
+				
+				<!-- Side note -->
+				<section class="side-note">
+					<div class="thumbnail">
+						<img src="http://placekitten.com/221/120" alt="Sample Image">	
+					</div>
+					<h2>Side note with image</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et dignissim metus. Maecenas id augue ac metus tempus aliquam. Sed pharetra placerat est suscipit sagittis. Phasellus aliquam malesuada blandit. Donec adipiscing sem erat.</p>
+					<a class="btn pull-right" href="#" title="This is my title!">Event details</a>
+				</section>
+				<!-- /Side note -->
+				
+			</section>
+			<!-- /Left (navigation) side -->
+			
+			<!-- Right (content) side -->
+			<section class="content-block" role="main">
+			
+				<!-- Widget container -->
+				<div class="widgets-container">
+				
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget">&times;</a>
+						<span>increase</span>
+						<p><strong>+35,18<sup>%</sup></strong> +2489 new visitors</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in decrease">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<span>decrease</span>
+						<p><strong>-12,50<sup>%</sup></strong> -311 new orders</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget box -->
+					<div class="widget alert fade in increase">
+						<a href="#" class="close" data-dismiss="alert" title="Hide widget" >&times;</a>
+						<span>7</span>
+						<p><strong>Tasks</strong> +3 New Tasks</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Widget Box -->
+					<div class="widget alert fade in text-only">
+						<button class="close" data-dismiss="alert" type="button" title="Hide widget">&times;</button>
+						<p><strong>Text Only App</strong> +29 Lorem Ipsum</p>
+					</div>
+					<!-- /Widget box -->
+					
+					<!-- Add new widget box -->
+					<div class="widget add-new-widget">
+						<a href="#">
+							<strong><span class="awe-plus-sign"></span> Add Widget</strong>
+						</a>
+					</div>
+					<!-- /Add new widget box -->
+					
+				</div>
+				<!-- /Widget container -->
+				
+				<!-- Breadcrumbs -->
+				<ul class="breadcrumb">
+					<li><a href="#"><span class="awe-home"></span> Home</a></li>
+					<li><a href="#">Chromatron template</a></li>
+					<li class="active">Calendar</li>
+				</ul>
+				<!-- Breadcrumbs -->
+				
+				<!-- Page header -->
+				<article class="page-header">
+					<h1>Calendar</h1>
+					<p>FullCalendar is a jQuery plugin that provides a full-sized, drag & drop calendar like the one below. It uses AJAX to fetch events on-the-fly for each month and is easily configured to use your own feed format (an extension is provided for Google Calendar). It is visually customizable and exposes hooks for user-triggered events (like clicking or dragging an event). It is open source and dual licensed under the MIT or GPL Version 2 licenses.</p>
+				</article>
+				<!-- /Page header -->
+				
+				<!-- Grid row -->
+				<div class="row-fluid">
+				
+					<!-- Example jQuery FullCalendar -->
+					<!-- Data block -->
+					<article class="span12 data-block">
+						<div class="data-container">
+							<header>
+								<h2>Basic calendar setup</h2>
+								<ul class="data-header-actions tabs">
+									<li class="demoTabs active"><a href="#basic">Basic</a></li>
+									<li class="demoTabs"><a href="#google">Google</a></li>
+								</ul>
+							</header>
+							<section class="tab-content">
+							
+								<!-- Tab #basic -->
+								<div class="tab-pane active" id="basic">
+									<div class='fullcalendar fullcalendar-demo'></div>
+								</div>
+								<!-- /Tab #basic -->
+								
+								<!-- Tab #google -->
+								<div class="tab-pane" id="google">
+									<div class='fullcalendar fullcalendar-gcal'></div>
+								</div>
+								<!-- /Tab #google -->
+								
+							</section>
+						</div>
+					</article>
+					<!-- /Data block -->
+					
+				</div>
+				<!-- /Grid row -->
+			
+			</section>
+			<!-- /Right (content) side -->
+			
+		</div>
+		<!-- /Main page container -->
+		
+		<!-- Scripts -->
+		<script src="js/navigation.js"></script>
+		
+		<!-- Bootstrap scripts -->
+		<!--
+		<script src="js/bootstrap/bootstrap-tooltip.js"></script>
+		<script src="js/bootstrap/bootstrap-tab.js"></script>
+		<script src="js/bootstrap/bootstrap-alert.js"></script>
+		<script src="js/bootstrap/bootstrap-collapse.js"></script>
+		<script src="js/bootstrap/bootstrap-transition.js"></script>
+		-->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+		
+		<!-- jQuery FullCalendar -->
+		<script src="js/plugins/fullCalendar/jquery.fullcalendar.min.js"></script>
+		
+		<!-- Google Calendar plugin for jQuery FullCalendar -->
+		<script src="js/plugins/fullCalendar/gcal.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+			
+				var date = new Date();
+				var d = date.getDate();
+				var m = date.getMonth();
+				var y = date.getFullYear();
+				
+				$('.fullcalendar-demo').fullCalendar({
+					header: {
+						left: 'title',
+						center: '',
+						right: 'today month,basicWeek prev,next'
+					},
+					buttonText: {
+						prev: '<span class="awe-circle-arrow-left"></span>',
+						next: '<span class="awe-circle-arrow-right"></span>'
+					},
+					editable: true,
+					events: [
+						{
+							title: 'All Day Event',
+							start: new Date(y, m, 1)
+						},
+						{
+							title: 'Long Event',
+							start: new Date(y, m, d-5),
+							end: new Date(y, m, d-2)
+						},
+						{
+							id: 999,
+							title: 'Repeating Event',
+							start: new Date(y, m, d-3, 16, 0),
+							allDay: false
+						},
+						{
+							id: 999,
+							title: 'Repeating Event',
+							start: new Date(y, m, d+4, 16, 0),
+							allDay: false
+						},
+						{
+							title: 'Meeting',
+							start: new Date(y, m, d, 10, 30),
+							allDay: false
+						},
+						{
+							title: 'Lunch',
+							start: new Date(y, m, d, 12, 0),
+							end: new Date(y, m, d, 14, 0),
+							allDay: false
+						},
+						{
+							title: 'Birthday Party',
+							start: new Date(y, m, d+1, 19, 0),
+							end: new Date(y, m, d+1, 22, 30),
+							allDay: false
+						},
+						{
+							title: 'Walking Pixels website',
+							start: new Date(y, m, 28),
+							end: new Date(y, m, 29),
+							url: 'http://www.walkingpixels.com/'
+						}
+					]
+				});
+				
+				$('.fullcalendar-gcal').fullCalendar({
+					header: {
+						left: 'title',
+						center: '',
+						right: 'today month,basicWeek prev,next'
+					},
+					buttonText: {
+						prev: '<span class="awe-arrow-left"></span>',
+						next: '<span class="awe-arrow-right"></span>'
+					},
+					events: {
+						url: 'http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic',
+						className: 'gcal-event', // an option!
+						currentTimezone: 'America/Chicago' // an option!
+					}
+				});
+				
+			});
+		</script>
+		
+	</body>
+
+<!-- Mirrored from template.walkingpixels.com/chromatron/calendar.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:30:04 GMT -->
+</html>
