@@ -30,7 +30,7 @@ class Message extends \Zend\Mail\Storage\Message
     {
         $charset = false;
         $contentType = isset($this->contentType) ? $this->contentType : '';
-        if (preg_match('/charset=([^;]+)/i', $contentType, $matches)) {
+        if (preg_match('/charset="?([^;"]+)/i', $contentType, $matches)) {
             $charset = $matches[1];
         }
         return $charset;
@@ -61,7 +61,11 @@ class Message extends \Zend\Mail\Storage\Message
             $text = $text;
         }
         if ($charset = $this->getCharset()) {
-            $text = iconv($charset, $outputCharset, $text);
+            if ($outputCharset != $charset) {
+                if ($utf8Text = iconv($charset, $outputCharset, $text)) {
+                    $text = $utf8Text;
+                }
+            }
         }
         return $text;
     }
