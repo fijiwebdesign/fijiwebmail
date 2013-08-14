@@ -12,6 +12,7 @@ namespace app\mail\form;
  
 use Fiji\Factory;
 use Fiji\App\Request;
+use Fiji\Mail\AddressList;
 
 use \Zend\Mail\Message;
 use \Zend\Mime\Message as MimeMessage;
@@ -21,7 +22,7 @@ use \Zend\Mail\Transport\Smtp as SmtpTransport;
 use \Zend\Mail\Transport\SmtpOptions;
 
 /**
- * Login Actions
+ * Compose email form handler
  */
 class Compose
 {
@@ -49,23 +50,40 @@ class Compose
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
     }
     
+    public function getMailTransport()
+    {
+        $messageer = $this->Config->get('mailTransport');
+        if ($messageer == 'sendmail') {
+            return $this->getSendmail();
+        } else {
+            return $this->getSMTP();
+        }
+    }
+    
     protected function getSMTP()
-    {        
+    {
+        
+        $stmpOptions = $this->Config->get('mailTransportOptions');
+        
         // Setup SMTP transport using LOGIN authentication
         $transport = new SmtpTransport();
-        // @todo configuration
+        // @todo dynamic configuration
+        // we should add a method to config/Mail to get as data/options
+        // eg: $stmpOptions->toString() or $smtpOptions->toOptions()
+        $ssl = $stmpOptions->get('connection_config');
+        $ssl = $ssl['ssl'];
         $options   = new SmtpOptions(array(
-            'name'=> 'smtp.gmail.com',
-            'host'=> 'smtp.gmail.com',
-            'port' => 587,
-            'connection_class'  => 'login',
+            'name'=> $stmpOptions->get('name'),
+            'host'=> $stmpOptions->get('host'),
+            'port' => $stmpOptions->get('port'),
+            'connection_class'  => $stmpOptions->get('connection_class'),
             'connection_config' => array(
                 'username' => $this->User->username,
                 'password' => $this->User->password,
-                'ssl' => 'tls'
+                'ssl' => $ssl
             ),
         ));
-        var_dump($options);
+
         $transport->setOptions($options);
         return $transport;
     }
@@ -91,25 +109,25 @@ class Compose
         $inReplyTo = $this->Req->getVar('In-Reply-To', '');
         
         // @todo configurable
-        $saveFolder = 'Sent Mail';
+        $saveFolder = $this->Config->get('folders')->get('sent', 'Sent Mail');
         
-        $from = new \Fiji\Mail\Address($this->User->username);
-        //$to = new \Fiji\Mail\Address($to);
+        $fromAddressList = new AddressList($this->User->username);
+        $toAddressList = new AddressList($to);
+        $ccAddressList = new AddressList($cc);
+        $bccAddressList = new AddressList($bcc);
         
-        /*
-        echo '<pre>';
-        var_dump($this->User);
-        var_dump($from);
-        var_dump(array($to, $subject, $body));
-        //return;
-         */
+        // zend mail message
+        $message = new Message();
+        $message->setEncoding("UTF-8");
         
-        $mail = new Message();
-        
-        $mail->getHeaders()->addHeaderLine('Cc', $cc);
-        $mail->getHeaders()->addHeaderLine('Bcc', $bcc);
-        $mail->getHeaders()->addHeaderLine('In-Reply-To', $inReplyTo);
-        $mail->getHeaders()->addHeaderLine('Message-ID', $this->generateMessageId());
+        if ($cc) {
+            $message->addCc($ccAddressList);
+        }
+        if ($bcc) {
+            $message->addBcc($bccAddressList);
+        }
+        $message->getHeaders()->addHeaderLine('In-Reply-To', $inReplyTo);
+        $message->getHeaders()->addHeaderLine('Message-ID', $this->generateMessageId());
 
         $text = new MimePart(strip_tags($body));
         $text->type = "text/plain";
@@ -125,13 +143,15 @@ class Compose
         $body = new MimeMessage();
         $body->setParts(array($html));
  
-        $mail->setFrom($from->email, $from->name)
-             ->addTo($to)
-             ->setSubject('Re: ' . $subject)
+        $message->setFrom($fromAddressList)
+             ->setSubject($subject)
              ->setBody($body);
+             
+        $message->addTo($toAddressList);
         
-        $transport = $this->getSendmail();
-        $transport->send($mail);
+        $transport = $this->getMailTransport();
+        
+        $transport->send($message);
         
         if ($saveFolder) {
             
@@ -141,10 +161,10 @@ class Compose
             }
             
             // @todo config
-            $this->Imap->appendMessage($mail->toString(), $saveFolder, array());
+            $this->Imap->appendMessage($message->toString(), $saveFolder, array());
         }
             
-        $this->App->redirect('?app=mail&page=inbox', 'Your message has been sent.');
+        $this->App->redirect('?app=mail&page=mailbox', 'Your message has been sent.');
         
         
     }

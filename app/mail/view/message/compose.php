@@ -15,8 +15,7 @@ $composeForm = new app\mail\view\widget\composeForm();
 
 <article class="data-block">
     <header>
-        <h2>New email</h2>
-        <a id="compose-send" class="btn btn-alt btn-primary" type="submit">Send</a>
+        <h2>Compose email</h2>
     </header>
     <section>
         <?php echo $composeForm->toHtml(); ?>

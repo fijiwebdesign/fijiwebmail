@@ -16,7 +16,7 @@ use Fiji\Factory;
 /**
  * Allows user management
  */
-class User {
+class User extends Model {
     
     /**
      * @var Zend\Session\Container Session
@@ -28,10 +28,25 @@ class User {
      */
     protected $expiresSecs = 3600;
     
+    protected $modelName = 'fiji_user';
+    
+    public $id;
+    
+    protected $username;
+    
+    protected $name;
+    
+    protected $email;
+    
     public function __construct() {
         
        $this->Session = Factory::getSingleton('Zend\Session\Container', array('user'));
        $this->Session->setExpirationSeconds($this->expiresSecs);
+       
+       // ensure autheticated user is loaded
+       if ($userId = $this->isAuthenticated()) {
+           $this->findById($userId);
+       }
         
     }
     
@@ -66,9 +81,11 @@ class User {
     /**
      * Authenticate the User
      */
-    public function authenticate()
+    public function authenticate($username, $password)
     {
-        // @todo Implement
+        // @todo Implement event/observer pattern authentication
+        $this->find(array('username' => $username, 'password' => $password));
+        return $this->isAuthenticated($this->getId());
     }
     
     /**

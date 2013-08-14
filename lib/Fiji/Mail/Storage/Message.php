@@ -30,7 +30,7 @@ class Message extends \Zend\Mail\Storage\Message
     {
         $charset = false;
         $contentType = isset($this->contentType) ? $this->contentType : '';
-        if (preg_match('/charset="?([^;"]+)/i', $contentType, $matches)) {
+        if (preg_match('/charset=["\']?([^;"\']+)/i', $contentType, $matches)) {
             $charset = $matches[1];
         }
         return $charset;

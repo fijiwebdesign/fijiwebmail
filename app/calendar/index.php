@@ -128,10 +128,10 @@
                             allDay: false
                         },
                         {
-                            title: 'Walking Pixels website',
+                            title: 'Fiji Cloud Mail Launch',
                             start: new Date(y, m, 28),
                             end: new Date(y, m, 29),
-                            url: 'http://www.walkingpixels.com/'
+                            url: 'http://www.fijisoftware.com/'
                         }
                     ]
                 });

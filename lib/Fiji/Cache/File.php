@@ -17,7 +17,7 @@ namespace Fiji\Cache;
 class File
 {
     
-    static $tmpDir = '/tmp';
+    protected $tmpDir = '/tmp';
     
     public function __construct()
     {

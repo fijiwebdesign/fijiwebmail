@@ -177,13 +177,15 @@ class Imap extends \Zend\Mail\Storage\Imap
     }
     
     /**
-     * Get flags for a list of message
+     * Get flags for a list of messages
      *
      * @param  int   $from    number of message
+     * @param  int   $to      
      * @throws Exception\RuntimeException
      */
     public function getFlags($from, $to = null)
     {
+        
         return $this->protocol->fetch('FLAGS', $from, $to);
     }
     

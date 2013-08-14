@@ -26,7 +26,7 @@ if (!$User->isAuthenticated()) {
             <em><?php echo isset($User->group) ? $User->group : 'Member'; ?></em>
             <ul>
                 <li><a class="btn btn-primary btn-flat" href="#" title="Edit your settings">settings</a></li>
-                <li><a class="btn btn-primary btn-flat" href="?app=auth&func=logout" title="Securely logout from application">logout</a></li>
+                <li><a class="btn btn-primary btn-flat" href="?app=auth&view=logout" title="Securely logout from application">logout</a></li>
             </ul>
         </figcaption>
     </figure>

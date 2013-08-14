@@ -12,7 +12,7 @@ use Fiji\Factory;
  
 // get the document
 $Doc = Factory::getSingleton('Fiji\App\Document');
-
+$App = Factory::getSingleton('Fiji\App\Application');
 $User = Factory::getSingleton('Fiji\App\User');
 
 ?>
@@ -70,7 +70,7 @@ $User = Factory::getSingleton('Fiji\App\User');
         }
         
         .login-page .login-container h1 .brand {
-            background: no-repeat bottom center url(public/images/FijiWebDesignLogo.png);
+            background: no-repeat bottom center url(public/images/Fiji-Mail-Cloud-Logo.png);
             height: 100px;
             width: 235px;
             display: block;
@@ -104,13 +104,13 @@ $User = Factory::getSingleton('Fiji\App\User');
                 <form method="post" action="">
                     <fieldset>
                         <div class="control-group">
-                            <label class="control-label" for="login">Gmail Email Address</label>
+                            <label class="control-label" for="login">Username</label>
                             <div class="controls">
                                 <input id="icon" type="text" placeholder="Your username" name="username">
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="password">Gmail Password</label>
+                            <label class="control-label" for="password">Password</label>
                             <div class="controls">
                                 <input id="password" type="password" placeholder="Password" name="password">
                                 <label class="checkbox">
@@ -124,7 +124,7 @@ $User = Factory::getSingleton('Fiji\App\User');
                     </fieldset>
                     
                     <input type="hidden" name="app" value="auth" />
-                    <input type="hidden" name="func" value="login" />
+                    <input type="hidden" name="view" value="login" />
                 </form>
                 <!-- /Login form -->
                 
@@ -146,6 +146,10 @@ $User = Factory::getSingleton('Fiji\App\User');
         <!--
         <script src="templates/chromatron/js/bootstrap/bootstrap.min.js"></script>
         -->
+     
+<?php 
+require $App->getPathBase() . '/templates/chromatron/widgets/notifications.php';
+?>
         
     </body>
 

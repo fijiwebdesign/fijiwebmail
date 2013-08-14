@@ -13,7 +13,7 @@ namespace Fiji\Mail;
 /**
  * Parses an address into parts
  */
-class Address
+class Address extends \Zend\Mail\Address
 {
     /**
      * email domain
@@ -35,16 +35,25 @@ class Address
      */
     public $email;
     
-    public function __construct($email)
+    /**
+     * Will parse "Name" <email@domain> as well as email@domain
+     * @param String Email in the form "Name" <email@domain> or just email@domain
+     * @param String Optional "Name" for compat with \Zend\Mail\Address
+     */
+    public function __construct($email, $name = null)
     {
-        
-        $this->parse($email);
+        if (is_null($name)) {
+            $this->parse($email);
+        } else {
+            parent::__construct($email, $name);
+        }
     }
     
     protected function parse($email)
     {
-        if (preg_match('/^([^>]+)<([^>]+)$/i', $email, $parts)) {
-            $this->name = $parts[1];
+        $email = trim($email);
+        if (preg_match('/^([^>]+)<([^>]+)>$/i', $email, $parts)) {
+            $this->name = trim($parts[1], '" \'');
             $this->user = strtok($parts[2], '@');
             $this->domain = strtok('@');
         } else {
@@ -53,11 +62,6 @@ class Address
             $this->domain = strtok('@');
         }
         $this->email = $this->user . '@' . $this->domain;
-    }
-    
-    public function __toString()
-    {
-        return $this->email;
     }
      
 }

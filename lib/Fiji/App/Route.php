@@ -11,6 +11,7 @@
 namespace Fiji\App;
 
 use Fiji\Factory;
+use Fiji\App\Config;
 
 /**
  * Application control
@@ -27,9 +28,10 @@ class Route {
      */
     public $User;
     
-    public function __construct() {
+    public function __construct(Config $Config = null) {
         $this->Req = Factory::getSingleton('Fiji\App\Request');
         $this->User = Factory::getSingleton('Fiji\App\User');
+        $this->Config = $Config ? $Config : Factory::getConfig();
     }
     
     /**
@@ -46,27 +48,35 @@ class Route {
         }
     }
     
-    /**
-     * A URL to return to after performing a function
-     */
-    public function setReturnUrl($returnUrl)
+    public function setController()
     {
-        $this->User->returnUrl = $returnUrl;
+        $this->Controller = $Controller;
+    }
+    
+    public function getController()
+    {
+        if (!isset($this->Controller)) {
+            $this->Controller = Factory::getController();
+        }
+        return $this->Controller;
     }
     
     /**
-     * Get the URL we want to redirect to
+     * Translate the SEF URL to request parameters
+     * @param String SEF URL
      */
-    public function getReturnUrl()
+    public function route($url)
     {
-        return $this->User->returnUrl;
+        $parts = explode('/', $url);
+        
+        $app = isset($parts[0]) ? $parts[0] : null;
+        $controller = isset($parts[1]) ? $parts[1] : null;
+        $method = isset($parts[2]) ? $parts[2] : null;
+        
+        $this->Request->set('app', $app);
+        $this->Request->set('page', $controller);
+        $this->Request->set('view', $method);
+        
     }
-    
-    public function redirect($url)
-    {
-        header('Location: ' . $url);
-        die;
-    }
-    
     
 }

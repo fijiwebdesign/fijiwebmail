@@ -8,6 +8,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  * @package   Fiji_Mail
  */
+ 
 ?>
 
 <style type="text/css">
@@ -119,7 +120,7 @@
                 </fieldset>
             </section>
             <section class="reply-wysiwyg">
-                <?php 
+                <?php
                     $composeForm = new app\mail\view\widget\composeForm($from, $subject, $inReplyTo);
                     echo $composeForm->toHtml();
                 ?>

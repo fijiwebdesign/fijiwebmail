@@ -13,7 +13,7 @@
 namespace app\mail\view\widget;
 
 /**
- * Generate HTML to display an Zend\Mail\AddressList list of emails
+ * Display the Email Composition Form
  */
 class composeForm
 {
@@ -21,6 +21,7 @@ class composeForm
     
     public function __construct($to = '', $subject = '', $inReplyTo = '', $cc = '', $bcc = '')
     {
+        // @note Already html encoded
         $this->to = $to;
         $this->subject = $subject;
         $this->inReplyTo = $inReplyTo;
@@ -94,7 +95,27 @@ class composeForm
             event.preventDefault();
         });
         
+        // form handler
+        $('#compose-email').bind('submit', function(event) {
+            if (!$('[name=to]').val()) {
+                formError('Please enter a recepient.', event);
+            }
+            if (!$('[name=subject]').val()) {
+                formError('Please enter a subject.', event);
+            }
+            if (!$('[name=body]').val()) {
+                formError('Please enter a message.', event);
+            }
+        });
+        
+        // display form errors
+        function formError(msg, event) {
+            event.preventDefault();
+            alert(msg);
+        }
+        
     });
+    
 </script>
 
 <style>

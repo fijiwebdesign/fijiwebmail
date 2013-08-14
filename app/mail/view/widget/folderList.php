@@ -18,7 +18,7 @@ use \RecursiveIteratorIterator;
 /**
  * Generate HTML to display folder list (mailboxes)
  */
-class folderList
+class folderList extends \Fiji\App\Widget
 {
     public $id; 
     
@@ -38,6 +38,11 @@ class folderList
         return $this;
     }
     
+    public function render($format = 'html')
+    {
+        echo $this->toHtml();
+    }
+    
     public function toHtml()
     {
         $currFolder = $this->Req->getVar('folder');
@@ -46,7 +51,7 @@ class folderList
         $folders = new RecursiveIteratorIterator($folders, RecursiveIteratorIterator::SELF_FIRST);
         $html = '';
         $html .= '<select name="folder" id="' . htmlentities($this->id) . '">';
-        $html .= '<option>' . $this->title . '</option>';
+        $html .= '<option value="">' . $this->title . '</option>';
         foreach ($folders as $localName => $folder) {
             $localName = str_pad('', $folders->getDepth(), '-', STR_PAD_LEFT) .
                          $localName;

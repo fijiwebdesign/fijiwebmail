@@ -19,8 +19,10 @@ class Application {
     
     public $User;
     
-    public function __construct() {
+    public function __construct(Controller $Controller = null) {
         $this->User = Factory::getSingleton('Fiji\App\User');
+        
+        $this->Controller = $Controller;
     }
     
     /**
@@ -51,5 +53,19 @@ class Application {
         die;
     }
     
+    public function getPathBase()
+    {
+        return dirname(dirname(dirname(__DIR__)));
+    }
+    
+    public function getName()
+    {
+        return Factory::getRequest()->get('app');
+    }
+    
+    public function getPath()
+    {
+        return $this->getPathBase() . '/app/' . $this->getName();
+    }
     
 }

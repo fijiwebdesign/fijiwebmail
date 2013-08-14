@@ -1,0 +1,8 @@
+/**
+ * CSS styles specific to mail app
+ */
+.content-block > .page-header, .content-block > .row-fluid {
+    max-width: 100%; /* 950px */
+    min-width: 530px;
+}
+

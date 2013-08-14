@@ -238,8 +238,6 @@ if ($this->searchQuery) {
                         $date = date('g:i a', strtotime($message->date));
                     }
                     
-                    //echo '<pre>' . print_r($message->getFlags(), true) . '</pre>';
-                    
                     $messageClass = array('msg');
                     $messageClass[] = $message->seen ? 'seen' : 'unseen';
                     $messageClass[] = $message->flagged ? 'flagged' : 'unflagged';
@@ -250,7 +248,11 @@ if ($this->searchQuery) {
                 <li class="<?php echo $messageClass; ?>" data-uid="<?php echo intval($message->uid); ?>">
                     <p class="select"><input class="mail-checkbox" type="checkbox" name="uids[]" value="<?php echo intval($message->uid); ?>"></p>
                     <p class="star"><span class="<?php echo $message->flagged ? 'icon-star' : 'icon-star-empty'; ?>"></span></p>
-                    <p class="from"><?php echo $message->fromWidget->toHtmlInline(); ?></p>
+                    <?php if ($this->folder == $sentFolder) : ?>
+                        <p class="to">To: <?php echo $message->toWidget->toHtmlInline(); ?></p>
+                    <?php else: ?>
+                        <p class="from"><?php echo $message->fromWidget->toHtmlInline(); ?></p>
+                    <?php endif; ?>
                     <p class="subject">
                         <?php
                         foreach($message->labels as $label) {

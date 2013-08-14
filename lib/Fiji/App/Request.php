@@ -20,9 +20,34 @@ class Request {
     /**
      * Retrieve a GET or POST variable
      */
+    public function get($name, $default = null)
+    {
+        return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $default;
+    }
+    
+    /**
+     * Retrieve a GET or POST variable
+     */
+    public function set($name, $value = null)
+    {
+        $_REQUEST[$name] = $value;
+    }
+    
+    /**
+     * Retrieve a GET or POST variable
+     */
     public function getVar($name, $default = null)
     {
         return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $default;
+    }
+    
+    /**
+     * Retrieve only alphanumeric http var
+     */
+    public function getAlphaNum($name, $default = null)
+    {
+      $var = $this->getVar($name, $default);
+      return preg_replace("/[^a-z0-9_\-]+/i", '', $var);
     }
     
 }

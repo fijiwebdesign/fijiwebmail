@@ -12,10 +12,12 @@ namespace Fiji\Mail\Protocol;
 
 use \Zend\Stdlib\ErrorHandler;
 use \Zend\Mail\Protocol\Imap as ZendImap;
-use Fiji\App\Factory;
+use \Fiji\Factory;
 
 class Imap extends ZendImap
 {
+    
+    private $error_reporting = E_ERROR;
     
     /**
      * Public constructor
@@ -28,6 +30,8 @@ class Imap extends ZendImap
     public function __construct($host = '', $port = null, $ssl = false)
     {
         parent::__construct($host, $port, $ssl);
+        
+        $this->error_reporting = Factory::getConfig()->get('error_reporting');
     }
 
     /**
@@ -46,7 +50,7 @@ class Imap extends ZendImap
             $lines[] = $tokens;
         }
         
-        echo '<pre class="debug debug-resp">Response: ' . print_r($lines, true) . '</pre>'; 
+        $this->log('<pre class="debug debug-resp">Response: ' . print_r($lines, true) . '</pre>'); 
 
         if ($dontParse) {
             // last to chars are still needed for response code
@@ -83,7 +87,7 @@ class Imap extends ZendImap
                 if (fwrite($this->socket, $line . ' ' . $token[0] . "\r\n") === false) {
                     throw new Exception\RuntimeException('cannot write - connection closed?');
                 }
-                echo '<pre class="debug debug-req">Request some:' . print_r($line . ' ' . $token[0], true) . '</pre>';
+                $this->log('<pre class="debug debug-req">Request some:' . print_r($line . ' ' . $token[0], true) . '</pre>');
                 if (!$this->_assumedNextLine('+ ')) {
                     throw new Exception\RuntimeException('cannot send literal string');
                 }
@@ -97,7 +101,107 @@ class Imap extends ZendImap
             throw new Exception\RuntimeException('cannot write - connection closed?');
         }
         
-        echo '<pre class="debug debug-req">Request more:' . print_r($line, true) . '</pre>';
+        $this->log('<pre class="debug debug-req">Request more:' . print_r($line, true) . '</pre>');
+    }
+
+    /**
+     * fetch one or more items of one or more messages
+     *
+     * @param  string|array $items items to fetch from message(s) as string (if only one item)
+     *                             or array of strings
+     * @param  int|array    $from  message for items or start message if $to !== null
+     * @param  int|null     $to    if null only one message ($from) is fetched, else it's the
+     *                             last message, INF means last message available
+     * @throws Exception\RuntimeException
+     * @return string|array if only one item of one message is fetched it's returned as string
+     *                      if items of one message are fetched it's returned as (name => value)
+     *                      if one items of messages are fetched it's returned as (msgno => value)
+     *                      if items of messages are fetched it's returned as (msgno => (name => value))
+     */
+    public function _fetch($items, $from, $to = null)
+    {
+        if (is_array($from)) {
+            $set = implode(',', $from);
+        } elseif ($to === null) {
+            $set = (int) $from;
+        } elseif ($to === INF) {
+            $set = (int) $from . ':*';
+        } else {
+            $set = (int) $from . ':' . (int) $to;
+        }
+
+        $items = (array) $items;
+        $itemList = $this->escapeList($items);
+
+        $tag = null;  // define $tag variable before first use
+        $this->sendRequest('FETCH', array($set, $itemList), $tag);
+
+        $result = array();
+        $tokens = null; // define $tokens variable before first use
+        while (!$this->readLine($tokens, $tag)) {
+            
+            $this->log("Readline.");
+            
+            // ignore other responses
+            if ($tokens[1] != 'FETCH') {
+                $this->log("fetched..");
+                continue;
+            }
+            // ignore other messages
+            if ($to === null && !is_array($from) && $tokens[0] != $from) {
+                $this->log("continued!!!");
+                continue;
+            }
+            // if we only want one item we return that one directly
+            if (count($items) == 1) {
+                $this->log("count(1)");
+                if ($tokens[2][0] == $items[0]) {
+                    $data = $tokens[2][1];
+                } else {
+                    // maybe the server send an other field we didn't wanted
+                    $count = count($tokens[2]);
+                    // we start with 2, because 0 was already checked
+                    for ($i = 2; $i < $count; $i += 2) {
+                        if ($tokens[2][$i] != $items[0]) {
+                            continue;
+                        }
+                        $data = $tokens[2][$i + 1];
+                        break;
+                    }
+                }
+            } else {
+                
+                    $this->log("count > 1");
+                $data = array();
+                while (key($tokens[2]) !== null) {
+                    $data[current($tokens[2])] = next($tokens[2]);
+                    next($tokens[2]);
+                }
+            }
+            // if we want only one message we can ignore everything else and just return
+            if ($to === null && !is_array($from) && $tokens[0] == $from) {
+                $this->log("want only one!");
+                // we still need to read all lines
+                while (!$this->readLine($tokens, $tag));
+                return $data;
+            }
+            
+            $this->log("add to result:");
+            $result[$tokens[0]] = $data;
+        }
+
+        if ($to === null && !is_array($from)) {
+            throw new Exception\RuntimeException('the single id was not found in response');
+        }
+
+        return $result;
+    }
+
+    public function log($message)
+    {
+        if ($this->error_reporting & E_NOTICE && false) {
+            $message;
+        }
     }
 
 }

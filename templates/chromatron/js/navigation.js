@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	
+    
 	// Menu Dropdown
-	$('.main-navigation li ul').hide(); //Hide all sub menus
+	$('.main-navigation li ul.collapse').hide(); //Hide all sub menus
 	$('.main-navigation li.current a').parent().find('ul').slideToggle('slow'); // Slide down the current sub menu
 	$('.main-navigation li a').click(
 		function () {

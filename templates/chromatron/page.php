@@ -4,16 +4,19 @@
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title>Fiji Mail | Inbox</title>
+        <title><?php echo htmlentities($Doc->title); ?></title>
         <meta name="description" content="">
         <meta name="robots" content="index, follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <base href="<?php echo htmlentities($Uri->getBase()); ?>">
         
         <!-- jQuery Snippet Styles -->
         <link rel='stylesheet' type='text/css' href='templates/chromatron/css/plugins/jquery.snippet.css'>
         
         <!-- Styles -->
         <link rel='stylesheet' type='text/css' href='templates/chromatron/css/chromatron-blue.css'>
+        <link rel='stylesheet' type='text/css' href='templates/chromatron/css/mail.css'>
         
         <!-- Fav and touch icons -->
         <link rel="shortcut icon" href="img/icons/favicon.html">
@@ -101,11 +104,8 @@
                 <a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-heart"></span>Apps</a>
                 
                 <!-- Main navigation -->
-                <?php echo $Doc->navigation; ?>
+                <?php $Doc->renderWidgets('navigation'); ?>
                 <!-- /Main navigation -->
-                
-                <!-- Side note with nested style -->
-                <?php echo $Doc->taskList; ?>
                 
                 
             </section>

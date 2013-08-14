@@ -1,46 +1,38 @@
 <?php
 
-// for dev
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$app = isset($_GET['app']) ? $_GET['app'] : 'default';
-$page = isset($_GET['page']) ? $_GET['page'] : 'index';
-
-// for now show email by default
-if ($app == 'default') {
-    header('Location: ?app=mail');
-    die;
-}
-
-if (!preg_match('/^[a-z0-9]+$/i', $app)) {
-    die;
-}
-if (!preg_match('/^[a-z0-9]+$/i', $page)) {
-    die;
-}
-
 use Zend\Loader\StandardAutoloader;
 use Fiji\Factory;
-
-$base_path = __DIR__;
-$zend_path = '/var/lib/zf2';
-$zend_path = 'C:\wamp\www\fijicloud\zf2';
-
-// autoloading zf2 classes
-require_once $zend_path . '/library/Zend/Loader/StandardAutoloader.php';
-$loader = new StandardAutoloader(array('autoregister_zf' => true));
-$loader->register();
-
-// Zend framework compat
-require $zend_path . '/library/Zend/Stdlib/compatibility/autoload.php';
-require $zend_path . '/library/Zend/Session/compatibility/autoload.php';
 
 // autoloading Fiji classes
 require_once 'lib/Autoload.php';
 
-// get the document 
-$Doc = Factory::getSingleton('Fiji\App\Document');
+// our base application configuration
+$Config = Factory::getSingleton('config\\App');
+
+// turn on errors in development mode
+if ($Config->get('mode') == config\App::MODE_DEV) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
+
+// necessary file paths
+$base_path = __DIR__;
+$zendPath = $Config->get('zendPath');
+
+// autoloading zf2 classes
+require_once $zendPath . '/library/Zend/Loader/StandardAutoloader.php';
+$loader = new StandardAutoloader(array('autoregister_zf' => true));
+$loader->register();
+
+// Zend framework compat
+require $zendPath . '/library/Zend/Stdlib/compatibility/autoload.php';
+require $zendPath . '/library/Zend/Session/compatibility/autoload.php';
+
+// Required instances
+$Req = Factory::getRequest();
+$Doc = Factory::getDocument();
+$App = Factory::getApplication();
+$Uri = Factory::getSingleton('Fiji\\App\\Uri');
 
 $options = array(
     'remember_me_seconds' => 2419200,
@@ -58,6 +50,9 @@ $config->setOptions($options);
 $manager = new SessionManager($config);
 Container::setDefaultManager($manager);
 
+// application and page requested. App is the module, and page is the controller
+$app = $Req->getAlphaNum('app', $Config->get('defaultApp'));
+
 // email search widget
 ob_start();
 require 'app/mail/view/widget/search.php';
@@ -66,22 +61,14 @@ $Doc->search = ob_get_clean();
 // main content
 if ($app) {
     ob_start();
-    require( 'app/' . $app . '/' . $page . '.php');
+    require( 'app/' . $app . '/index.php');
     $Doc->content = ob_get_clean();
 }
-
-// folders menu
-$Doc->folderListWidget = new app\mail\view\widget\folderList('folder-list');
 
 // navigation menu
 ob_start();
 require 'templates/chromatron/widgets/navigation.php';
 $Doc->navigation = ob_get_clean();
-
-// task list
-ob_start();
-require 'app/mail/view/widget/taskList.php';
-$Doc->taskList = ob_get_clean();
 
 $Doc->breadcrumbs = '';
 

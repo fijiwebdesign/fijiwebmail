@@ -33,3 +33,22 @@ spl_autoload_register( function( $className ) use ($includePaths)
     }
     
 });
+
+// opentok library path
+$openTokPath = __DIR__ . '/Opentok';
+
+/**
+ * Autoload Opentok
+ * 
+ * @param string $className 
+ */
+spl_autoload_register( function( $className ) use ($openTokPath)
+{
+    
+    $path = $openTokPath . '/' . $className . '.php';
+    
+    if (file_exists($path)) {
+        include $path;
+    }
+    
+});
