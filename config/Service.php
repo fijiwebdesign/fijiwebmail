@@ -28,7 +28,7 @@ class Service extends \Fiji\App\Config
     {
         parent::__construct($options);
         
-        // @todo remote in production
+        // @todo remove in production
         if (in_array($_SERVER['HTTP_HOST'], array('fijiwebdesign.com', 'fijisoftware'))) {
             $this->password = 'vlg4lyfe';
             $this->database = 'fiji_cloudmail';

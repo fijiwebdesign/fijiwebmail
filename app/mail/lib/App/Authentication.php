@@ -49,13 +49,27 @@ class Authentication extends \Fiji\App\Authentication
             return false;
         }
         
-        // saving username to session
+        // populate user
         $this->User->username = $username;
-        $this->User->email = $username;;
+        $this->User->name = substr($username, 0, strpos($username, '@'));
+        $this->User->email = $username;
         $this->User->password = $password;
         $this->User->isAuthenticated(true);
-        // save imap to session
         $this->User->imapOptions = $options;
+        
+        // persist user to session
+        $this->User->persist();
+        
+        // find this user in local user via email or create it
+        $this->User->find(array('email' => $username));
+        if (!$this->User->id) {
+            $this->User->save();
+            if (!$this->User->id) {
+                throw new \Exception('Could not save user');
+            }
+        }
+        
+        
         
         return true;
    }
@@ -63,6 +77,7 @@ class Authentication extends \Fiji\App\Authentication
    public function logout()
    {
        $this->User->username = null;
+       $this->User->email = null;
        $this->User->password = null;
        $this->User->imapOptions = null;
        $this->User->isAuthenticated(false);

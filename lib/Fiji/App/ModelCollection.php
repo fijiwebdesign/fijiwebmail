@@ -35,7 +35,7 @@ class ModelCollection extends \Fiji\Service\DomainCollection
     public function find($query = null)
     {
         if ($this->onFind($query) !== false) {
-            parent::find($query);
+            return parent::find($query);
         }
     }
     
@@ -45,7 +45,7 @@ class ModelCollection extends \Fiji\Service\DomainCollection
     public function save()
     {
         if ($this->onSave() !== false) {
-            parent::save();
+            return parent::save();
         }
     }
     
@@ -55,7 +55,7 @@ class ModelCollection extends \Fiji\Service\DomainCollection
     public function delete()
     {
         if ($this->onDelete() !== false) {
-            parent::delete();
+            return parent::delete();
         }
     }
 

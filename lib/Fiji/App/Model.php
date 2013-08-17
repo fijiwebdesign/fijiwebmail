@@ -75,7 +75,7 @@ abstract class Model extends \Fiji\Service\DomainObject
     public function findById($id)
     {
         if ($this->onFindById($id) !== false) {
-            parent::findById($id);
+            return parent::findById($id);
         }
     }
     
@@ -85,7 +85,7 @@ abstract class Model extends \Fiji\Service\DomainObject
     public function find($query)
     {
         if ($this->onFind($query) !== false) {
-            parent::find($query);
+            return parent::find($query);
         }
     }
     
@@ -95,7 +95,7 @@ abstract class Model extends \Fiji\Service\DomainObject
     public function save()
     {
         if ($this->onSave() !== false) {
-            parent::save();
+            return parent::save();
         }
     }
     
@@ -105,7 +105,7 @@ abstract class Model extends \Fiji\Service\DomainObject
     public function delete()
     {
         if ($this->onDelete() !== false) {
-            parent::delete();
+            return parent::delete();
         }
     }
 

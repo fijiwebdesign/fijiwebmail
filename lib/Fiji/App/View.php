@@ -42,7 +42,7 @@ class View {
     public function getTemplatePath()
     {
         if (!isset($this->templatePath)) {
-            $path = str_replace('\\', '/', get_class($this));
+            $path = str_replace('\\', '/', strtolower(get_class($this)));
             $this->templatePath = $path;
         }
         return $this->templatePath;

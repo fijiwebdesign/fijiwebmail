@@ -137,7 +137,12 @@ class RedBean implements DataProvider
             }
         }
         
-        return R::store($bean);
+        $id = R::store($bean);
+        if ($id) {
+            $DomainObject->id = $id;
+        }       
+        return $id;
+        
     }
     
     /**

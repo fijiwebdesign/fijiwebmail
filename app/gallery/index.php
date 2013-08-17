@@ -19,11 +19,23 @@ try {
     $Controller = new app\gallery\controller\Gallery($View);
 } catch (\Exception $e) {
     if($mode == config\App::MODE_DEV) {
-        throw new \Exception($e->getMessage());
+        echo "<h3>Error occurred!</h3>";
+        echo '<p class="alert fade in">Message: ' . $e->getMessage();
+        echo '<br>File: ' . $e->getFile();
+        echo '<br>Line: ' . $e->getLine() . '</p>';
+        
+        if (isset($e->xdebug_message)) {
+            echo '<pre class="alert">'. $e->xdebug_message . '</pre>';
+            var_dump($e);
+        } else {
+            echo '<pre class="alert">' . print_r($e, true) . '</pre>';
+        }
+        
     } else {
         // @todo custom error page
         echo "<h1>Error Loading page!</h1>";
         echo "<p class=\"alert fade in\">A error occurred with the message: " . $e->getMessage() . "</p>";
     }
 }
+
 

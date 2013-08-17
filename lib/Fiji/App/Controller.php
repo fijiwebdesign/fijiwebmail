@@ -57,6 +57,8 @@ abstract class Controller
                 die($e->getMessage());
             }
         } else {
+            var_dump($method);
+            var_dump(get_class_methods($this));
             throw new controllerException('Method doesn\'t exist!');
         }
     }

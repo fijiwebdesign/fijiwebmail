@@ -32,6 +32,8 @@ class composeForm
     public function toHtml()
     {
         
+        $attachmentWidget = new \app\mail\view\widget\attachment\attachment();
+        
         ob_start();
         ?>
         
@@ -65,7 +67,9 @@ class composeForm
             </div>
         </div>
         <div class="form-actions">
-            <button class="btn btn-alt btn-primary" type="submit">Send Email</button>
+            <?php $attachmentWidget->render(); ?>
+            <input type="hidden" name="plupload_id" value="" />
+            <button class="btn btn-alt btn-primary" id="btn-send-email" type="submit"><i class="icon-plane"></i>&nbsp;Send Email</button>
         </div>
     </fieldset>
     <input type="hidden" name="In-Reply-To" value="<?php echo htmlentities($this->inReplyTo); ?>">
@@ -96,27 +100,85 @@ class composeForm
         });
         
         // form handler
-        $('#compose-email').bind('submit', function(event) {
+        $('#btn-send-email').bind('click', function(event) {
             if (!$('[name=to]').val()) {
-                formError('Please enter a recepient.', event);
+                return formError('Please enter a recepient.', event);
             }
             if (!$('[name=subject]').val()) {
-                formError('Please enter a subject.', event);
+                return formError('Please enter a subject.', event);
             }
             if (!$('[name=body]').val()) {
-                formError('Please enter a message.', event);
+                return formError('Please enter a message.', event);
             }
+            
+            // upload attachments
+            uploadFiles(event);
         });
         
         // display form errors
         function formError(msg, event) {
             event.preventDefault();
-            alert(msg);
+            $('#form-error-body').html(msg);
+            $('#form-error').modal('show');
+            return false;
         }
+        
+        // attachments
+        $('.plupload').hide();
+        $('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="icon-facetime-video"></i>&nbsp;Attach Files</a></li>');
+        $('.pl_start').remove();
+        $('.pl_add').addClass('btn-success');
+        $('#btn-attach').bind('click', function(event) {
+            event.preventDefault();
+            $('.plupload').show();
+            focusOnAttachments();
+            $('.pl_add').trigger('click');
+        });
+        $('.pl_add').prepend('<i class="icon-plus"></i>&nbsp;');
+        
+        function focusOnAttachments() {
+            $('body, document').animate({
+                scrollTop: $('.plupload').offset().top
+            }, 500, 'linear', function() {
+                
+            });
+        }
+        
+        // make sure attachments have been uploaded before submitting form
+        function uploadFiles(event) {
+            if ($('.plupload').pluploadQueue().files.length > 0) {
+                // stop the form submit
+                event.preventDefault();
+                
+                // listen for plupload completion
+                $('.plupload').pluploadQueue().bind('StateChanged', function(up) {
+                    // Called when the state of the queue is changed
+                    if (up.state == plupload.STOPPED) {
+                        $('[name=plupload_id]').val($('.plupload').pluploadQueue().id);
+                        $('#compose-email').submit();
+                    }
+                });
+                // start upload
+                $('.plupload').pluploadQueue().start();
+            }
+        };
         
     });
     
 </script>
+
+<div class="modal hide fade" id="form-error">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Error</h3>
+  </div>
+  <div class="modal-body">
+    <p id="form-error-body"></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Ok</a>
+  </div>
+</div>
 
 <style>
     
@@ -145,7 +207,7 @@ class composeForm
 }
 
 .add-bcc-wrap {
-    float: right;
+    /* float: right; */
 }
 
 </style>

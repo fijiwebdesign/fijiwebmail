@@ -146,7 +146,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     /**
      * Set the Service providing data
      */
-    public function setService(\Fiji\App\Service $Service)
+    public function setService(\Fiji\Service\Service $Service)
     {
         $this->Service = $Service;
     }

@@ -117,6 +117,13 @@ class MySql implements \Fiji\Service\DataProvider
         $names = $DomainObject->getKeys();
         $values = $DomainObject->getValues();
         
+        foreach($names as $key => $val) {
+            if (!$values[$key]) {
+                unset($names[$key]);
+                unset($values[$key]);
+            } 
+        }
+        
         $names = '`' . implode('`, `', $names) . '`';
         $values = "'" . implode("', '", array_map('mysql_real_escape_string', $values)) . "'";
         
@@ -124,6 +131,8 @@ class MySql implements \Fiji\Service\DataProvider
             ($values)
         ";
         $result = mysql_query($query, $this->link);
+        $DomainObject->id = mysql_insert_id();
+        
         if (!$result) {
             var_dump($query);
             throw new Exception(mysql_error($this->link));
@@ -133,6 +142,7 @@ class MySql implements \Fiji\Service\DataProvider
     
     /**
      * Save all Domain Objects in Collection to storage
+     * @todo Insert IDs into the DomainObjects in DomainCollection
      */
     public function save(DomainCollection $DomainCollection) {
         

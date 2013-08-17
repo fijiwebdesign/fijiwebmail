@@ -44,9 +44,9 @@ class Factory
    /**
     * Retrieve current user
     */
-   static function getUser()
+   static function getUser($className = null)
    {
-       return self::getSingleton('Fiji\\App\\User');
+       return self::getSingleton($className ? $className : 'Fiji\\App\\User');
    }
    
    /**

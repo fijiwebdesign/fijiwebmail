@@ -14,12 +14,13 @@ use Fiji\Factory;
 use Fiji\App\Request;
 use Fiji\Mail\AddressList;
 
-use \Zend\Mail\Message;
-use \Zend\Mime\Message as MimeMessage;
-use \Zend\Mime\Part as MimePart;
-use \Zend\Mail\Transport\Sendmail as SendmailTransport;
-use \Zend\Mail\Transport\Smtp as SmtpTransport;
-use \Zend\Mail\Transport\SmtpOptions;
+use Zend\Mail\Message;
+use Zend\Mime\Mime;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
+use Zend\Mail\Transport\Sendmail as SendmailTransport;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
 
 /**
  * Compose email form handler
@@ -101,6 +102,7 @@ class Compose
     
     public function sendComposed()
     {
+        
         $to = $this->Req->getVar('to', '');
         $cc = $this->Req->getVar('cc', '');
         $bcc = $this->Req->getVar('bcc', '');
@@ -111,7 +113,7 @@ class Compose
         // @todo configurable
         $saveFolder = $this->Config->get('folders')->get('sent', 'Sent Mail');
         
-        $fromAddressList = new AddressList($this->User->username);
+        $fromAddressList = new AddressList($this->User->username, $this->User->name);
         $toAddressList = new AddressList($to);
         $ccAddressList = new AddressList($cc);
         $bccAddressList = new AddressList($bcc);
@@ -128,26 +130,43 @@ class Compose
         }
         $message->getHeaders()->addHeaderLine('In-Reply-To', $inReplyTo);
         $message->getHeaders()->addHeaderLine('Message-ID', $this->generateMessageId());
-
+        
         $text = new MimePart(strip_tags($body));
         $text->type = "text/plain";
         
         $html = new MimePart($body);
         $html->type = "text/html";
         
-        /*
-        $image = new MimePart(fopen($pathToImage, 'r'));
-        $image->type = "image/jpeg";
-         */
+        $parts = array($text, $html);
+        $content = new MimeMessage();
+        $content->setParts($parts);
         
-        $body = new MimeMessage();
-        $body->setParts(array($html));
- 
-        $message->setFrom($fromAddressList)
+        // we need to separate the message from the attachments
+        $attachments = $this->getAttachments();
+        if (count($attachments)) {
+            
+            $contentPart = new MimePart($content->generateMessage());        
+            $contentPart->type = Mime::MULTIPART_ALTERNATIVE . ';' . PHP_EOL . ' boundary="' . $content->getMime()->boundary() . '"';
+            
+            $body = new MimeMessage();
+            $body->setParts(array_merge(array($contentPart), $attachments));
+        } else {
+            $body = $content;
+        }
+        
+        $message->setEncoding('utf-8')
+             ->setFrom($fromAddressList)
              ->setSubject($subject)
              ->setBody($body);
              
         $message->addTo($toAddressList);
+        
+        if (count($attachments)) {
+            $message->getHeaders()->get('content-type')->setType(Mime::MULTIPART_MIXED);
+        } else {
+            $message->getHeaders()->get('content-type')->setType(Mime::MULTIPART_ALTERNATIVE);
+        }
+        
         
         $transport = $this->getMailTransport();
         
@@ -166,6 +185,40 @@ class Compose
             
         $this->App->redirect('?app=mail&page=mailbox', 'Your message has been sent.');
         
+        
+    }
+    
+    public function getAttachments()
+    {
+        $attachmentsWidget = new \app\mail\view\widget\attachment\attachment();
+        
+        foreach($_REQUEST as $name => $value) {
+            if (strrpos($name, '_count') == strlen($name) - 6) {
+                $count = $value;
+                $upload_id = substr($name, 0, strlen($name) - 6);
+                break;
+            }
+        }
+        
+        $uploads_path = $attachmentsWidget->getUploadDirPath();
+        
+        $attachments = array();
+        for($i = 0; $i < $count; $i++) {
+            
+            $tmp_name = $_REQUEST["{$upload_id}_{$i}_tmpname"];
+            $name = $_REQUEST["{$upload_id}_{$i}_name"];
+            
+            $path = $uploads_path . '/' . $tmp_name;
+            
+            $attachment = new MimePart(fopen($path, 'r'));
+            $attachment->disposition = "attachment";
+            $attachment->filename = $name;
+            $attachment->encoding = Mime::ENCODING_BASE64;
+            
+            $attachments[] = $attachment;
+        }
+        
+        return $attachments;
         
     }
     

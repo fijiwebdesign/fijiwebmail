@@ -41,6 +41,8 @@
                 </select>
                 
                 <button name="view" value="saveUpload">Upload</button>
+                
+                <input type="hidden" name="app" value="gallery" />
             
             </form>
             

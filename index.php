@@ -83,4 +83,6 @@ require 'templates/chromatron/widgets/notifications.php';
 $Doc->notifications = ob_get_clean();
 
 // load template
+ob_start();
 require( 'templates/chromatron/page.php');
+ob_end_flush();
