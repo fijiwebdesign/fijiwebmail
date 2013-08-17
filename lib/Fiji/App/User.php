@@ -32,11 +32,15 @@ class User extends Model {
     
     public $id;
     
-    protected $username;
+    public $username;
     
-    protected $name;
+    public $name;
     
-    protected $email;
+    public $email;
+    
+    public $password;
+    
+    private $imapOptions;
     
     public function __construct() {
         
@@ -45,9 +49,23 @@ class User extends Model {
        
        // ensure autheticated user is loaded
        if ($userId = $this->isAuthenticated()) {
+           
+           // get from session
+           foreach($this->getKeys() as $key) {
+                 $this[$key] = $this->Session->$key;
+            }
+           
            $this->findById($userId);
        }
         
+    }
+    
+    /**
+     * Retrieve session object for this user
+     */
+    public function getSession()
+    {
+        return $this->Session;
     }
     
     /**
@@ -57,6 +75,24 @@ class User extends Model {
     public function setExpirationSeconds($secs)
     {
          $this->Session->setExpirationSeconds($secs);
+    }
+    
+    /**
+     * Allow persisting custom values
+     */
+    public function getPersistKeys()
+    {
+        return isset($this->persist) ? $this->persist : $this->getKeys();
+    }
+    
+    /**
+     * Persist user data to session
+     */
+    public function persist()
+    {
+        foreach($this->getPersistKeys() as $key) {
+            $this->Session->$key = $this->$key;
+        }
     }
     
     /**
