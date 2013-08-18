@@ -44,7 +44,7 @@ class Imap {
                     $foundPart = $part;
                     break;
                 }
-            } catch (Zend_Mail_Exception $e) {
+            } catch (\Exception $e) {
                 // ignore
             }
         }
@@ -52,9 +52,29 @@ class Imap {
     }
     
     /**
-     * Returns the email headers
+     * Find attachments (inline or attachment)
+     * @var $message 
+     * @var $contentType String ("attachment", "inline")
      */
-    public function getMessageHeaders($id)
+    public function getAttachments($message, $disposition = 'attachment') 
+    {
+        $parts = array();
+        foreach (new \RecursiveIteratorIterator($message) as $part) {
+            try {
+                if (strtok($part->{"Content-Disposition"}, ';') == $disposition) {
+                    $parts[] = $part;
+                }
+            } catch (\Exception $e) {
+                // ignore
+            }
+        }
+        return $parts;
+    }
+    
+    /**
+     * Returns the email message
+     */
+    public function getMessage($id)
     {
         $message = $this->Imap->getMessage($id);
         $message->num = $id;
@@ -82,6 +102,10 @@ class Imap {
             }
         }
         
+        //echo '<pre>';
+        //var_dump($this->getMessageCustomFlags($message));
+        //echo '</pre>';
+        
         
         $message->className = '';
         
@@ -89,11 +113,24 @@ class Imap {
     }
 
     /**
+     * Retrieve flags not in standard flag list $this->flags
+     */
+    public function getMessageCustomFlags($message)
+    {
+        $flags = $message->getFlags();
+        foreach($flags as $i => $flag) {
+            if (in_array($flag, $this->flags)) {
+                unset($flags[$i]);
+            }
+        }
+        return $flags;
+    }
+
+    /**
      * Returns the Message HTML part or default to text part
      */
-    public function getMessageHtmlPart($id)
+    public function getMessageHtmlPart($message)
     {
-        $message = $this->Imap->getMessage($id);
         $part = $message;
         if ($message->isMultipart()) {
             if (!$part = $this->findPartByContentType($message, 'text/html')) {

@@ -16,6 +16,7 @@ use Fiji\Mail\Storage\Imap;
 use Fiji\Cache\File as Cache;
 use Fiji\Factory;
 use app\mail\view\widget\addressList as addressListWidget;
+use Exception;
 
 /**
  * Email Message
@@ -85,17 +86,25 @@ class message extends \Fiji\App\Controller
         $uid = $this->Req->getVar('uid', '');
         $id = $this->Imap->getNumberByUniqueId($uid);
         if (!($uid || $id)) {
-            die;
+            throw new Exception('Invalid Message Id');
         }
-        
         
         $folder = $this->Req->getVar('folder', null);
         if ($folder) {
             $this->Imap->selectFolder($folder);
         }
         
-        $message = $this->ImapHelper->getMessageHeaders($id);
-        $htmlPart = $this->ImapHelper->getMessageHtmlPart($id);
+        $message = $this->ImapHelper->getMessage($id);
+        $htmlPart = $this->ImapHelper->getMessageHtmlPart($message);
+        
+        $attachments = $this->ImapHelper->getAttachments($message);
+        
+        $attachmentModels = array();
+        foreach($attachments as $attachment) {
+            $attachmentModel = Factory::createModel('app\mail\model\Attachment');
+            $attachmentModel->setDataFromMimeAttachment($attachment);
+            $attachmentModels[] = $attachmentModel;
+        }
         
         $body = $htmlPart->getContent();
         if ($htmlPart->getContentType() == 'text/plain') {
@@ -118,6 +127,113 @@ class message extends \Fiji\App\Controller
         // @todo View class
         require __DIR__ . '/../view/message/message.php';
         
+    }
+
+    /**
+     * Display an attachment
+     * @todo Optimize
+     */
+    public function attachment()
+    {
+        // page title
+        $this->Doc->title = "Email Message";
+        
+        // we need a session
+        if (!$this->User->isAuthenticated()) {
+            // set our return path and redirect to login page
+            $this->App->setReturnUrl('?app=mail');
+            $this->App->redirect('?app=auth');
+        }
+        
+        // email message id (not the uid or Message-ID)
+        $uid = $this->Req->getVar('uid', '');
+        $id = $this->Imap->getNumberByUniqueId($uid);
+        if (!($uid || $id)) {
+            throw new Exception('Invalid Message Id');
+        }
+        $filename = $this->Req->getVar('filename');
+        
+        if (!$filename) {
+            throw new Exception('No attachment filename');
+        }
+        
+        $folder = $this->Req->getVar('folder', null);
+        if ($folder) {
+            $this->Imap->selectFolder($folder);
+        }
+        
+        $message = $this->ImapHelper->getMessage($id);
+        $attachments = $this->ImapHelper->getAttachments($message);
+        
+        // find attachment in list
+        $attachmentModelMatched = false;
+        foreach($attachments as $attachment) {
+            $attachmentModel = Factory::createModel('app\mail\model\Attachment');
+            $attachmentModel->setDataFromMimeAttachment($attachment);
+            
+            if ($attachmentModel->filename == $filename) {
+                $attachmentModelMatched = true;
+                break;
+            }
+        }
+        
+        if (!$attachmentModelMatched) {
+            throw new Exception('Attachment not found');
+        }
+        
+        if ($this->Req->get('disposition') == 'inline') {
+            $this->inlineAttachment($attachmentModel);
+        } else {
+            $this->downloadAttachment($attachmentModel);
+        }
+        
+        
+    }
+
+/**
+     * Display the attachment inline
+     */
+    private function inlineAttachment(\app\mail\model\Attachment $attachmentModel) {
+        
+        if (!$attachmentModel->isImage()) {
+            throw new Exception('Only Images can be displayed inline.');
+        }
+        
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-Transfer-Encoding: binary ");
+
+        header("Content-Type: " . $attachmentModel->mimetype);
+        header("Content-Disposition: inline; filename=" . $attachmentModel->title);
+        header("Content-Length: " . strlen($attachmentModel->content));
+        header("Content-Transfer-Encoding: binary");
+        echo $attachmentModel->content;
+        
+        die;
+    }
+
+    /**
+     * Force download of the attachment
+     */
+    private function downloadAttachment(\app\mail\model\Attachment $attachmentModel) {
+        
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Disposition: attachment;filename=" . $attachmentModel->filename);
+        header("Content-Transfer-Encoding: binary ");
+
+        header("Content-Type: " . $attachmentModel->mimetype);
+        header("Content-Disposition: attachment; filename=" . $attachmentModel->title);
+        header("Content-Length: " . strlen($attachmentModel->content));
+        header("Content-Transfer-Encoding: binary");
+        echo $attachmentModel->content;
+        
+        die;
     }
 
     /**

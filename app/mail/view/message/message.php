@@ -36,6 +36,7 @@
 
 .email-reply-btn {
     float: right;
+    margin-top: -10px;
 }
 
 .email-reply-btn .icon-share-alt {
@@ -90,6 +91,24 @@
 .reply-textarea p {
     padding: 10px;
 }
+
+#email-attachments {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+#email-attachments ul {
+    margin-left: 0;
+}
+
+#email-attachments li {
+    list-style: none;
+    padding-bottom: 10px;
+}
+
+#email-attachments li img {
+    margin-right: 10px;
+}
    
 </style>
 
@@ -108,8 +127,27 @@
                 </div>
             </header>
             <section class="email-body">
-                <div scrolling="no" frameborder="no" tabindex="-1" style="">
+                <div>
                     <?php echo $body; ?>
+                </div>
+                <div id="email-attachments">
+                    <?php 
+                    if (count($attachmentModels)) {
+                        echo '<h4>' . count($attachmentModels) . ' Attachments</h4>';
+                        echo '<ul>';
+                        foreach($attachmentModels as $attachmentModel) {
+                            $url = $attachmentModel->getUrl($uid);
+                            $thumb = '';
+                            if ($attachmentModel->isImage()) {
+                                // @todo resize image
+                                $thumb = '<img src="' . $url . '&disposition=inline" style="max-width:150px;max-height:150px" />';
+                            }
+                            
+                            echo '<li>' . $thumb . '<a href="' . $url . '" target="_blank">' . $attachmentModel->title . '</a></li>';
+                        }
+                        echo '</ul>';
+                    }
+                    ?>
                 </div>
             </section>
             <section class="reply-fake">

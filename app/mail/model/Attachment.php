@@ -24,6 +24,10 @@ class Attachment extends \Fiji\App\Model
     
     public $filename;
     
+    public $mimetype;
+    
+    public $content;
+    
     public $description;
     
     public $mailbox_id;
@@ -38,13 +42,44 @@ class Attachment extends \Fiji\App\Model
     }
     
     /**
+     * Parses the Attachment Mime Part for data to populate Model
+     * @param \Fiji\Mail\Storage\Message $Attachment
+     */
+    public function setDataFromMimeAttachment(\Fiji\Mail\Storage\Message $Attachment)
+    {
+        $ContentDisposition = $Attachment->getHeader('Content-Disposition')->getFieldValue();
+        $ContentType = $Attachment->getHeader('ContentType')->getFieldValue();
+        
+        $mimeType = substr($ContentType, 0, strpos($ContentType, ';'));
+        $fileName = '';
+        if (preg_match('/name=[\'"]?([^"\']+)["\']?/', $ContentType, $matches)) {
+            $fileName = $matches[1];
+        } elseif (preg_match('/filename=[\'"]?([^"\']+)["\']?/', $ContentDisposition, $matches)) {
+            $fileName = $matches[1];
+        } else {
+            throw new \Exception('Could not find attachment name.');
+        }
+        
+        $this->filename = $fileName;
+        $this->mimetype = strtolower($mimeType);
+        $this->title = $fileName;
+        $this->content = $Attachment->getContent();
+    }
+    
+    public function isImage()
+    {
+        return strpos($this->mimetype, 'image/') === 0;
+    }
+    
+    /**
      * Handle getting URLs ($this->url);
      */
-    public function getUrl()
+    public function getUrl($uid)
     {
-        $App = Factory::getApplication();
-        $basePath = $App->getPathBase();
-        return str_replace($basePath . '/', '', $this->filename);
+        $url = '?app=mail&page=message&view=attachment&uid=' . $uid 
+            . '&filename=' . htmlspecialchars(urlencode($this->filename));
+        return $url;
+                            
     }
 
 }

@@ -24,6 +24,27 @@ class Message extends \Zend\Mail\Storage\Message
     }
     
     /**
+     * Override the parent::getHeader() which throws exceptions.
+     * We can live without exceptions here. 
+     */
+    public function getHeader($name, $format = null)
+    {
+        $header = null;
+        try {
+            $header = parent::getHeader($name, $format);
+        } catch(\Exception $e) {
+            if ($format == 'string') {
+                $header = '';
+            } elseif ($format == 'array') {
+                $header = array();
+            } else {
+                $header = new \Zend\Mail\Header\GenericHeader();
+            }
+        }
+        return $header;
+    }
+    
+    /**
      * Returns the character set encoding of mime part
      */
     public function getCharset()

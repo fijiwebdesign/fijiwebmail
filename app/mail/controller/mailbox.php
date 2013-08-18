@@ -130,7 +130,7 @@ class mailbox extends \Fiji\App\Controller
             $id = $ids[$i];
             
             // get message headers
-            $message = $this->ImapHelper->getMessageHeaders($id);
+            $message = $this->ImapHelper->getMessage($id);
             
             $message->uid = $this->Imap->getUniqueId($id);
             
