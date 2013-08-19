@@ -124,6 +124,9 @@ class message extends \Fiji\App\Controller
         $fromWidget = new addressListWidget($message->getHeader('from')->getAddressList());
         $toWidget = new addressListWidget($message->getHeader('to')->getAddressList());
         
+        $this->Imap->addFlags($id, array('xtag'));
+        var_dump($message->getFlags());
+        
         // @todo View class
         require __DIR__ . '/../view/message/message.php';
         
@@ -190,7 +193,7 @@ class message extends \Fiji\App\Controller
         
     }
 
-/**
+   /**
      * Display the attachment inline
      */
     private function inlineAttachment(\app\mail\model\Attachment $attachmentModel) {
@@ -407,22 +410,6 @@ class message extends \Fiji\App\Controller
         // go to requested
         $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
             count($uids) . ' email(s) marked as ' . $flag); 
-    }
-    
-    /**
-     * Add folders to spam
-     */
-    public function spam()
-    {
-        
-    }
-    
-    /**
-     * Add messages to archive
-     */
-    public function arhive()
-    {
-        
     }
     
 }

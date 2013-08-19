@@ -281,6 +281,7 @@ $(function() {
     handleMailSelections();
     
     $('.mailbox li').bind('click', function(event) {
+        event.preventDefault();
         location = '?app=mail&page=message&uid=' + $(this).attr('data-uid')
                 + '&folder=' + $('.mailbox').attr('data-folder');
     });
@@ -303,13 +304,15 @@ $(function() {
         location = '?app=mail&page=message&view=move&to=Archive&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
     });
     
-    // dropdown list
+    // Folder dropdown list
     $('#<?php echo htmlentities($folderListWidget->id); ?>').bind('change', function() {
+        event.preventDefault();
         location = '?app=mail&page=message&view=move&to=' + this.value + '&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();
     });
     
-    // html dropdown list
-    $('#<?php echo htmlentities($folderListWidget->id); ?> a').bind('click', function() {
+    // Move to folder html dropdown list
+    $('#<?php echo htmlentities($folderListWidget->id); ?> a').bind('click', function(event) {
+        event.preventDefault();
         var folder = $(this).attr('data-value');
         if (!folder) return;
         location = '?app=mail&page=message&view=move&to=' + folder + '&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();
@@ -329,6 +332,7 @@ $(function() {
     
     // tools more
     $('#<?php echo htmlentities($toolsWidget->getId()); ?> a').bind('click', function(event) {
+        event.preventDefault();
         var view = $(this).attr('data-id');
         location = '?app=mail&page=message&view=' + view + '&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();
     });

@@ -87,6 +87,7 @@ class mailbox extends \Fiji\App\Controller
 
         if ($this->searchQuery) {
             $ids = $this->Imap->search(array('TEXT "' . htmlentities($this->searchQuery) . '"'));
+            $ids = array_reverse($ids);
         } else {
             $sizes = $this->Imap->getSize(null, $this->folder);
             $ids = array_reverse(array_keys($sizes));

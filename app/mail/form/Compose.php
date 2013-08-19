@@ -72,7 +72,7 @@ class Compose
         // we should add a method to config/Mail to get as data/options
         // eg: $stmpOptions->toString() or $smtpOptions->toOptions()
         $ssl = $stmpOptions->get('connection_config');
-        $ssl = $ssl['ssl'];
+        $ssl = isset($ssl['ssl']) ? $ssl['ssl'] : null;
         $options   = new SmtpOptions(array(
             'name'=> $stmpOptions->get('name'),
             'host'=> $stmpOptions->get('host'),
