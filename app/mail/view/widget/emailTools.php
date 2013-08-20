@@ -27,6 +27,11 @@ class emailTools
      */
     public $count;
 
+    /**
+     * @var Tool Items/Links
+     */
+    public $links;
+
     public function __construct($id = 'email-tools', $title = 'More', $links = array())
     {
         $this->id = $id;

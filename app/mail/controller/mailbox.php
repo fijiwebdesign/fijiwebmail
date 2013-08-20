@@ -18,6 +18,7 @@ use app\mail\view\widget\addressList as addressListWidget;
 use app\mail\view\widget\folderList as folderListWidget;
 use app\mail\view\widget\pagination;
 use app\mail\view\widget\emailTools;
+use app\mail\view\widget\addLabel;
 
 /**
  * Email Message
@@ -106,12 +107,24 @@ class mailbox extends \Fiji\App\Controller
         $end = $paginationWidget->getEnd();
         
         // @todo language
-        $toolsWidget = new emailTools();
+        // move to folder tool
+        $folderListWidget = new folderListWidget('folder-list-move', '<i class="icon-folder-open"></i>');
+        
+        // more tool
+        $toolsWidget = new emailTools('email-tools', '<i class="icon-flag"></i>');
         $toolsWidget->addLink('read', 'Mark as Read');
         $toolsWidget->addLink('unread', 'Mark as Unread');
         $toolsWidget->addLink('star', 'Star');
         $toolsWidget->addLink('unstar', 'Unstar');
         
+        // add labels tool
+        $addLabelWidget = new addLabel('addlabel-tool', '<i class="icon-tags"></i>');
+        $labels = $this->Imap->getAllLabels();
+        foreach($labels as $label) {
+            $addLabelWidget->addLink($label, strtok($label, '/'));
+        }
+        
+        // select messages tool
         $select = '<input type="checkbox">';
         $selectWidget = new emailTools('tool-select', $select);
         $selectWidget->addLink('all', 'All');
@@ -142,8 +155,6 @@ class mailbox extends \Fiji\App\Controller
             
         }
         
-        $folderListWidget = new folderListWidget('folder-list-move', 'Move to');
-        
         $sentFolder = $this->Config->get('folders')->get('sent');
         
         // template
@@ -153,12 +164,13 @@ class mailbox extends \Fiji\App\Controller
     public function test()
     {
         
+        // all flags for all messages in mailbox
+        $flags = $this->Imap->getFlags(1, INF);
+        // unique flags
+        $flags = array_unique(iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($flags))));
         
-        $flags = $this->Imap->getFlags(1);
-        
-        echo 'flags';
-        var_dump(array_unique($flags));
-        die;
+        echo '<pre>';
+        var_dump($flags);
         
     }
 

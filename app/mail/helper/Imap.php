@@ -10,7 +10,8 @@
 
 namespace app\mail\helper;
 
-use \Zend\Mail\Storage;
+use Zend\Mail\Storage;
+use Fiji\Factory;
 
 class Imap {
     
@@ -84,28 +85,8 @@ class Imap {
         $message->answered = $message->hasFlag(Storage::FLAG_ANSWERED);
         $message->flagged = $message->hasFlag(Storage::FLAG_FLAGGED);
         
-        // @todo real implementation. Labels are folders in IMAP or via Gmail IMAP extension
-        $labels = array(
-            array('warning', 'label-warning'), 
-            array('success', 'label-success'), 
-            array('important', 'label-important'),
-            array('done', '')
-            );
-        $message->labels = array();
-        if (rand(0, 10) > 4) {
-            $message->labels[] = $labels[rand(0, 3)];
-            if (rand(0, 1)) {
-                $message->labels[] = $labels[rand(0, 3)];
-            }
-            if (!rand(0, 2)) {
-                $message->labels[] = $labels[rand(0, 3)];
-            }
-        }
-        
-        //echo '<pre>';
-        //var_dump($this->getMessageCustomFlags($message));
-        //echo '</pre>';
-        
+        // get labels (cusotm flags)
+        $message->labels = $this->getMessageCustomFlags($message);
         
         $message->className = '';
         
@@ -114,16 +95,18 @@ class Imap {
 
     /**
      * Retrieve flags not in standard flag list $this->flags
+     * @return Fiji\App\ModelCollection(app\mail\model\label)
      */
     public function getMessageCustomFlags($message)
     {
         $flags = $message->getFlags();
+        $flagModelList = Factory::createModelCollection('app\mail\model\Label');
         foreach($flags as $i => $flag) {
-            if (in_array($flag, $this->flags)) {
-                unset($flags[$i]);
+            if (!in_array($flag, $this->flags)) {
+                $flagModelList[] = Factory::createModel('app\mail\model\Label')->loadDataFromFlag($flag);
             }
         }
-        return $flags;
+        return $flagModelList;
     }
 
     /**

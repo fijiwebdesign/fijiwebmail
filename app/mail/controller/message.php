@@ -48,6 +48,12 @@ class message extends \Fiji\App\Controller
         $this->App = Factory::getSingleton('Fiji\App\Application');
         $this->Req = Factory::getSingleton('Fiji\App\Request');
         $this->Doc = Factory::getSingleton('Fiji\App\Document');
+        
+        // url params
+        $this->folder = $this->Req->getVar('folder');
+        $this->page = $this->Req->get('p');
+        $this->query = $this->Req->get('q');
+        
         // configs @todo
         $this->Config = Factory::getSingleton('config\Mail');
         $this->Cache = new Cache();
@@ -57,7 +63,7 @@ class message extends \Fiji\App\Controller
             $this->App->redirect('?app=auth');
         }
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
-        $this->folder = $this->Req->getVar('folder');
+        
         if ($this->folder) {
             $this->Imap->selectFolder($this->folder);
         }
@@ -125,7 +131,6 @@ class message extends \Fiji\App\Controller
         $toWidget = new addressListWidget($message->getHeader('to')->getAddressList());
         
         $this->Imap->addFlags($id, array('xtag'));
-        var_dump($message->getFlags());
         
         // @todo View class
         require __DIR__ . '/../view/message/message.php';
@@ -410,6 +415,36 @@ class message extends \Fiji\App\Controller
         // go to requested
         $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
             count($uids) . ' email(s) marked as ' . $flag); 
+    }
+    
+    /**
+     * Create a label. Labels are custom flags
+     */
+    public function addLabel()
+    {
+        $uids = $this->Req->getVar('uids', array());
+        $flag = $this->Req->getVar('flag');
+        $color = $this->Req->getVar('color');
+        $label = $this->Req->getVar('label');
+        
+        if (!$label) {
+            $label = $flag . '/' . $color;
+        }
+        
+        if (!$label) {
+            throw new \Exception('Label not defined');
+        }
+        
+        // remote messages
+        foreach($uids as $uid) {
+            $id = $this->Imap->getNumberByUniqueId($uid);
+            $this->Imap->addFlags($id, array($label));
+        }
+        
+        // go to requested
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
+            count($uids) . ' email(s) marked as ' . $label); 
     }
     
 }

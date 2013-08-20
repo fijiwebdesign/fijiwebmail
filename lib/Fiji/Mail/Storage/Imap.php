@@ -185,8 +185,31 @@ class Imap extends \Zend\Mail\Storage\Imap
      */
     public function getFlags($from, $to = null)
     {
+        $data = $this->protocol->fetch('FLAGS', $from, $to);
+        return $data;
+    }
+
+    public function getAllFlags()
+    {
+        // all flags for all messages in mailbox
+        $flags = $this->getFlags(1, INF);
+        // unique flags
+        $flags = array_unique(iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($flags))));
+        return $flags;
+    }
+    
+    public function getAllLabels()
+    {
+        // all flags for all messages in mailbox
+        $flags = $this->getAllFlags();
         
-        return $this->protocol->fetch('FLAGS', $from, $to);
+        foreach($flags as $i => $flag) {
+            if (in_array($flag, self::$knownFlags)) {
+                unset($flags[$i]);
+            }
+        }
+        return $flags;
+        
     }
     
 }

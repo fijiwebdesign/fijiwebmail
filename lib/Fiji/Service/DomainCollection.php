@@ -52,10 +52,23 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     public function setData(Array $data = array())
     {
         foreach($data as $value) {
-            $object = clone($this->getDomainObject());
-            $object->setData($value);
-            $this->objects[] = $object;
+            $this->push($value);
         }
+    }
+    
+    /**
+     * Push an object to the collection
+     * @param Array|DomainObject $data Object to add to collection
+     */
+    public function push($data) {
+        if (!$data instanceof DomainObject) {
+            $object = clone($this->getDomainObject());
+            $object->setData((array) $data);
+            $this->objects[] = $object;
+        } else {
+            $this->objects[] = $data;
+        }
+        
     }
     
     /**
@@ -124,7 +137,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      */
     public function offsetSet($i, $value)
     {
-        return $this->objects[$i] = $value;
+        $this->push($value);
     }
     
     /**
@@ -132,7 +145,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      */
     public function offsetUnset($i)
     {
-        return array_splice($this->objects, $i, 1, null);
+        unset($this->objects[$i]);
     }
     
     /**
