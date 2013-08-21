@@ -96,6 +96,9 @@
             <!-- Left (navigation) side -->
             <section class="navigation-block">
                 
+                <!-- header -->
+                <?php $Doc->renderWidgets('header', 'html'); ?>
+                
                 <!-- User profile -->
                 <?php echo $Doc->userProfile; ?>
                 <!-- /User profile -->
@@ -104,7 +107,7 @@
                 <a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-heart"></span>Apps</a>
                 
                 <!-- Main navigation -->
-                <?php $Doc->renderWidgets('navigation'); ?>
+                <?php $Doc->renderWidgets('navigation', 'html'); ?>
                 <!-- /Main navigation -->
                 
                 

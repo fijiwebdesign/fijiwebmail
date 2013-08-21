@@ -19,6 +19,8 @@ class navigation extends \Fiji\App\Widget
 {
     protected $model;
     
+    protected $items;
+    
     public function __construct($model)
     {
         parent::__construct($model);
@@ -27,5 +29,18 @@ class navigation extends \Fiji\App\Widget
     public function render($format = 'html')
     {
         include(__DIR__ . '/view/navigation.php');
+    }
+    
+    public function addMenuItem($text, $link, $icon = '', $className = '', $current = false)
+    {
+        if ($current) {
+            $className .= ' current';
+        }
+        $this->items[] = (object) array('text' => $text, 'link' => $link, 'icon' => $icon, 'className' => $className);
+    }
+    
+    public function getMenuItems()
+    {
+        return $this->items;
     }
 }

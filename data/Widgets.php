@@ -36,6 +36,13 @@ class Widgets extends Collection
             'position' => 'navigation',
             'class' =>'app\mail\view\widget\navigation\navigation',
             'published' => 1
+        ),
+        array(
+            'name' => 'header',
+            'title' => 'Header',
+            'position' => 'header',
+            'class' =>'widget\header\header',
+            'published' => 1
         )
     );
     

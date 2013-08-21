@@ -21,16 +21,7 @@ namespace config;
  */
 class Widgets extends \Fiji\App\Config
 {
-    /**
-     * Mail navigation widget
-     */
-    public $mail_nav = array(
-        'name' => 'mail_nav',
-        'title' => 'Navigation',
-        'position' => 'navigation',
-        'class' =>'app/mail/view/widget/navigation/navigation',
-        'published' => 1
-    );
+    // look in data\Widgets for widget positions
     
 }
 

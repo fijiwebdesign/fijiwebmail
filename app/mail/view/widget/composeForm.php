@@ -43,7 +43,7 @@ class composeForm
             <div class="compose-headers">
                 <div class="controls control-to">
                     <label for="to" class="control-label">To</label>
-                    <input name="to" class="input-xlarge" value="<?php echo $this->to; ?>">
+                    <input name="to" class="input-xlarge" type="text" value="<?php echo $this->to; ?>">
                     <span class="add-bcc-wrap">
                         <a href="#" class="add-cc">Cc</a>
                         <a href="#" class="add-bcc">Bcc</a>
@@ -51,15 +51,15 @@ class composeForm
                 </div>
                 <div class="controls control-cc">
                     <label for="cc" class="control-label">Cc</label>
-                    <input name="cc" class="input-xlarge" value="<?php echo $this->cc; ?>">
+                    <input name="cc" class="input-xlarge" type="text" value="<?php echo $this->cc; ?>">
                 </div>
                 <div class="controls control-bcc">
                     <label for="bcc" class="control-label">Bcc</label>
-                    <input name="bcc" class="input-xlarge" value="<?php echo $this->bcc; ?>">
+                    <input name="bcc" class="input-xlarge" type="text" value="<?php echo $this->bcc; ?>">
                 </div>
                 <div class="controls control-subject">
                     <label for="subject" class="control-label">Subject</label>
-                    <input name="subject" class="input-xlarge" value="<?php echo $this->subject; ?>">
+                    <input name="subject" class="input-xlarge" type="text" value="<?php echo $this->subject; ?>">
                 </div>
             </div>
             <div class="controls">

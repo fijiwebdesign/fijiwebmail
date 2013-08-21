@@ -7,8 +7,21 @@
  * @package   Fiji_Mail
  */
 
+/** Logo */
+.navigation-block header h1 a {
+    background-image: url(../images/Fiji-Mail-Cloud-Logo.png);
+    height: 92px;
+}
 
 /** debugging */
 pre.debug {
     display: none !important;
-} 
+}
+
+nav.main-navigation a > [class^="icon-"] {
+    opacity: 0.6;
+}
+nav.main-navigation a:hover > [class^="icon-"],
+nav.main-navigation a.current > [class^="icon-"] {
+    opacity: 1;
+}

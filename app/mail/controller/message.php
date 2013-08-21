@@ -129,9 +129,7 @@ class message extends \Fiji\App\Controller
         
         $fromWidget = new addressListWidget($message->getHeader('from')->getAddressList());
         $toWidget = new addressListWidget($message->getHeader('to')->getAddressList());
-        
-        $this->Imap->addFlags($id, array('xtag'));
-        
+                
         // @todo View class
         require __DIR__ . '/../view/message/message.php';
         
