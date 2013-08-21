@@ -136,6 +136,45 @@ class message extends \Fiji\App\Controller
     }
 
     /**
+     * Display the body of the email message
+     */
+    public function body()
+    {
+        // page title
+        $this->Doc->title = "Email Message";
+        
+        // we need a session
+        if (!$this->User->isAuthenticated()) {
+            // set our return path and redirect to login page
+            $this->App->setReturnUrl('?app=mail');
+            $this->App->redirect('?app=auth');
+        }
+        
+        // email message id (not the uid or Message-ID)
+        $uid = $this->Req->getVar('uid', '');
+        $id = $this->Imap->getNumberByUniqueId($uid);
+        if (!($uid || $id)) {
+            throw new Exception('Invalid Message Id');
+        }
+        
+        $folder = $this->Req->getVar('folder', null);
+        if ($folder) {
+            $this->Imap->selectFolder($folder);
+        }
+        
+        $message = $this->ImapHelper->getMessage($id);
+        $htmlPart = $this->ImapHelper->getMessageHtmlPart($message);
+        
+        $body = $htmlPart->getContent();
+        if ($htmlPart->getContentType() == 'text/plain') {
+            $body = nl2br($body);
+        }
+                
+        // @todo View class
+        require __DIR__ . '/../view/message/body.php';
+    }
+
+    /**
      * Display an attachment
      * @todo Optimize
      */

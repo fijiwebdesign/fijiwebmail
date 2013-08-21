@@ -81,8 +81,14 @@ $Doc->userProfile = ob_get_clean();
 ob_start();
 require 'templates/chromatron/widgets/notifications.php';
 $Doc->notifications = ob_get_clean();
+ 
+$siteTemplate = $Req->get('siteTemplate');
 
 // load template
 ob_start();
-require( 'templates/chromatron/page.php');
+if ($siteTemplate == 'app') {
+    require( 'templates/chromatron/app.php');
+} else {
+    require( 'templates/chromatron/page.php');
+}
 ob_end_flush();

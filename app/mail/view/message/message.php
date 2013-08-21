@@ -128,7 +128,8 @@
             </header>
             <section class="email-body">
                 <div>
-                    <?php echo $body; ?>
+                    <iframe id="email-body-iframe" src="?app=mail&page=message&view=body&uid=<?php echo $uid; ?>&siteTemplate=app" 
+                        sandbox="allow-same-origin" seamless style="width:100%;overflow:hidden" scrolling="no"></iframe>
                 </div>
                 <div id="email-attachments">
                     <?php 
@@ -189,7 +190,22 @@ $(function() {
     $('.email-reply-btn').bind('click', showWysiwyg);
     
     $('.reply-textarea').bind('click', showWysiwyg);
+    
+    // @todo figure out a better way to do this
+    setInterval(function() {
+        autoResizeIframe('email-body-iframe');
+    }, 1000);
+    
 });
+
+function autoResizeIframe(id){
+    
+    var height =document.getElementById(id).contentWindow.document .body.scrollHeight;
+    var width =document.getElementById(id).contentWindow.document .body.scrollWidth;
+
+    document.getElementById(id).height= (height) + "px";
+    document.getElementById(id).width= (width) + "px";
+}
     
 </script>
 
