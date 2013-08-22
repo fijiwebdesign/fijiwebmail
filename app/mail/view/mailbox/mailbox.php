@@ -21,7 +21,7 @@ if ($this->searchQuery) {
 ?>
 
 <article class="data-block">
-    <div class="data-container">
+    <div class="data-container mail-mailbox">
         <header class="messages-title">
             <h2><?php echo htmlentities($header, ENT_QUOTES, 'UTF-8'); ?></h2>
             <?php echo $this->Doc->search; ?>
