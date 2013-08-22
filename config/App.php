@@ -20,6 +20,8 @@ class App extends \Fiji\App\Config
     
     public $error_reporting = E_ALL;
     
+    public $supportEmail = 'info@fijiwebdesign.com';
+    
     // zend frameworl library path (/var/lib/zf2 on my linux)
     public $zendPath = 'C:\wamp\www\fijicloud\zf2';
     

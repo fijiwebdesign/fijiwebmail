@@ -22,7 +22,6 @@ $User = Factory::getSingleton('Fiji\App\User');
 <!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
     
-<!-- Mirrored from template.walkingpixels.com/chromatron/login.html by HTTrack Website Copier/3.x [XR&CO'2010], Thu, 27 Dec 2012 09:29:34 GMT -->
 <head>
         <meta charset="utf-8">
         <title>Login | Fiji Communication Server</title>
@@ -76,6 +75,17 @@ $User = Factory::getSingleton('Fiji\App\User');
             display: block;
             margin: auto;
         }
+        
+        #login-nav {
+            margin-top: -20px;
+        }
+        
+        #copyright {
+            text-align: right;
+            color: #8d8d8d;
+            text-shadow: 0 1px 1px #ffffff;
+            margin-top: 10px;
+        }
             
         </style>
     </head>
@@ -101,7 +111,7 @@ $User = Factory::getSingleton('Fiji\App\User');
                 <!-- /Sample alert -->
                 
                 <!-- Login form -->
-                <form method="post" action="">
+                <form id="login-form" method="post" action="">
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="login">Username</label>
@@ -121,6 +131,16 @@ $User = Factory::getSingleton('Fiji\App\User');
                         <div class="form-actions">
                             <button class="btn btn-primary btn-alt" type="submit"><span class="awe-signin"></span> Log in</button>
                         </div>
+                        
+                        <!-- Login page navigation -->
+                        <nav id="login-nav">
+                            <ul>
+                                <li><a href="#">Lost password?</a></li>
+                                <li><a href="#">Support</a></li>
+                            </ul>
+                        </nav>
+                        <!-- Login page navigation -->
+            
                     </fieldset>
                     
                     <input type="hidden" name="app" value="auth" />
@@ -130,14 +150,9 @@ $User = Factory::getSingleton('Fiji\App\User');
                 
             </section>
             
-            <!-- Login page navigation -->
-            <nav>
-                <ul>
-                    <li><a href="#">Lost password?</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </nav>
-            <!-- Login page navigation -->
+            <!-- copyright -->
+            <footer id="copyright">Fiji Cloud Email &copy; <a href="http://www.fijisoftware.com/">FijiSoftware.com</a></footer>
+            <!-- /copyright -->
             
         </div>
         <!-- /Main login container -->

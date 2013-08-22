@@ -17,7 +17,7 @@
     margin-bottom: 0;
 }
 
-.icon-tasks {
+.awe-tasks {
     margin-right: 20px;
 }
 
@@ -41,7 +41,7 @@ $(function() {
 <article class="span4 data-block todo-block nested">
     <div class="data-container">
         <div class="toggle header">
-            <h3><span class="icon-tasks"></span>Tasks</h3>
+            <h3><span class="awe-tasks"></span>Tasks</h3>
         </div>
         <section class="toggled" style="display:none;">
             <form>

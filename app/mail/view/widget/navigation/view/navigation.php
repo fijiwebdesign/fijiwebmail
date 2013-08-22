@@ -20,12 +20,12 @@ $app = $Req->get('app', 'mail');
 $folder = $Req->get('folder', 'inbox');
 
 // add the menu items @todo move to configuration or service
-$this->addMenuItem('Inbox', '?app=mail', 'icon-envelope', '', $folder == 'inbox');
-$this->addMenuItem('Sent Mail', '?app=mail&folder=Sent Mail', 'icon-plane', '', $folder == 'Sent Mail');
-$this->addMenuItem('Drafts', '?app=mail&folder=Drafts', 'icon-edit', '', $folder == 'Drafts');
-$this->addMenuItem('Archive', '?app=mail&folder=Archive', 'icon-briefcase', '', $folder == 'Archive');
-$this->addMenuItem('Trash', '?app=mail&folder=Trash', 'icon-trash', '', $folder == 'Trash');
-$this->addMenuItem('Spam', '?app=mail&folder=Spam', 'icon-warning-sign', '', $folder == 'Spam');
+$this->addMenuItem('Inbox', '?app=mail', 'awe-envelope', '', $folder == 'inbox');
+$this->addMenuItem('Sent Mail', '?app=mail&folder=Sent Mail', 'awe-plane', '', $folder == 'Sent Mail');
+$this->addMenuItem('Drafts', '?app=mail&folder=Drafts', 'awe-edit', '', $folder == 'Drafts');
+$this->addMenuItem('Archive', '?app=mail&folder=Archive', 'awe-briefcase', '', $folder == 'Archive');
+$this->addMenuItem('Trash', '?app=mail&folder=Trash', 'awe-trash', '', $folder == 'Trash');
+$this->addMenuItem('Spam', '?app=mail&folder=Spam', 'awe-warning-sign', '', $folder == 'Spam');
 
 ?>
 
@@ -47,7 +47,7 @@ $this->addMenuItem('Spam', '?app=mail&folder=Spam', 'icon-warning-sign', '', $fo
 </nav>
 
 <section class="side-note" id="side-note-compose">
-    <p><a class="btn btn-primary btn-compose" href="?app=mail&page=message&view=compose"><span class="icon-pencil"></span> Compose</a></p>
+    <p><a class="btn btn-primary btn-compose" href="?app=mail&page=message&view=compose"><span class="awe-pencil"></span> Compose</a></p>
 </section>
 
 <section class="side-note" id="side-note-folderlist">

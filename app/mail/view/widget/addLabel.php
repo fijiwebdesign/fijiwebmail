@@ -32,7 +32,7 @@ class addLabel extends emailTools
             <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
             <ul class="dropdown-menu">
                 ' . $html . '
-                <li><a id="addlabel-create" href="#"><i class="icon-plus"></i>&nbsp;New Label</a></li>
+                <li><a id="addlabel-create" href="#"><i class="awe-plus"></i>&nbsp;New Label</a></li>
             </ul>
         </div>';
         

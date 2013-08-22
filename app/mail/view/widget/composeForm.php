@@ -69,7 +69,7 @@ class composeForm
         <div class="form-actions">
             <?php $attachmentWidget->render(); ?>
             <input type="hidden" name="plupload_id" value="" />
-            <button class="btn btn-alt btn-primary" id="btn-send-email" type="submit"><i class="icon-plane"></i>&nbsp;Send Email</button>
+            <button class="btn btn-alt btn-primary" id="btn-send-email" type="submit"><i class="awe-plane"></i>&nbsp;Send Email</button>
         </div>
     </fieldset>
     <input type="hidden" name="In-Reply-To" value="<?php echo htmlentities($this->inReplyTo); ?>">
@@ -125,7 +125,7 @@ class composeForm
         
         // attachments
         $('.plupload').hide();
-        $('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="icon-facetime-video"></i>&nbsp;Attach Files</a></li>');
+        $('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="awe-facetime-video"></i>&nbsp;Attach Files</a></li>');
         $('.pl_start').remove();
         $('.pl_add').addClass('btn-success');
         $('#btn-attach').bind('click', function(event) {
@@ -134,7 +134,7 @@ class composeForm
             focusOnAttachments();
             $('.pl_add').trigger('click');
         });
-        $('.pl_add').prepend('<i class="icon-plus"></i>&nbsp;');
+        $('.pl_add').prepend('<i class="awe-plus"></i>&nbsp;');
         
         function focusOnAttachments() {
             $('body, document').animate({

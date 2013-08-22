@@ -39,7 +39,7 @@
     margin-top: -10px;
 }
 
-.email-reply-btn .icon-share-alt {
+.email-reply-btn .awe-share-alt {
     transform:rotate(180deg);
     -ms-transform:rotate(180deg); /* IE 9 */
     -moz-transform:rotate(180deg); /* Firefox */
@@ -123,7 +123,7 @@
                     <div class="header to"><span>to</span><?php echo $toWidget->toHtml(); ?></div>
                     <div class="header date"><span>on</span><?php echo date('D jS M Y', strtotime($message->date)); ?></div>
                     <div class="header time"><span>at</span><?php echo date('h:ia', strtotime($message->date)); ?></div>
-                    <a href="#" class="email-reply-btn btn"><span class="icon-share-alt"></span>Reply</a> 
+                    <a href="#" class="email-reply-btn btn"><span class="awe-share-alt"></span>Reply</a> 
                 </div>
             </header>
             <section class="email-body">

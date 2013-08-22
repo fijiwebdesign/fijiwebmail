@@ -52,39 +52,8 @@
                     placement: 'top'
                 });
                 
-                // Close button for widgets
-                $('.widget').alert();
-                
-                // Remove tooltip when widget is closed
-                $('.widget').bind('close', function () {
-                    $(this).find('.close').tooltip('destroy');
-                })
-                
-                // Tabs
-                $('.demoTabs a').click(function (e) {
-                    e.preventDefault();
-                    $(this).tab('show');
-                })
-                
-                // Tickets
-                $('#ticketsDemo .ticket-data-activity a').click(function (e) {
-                    e.preventDefault();
-                })
-                
-                
             });
         </script>
-        
-        <script type="text/javascript">
-            //var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-2"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
-        </script>
-        
-        <style type="text/css">
-            
-            
-            
-            
-        </style>
         
         
     </head>
@@ -126,6 +95,12 @@
                 
                 </div>
                 <!-- /Grid row -->
+                
+                <div class="row-fluid">
+                    <!-- copyright -->
+                    <footer id="copyright">Fiji Cloud Email &copy; <a href="http://www.fijisoftware.com/" target="_blank">Fiji Software</a>&trade;</footer>
+                    <!-- /copyright -->
+                </div>
             
             </section>
             <!-- /Right (content) side -->

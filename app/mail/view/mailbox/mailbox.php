@@ -9,182 +9,6 @@
  */
 ?>
 
-
-<style type="text/css">
-
-.mailbox > li > p {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-    
-.subject {
-    width: 55%;
-    text-overflow: ellipsis;
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.from {
-    width: 20%;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.mailbox > li {
-    cursor: pointer;
-}
-
-.mailbox > li.unseen {
-    background-color: #fff;
-}
-
-.label {
-    margin-right: 3px;
-}
-
-.messages-title {
-    margin-bottom: 15px;
-}
-
-.message-header {
-    margin-bottom: 15px;
-    display: inline-block;
-    width: 100%;
-}
-
-.message-header .pagination {
-    float: right;
-    margin: 0;
-}
-
-.message-header ul {
-    padding: 1px;
-}
-
-.message-header ul > li a {
-    border-radius: 0;
-}
-    
-.message-header ul > li:first-child a {
-    border-radius: 4px 0 0 4px;
-}
-
-.message-header ul > li:last-child a {
-    border-radius: 0 4px 4px 0;
-}
-
-.mailbox li {
-    cursor: pointer;
-    margin-bottom: 0;
-    border-bottom: none;
-    border-radius: 0;
-}
-
-.mailbox li:first-child {
-    border-radius: 4px 4px 0 0;
-}
-
-.mailbox li:last-child {
-    border-radius: 0 0 4px 4px;
-    margin-bottom: 6px;
-    border-bottom: 1px solid #d9d9d9;
-}
-
-.mailbox li:hover, .mailbox li.selected {
-    background-color: rgb(255, 250, 194);
-}
-
-.mailbox li .select {
-    line-height: 25px;
-}
-
-.icon-star-empty {
-    opacity: 0.25;
-}
-
-.icon-star-empty:hover {
-    opacity: 0.45;
-}
-
-.date {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 10%;
-    text-align: right;
-    white-space: nowrap;
-    float: right !important;
-}
-
-.addressList {
-    margin: 0 !important;
-    padding: 0;
-    list-style: none;
-    display: inline-block;
-}
-
-.addressList a {
-    display: inline-block;
-}
-
-[class^="tools-"] {
-    margin-right: 10px !important;
-    float: left !important;
-}
-
-.tools-folder-list-move, .tools-more {
-    display: block;
-}
-
-.tools-folder-list-move select {
-    margin: 0;
-}
-
-.mail-pagination {
-    
-}
-
-.mail-pagination .pagination-list {
-    float: right;
-    margin-left: 6px;
-}
-
-.mail-pagination .pagination-data {
-    float: left;
-    display: block;  
-    height: 27px;
-    line-height: 27px;
-}
-
-.mail-pagination .pagination-data span {
-    font-weight: bold;
-}
-
-.mailbox .mail-checkbox, 
-.tools-selector input[type=checkbox] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    border: 1px solid #ccc;
-}
-
-.mailbox .mail-checkbox:checked,
-.tools-selector input[type=checkbox]:checked {
-    background-color: #bbb;
-    border-color: #aaa;
-    box-shadow: inset 0 0 4px #fff;
-}
-
-.tools-selector input[type=checkbox] {
-    margin-top: -1px;
-}
-
-</style>
-
 <?php
 $header =  'Inbox';
 if ($this->folder) {
@@ -210,9 +34,9 @@ if ($this->searchQuery) {
                 </div>
                 <div class="tools-default pagination">
                     <ul>
-                        <li><a class="btn-archive" href="#" title="Archive Messages"><span class="icon-download"></span></a></li>
-                        <li><a class="btn-spam" href="#" title="Mark as Spam"><span class="icon-warning-sign"></span></a></li>
-                        <li><a class="btn-delete" href="#" title="Delete Messages"><span class="icon-trash"></span></a></li>
+                        <li><a class="btn-archive" href="#" title="Archive Messages"><span class="awe-download"></span></a></li>
+                        <li><a class="btn-spam" href="#" title="Mark as Spam"><span class="awe-warning-sign"></span></a></li>
+                        <li><a class="btn-delete" href="#" title="Delete Messages"><span class="awe-trash"></span></a></li>
                     </ul>
                 </div>
                 <div class="tools-folder-list-move"  title="Move to">
@@ -250,7 +74,7 @@ if ($this->searchQuery) {
                     
                 <li class="<?php echo $messageClass; ?>" data-uid="<?php echo intval($message->uid); ?>">
                     <p class="select"><input class="mail-checkbox" type="checkbox" name="uids[]" value="<?php echo intval($message->uid); ?>"></p>
-                    <p class="star"><span class="<?php echo $message->flagged ? 'icon-star' : 'icon-star-empty'; ?>"></span></p>
+                    <p class="star"><span class="<?php echo $message->flagged ? 'awe-star' : 'awe-star-empty'; ?>"></span></p>
                     <?php if ($this->folder == $sentFolder) : ?>
                         <p class="to">To: <?php echo $message->toWidget->toHtmlInline(); ?></p>
                     <?php else: ?>

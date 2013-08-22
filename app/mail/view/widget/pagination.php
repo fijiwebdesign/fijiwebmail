@@ -92,12 +92,12 @@ class pagination
         <ul class="pagination-list" data-page="' . $this->getPage() . '">
             <li class="' . ($this->hasPrev() ? '' : 'disabled') . '">
                 <a class="page-next" href="' . ($this->hasPrev() ? '?app=mail&folder=' . $folder . '&p=' . $this->getPrevPage() : '#') . ($query ? ('&q=' . $query) : '') . '" title="Newer Messages">
-                    <span class="icon-arrow-left"></span>
+                    <span class="awe-arrow-left"></span>
                 </a>
             </li>
             <li class="' . ($this->hasNext() ? '' : 'disabled') . '">
                 <a class="page-prev" href="' . ($this->hasNext() ? '?app=mail&folder=' . $folder . '&p=' . $this->getNextPage() : '#') . ($query ? ('&q=' . $query) : '') . '" title="Older Messages">
-                    <span class="icon-arrow-right"></span>
+                    <span class="awe-arrow-right"></span>
                 </a>
             </li>
         </ul>';
