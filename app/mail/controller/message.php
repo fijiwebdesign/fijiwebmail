@@ -309,7 +309,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) successfully deleted.'); 
     }
     
@@ -333,7 +334,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) successfully updated.'); 
         
     }
@@ -351,7 +353,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) marked as unread.'); 
     }
     
@@ -368,7 +371,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) marked as read.'); 
     }
     
@@ -385,7 +389,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) starred.'); 
     }
     
@@ -402,7 +407,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) unstarred.'); 
     }
     
@@ -426,7 +432,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) marked as ' . $flag); 
     }
     
@@ -450,7 +457,8 @@ class message extends \Fiji\App\Controller
         }
         
         // go to requested
-        $this->App->redirect($this->App->getReturnUrl('?app=mail&folder=' . $this->folder), 
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) marked as ' . $flag); 
     }
     

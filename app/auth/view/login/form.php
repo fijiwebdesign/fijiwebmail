@@ -62,10 +62,31 @@ $User = Factory::getSingleton('Fiji\App\User');
         
         .login-page .login-container {
             margin-top: 20px;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .login-page .login-container > section {
+            text-align: center;
+            margin: 0;
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+            background: #fff url(public/images/bgs/197928018_c0a71626ed_o2.jpg);
         }
             
         .login-page .login-container h1 {
             text-align: center;
+        }
+        
+        #login-form {
+            width: 375px;
+            margin: auto;
+            text-align: left;
+        }
+        
+        #login-form > fieldset {
+            background: #fff;
         }
         
         .login-page .login-container h1 .brand {
@@ -85,6 +106,11 @@ $User = Factory::getSingleton('Fiji\App\User');
             color: #8d8d8d;
             text-shadow: 0 1px 1px #ffffff;
             margin-top: 10px;
+            padding-right: 10px;
+        }
+        
+        body.login-page {
+            background-color: #f0f0f0;
         }
             
         </style>

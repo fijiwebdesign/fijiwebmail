@@ -93,7 +93,7 @@ $(function() {
     // @todo figure out a better way to do this
     setInterval(function() {
         autoResizeIframe('email-body-iframe');
-    }, 1000);
+    }, 500);
     
 });
 
