@@ -14,7 +14,8 @@ use Zend\Session\Container;
 use Fiji\Factory;
 
 /**
- * Allows user management
+ * Allows user management 
+ * @deprecated Use Fiji\App\Model\User
  */
 class User extends Model {
     

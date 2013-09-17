@@ -26,7 +26,7 @@ class header extends \Fiji\App\Widget
     <h1><a class="brand" href="?" title="Fiji Cloud Email">Fiji Cloud Email</a></h1>
 
     <!-- Main page headline -->
-    <p>Open Source Cloud Email</p>
+    <p>Open Source Cloud Email for everyone!</p>
 </header>
 
     <?php

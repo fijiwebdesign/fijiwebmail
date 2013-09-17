@@ -12,17 +12,13 @@ namespace Fiji\App;
  */
 
 use Fiji\Factory;
+use Fiji\Service\DomainObject;
 
 /**
  * Base Model
  */
-abstract class Model extends \Fiji\Service\DomainObject
+abstract class Model extends DomainObject
 {
-    
-    /**
-     * @var Unique ID of model instance
-     */
-    public $id;
     
     /**
      * Construct and set the service used to retrieve/store data

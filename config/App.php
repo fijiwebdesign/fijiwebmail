@@ -47,7 +47,7 @@ class App extends \Fiji\App\Config
         parent::__construct($options);
         
         // @todo remote in production
-        if (in_array($_SERVER['HTTP_HOST'], array('fijiwebdesign.com', 'fijisoftware'))) {
+        if (in_array($_SERVER['HTTP_HOST'], array('fijiwebdesign.com', 'fijisoftware.com'))) {
             $this->zendPath = '/var/lib/zf2/';
         }
         

@@ -12,11 +12,12 @@ namespace Fiji\App;
  */
 
 use Fiji\Factory;
+use Fiji\Service\DomainCollection;
 
 /**
  * ModelCollection
  */
-class ModelCollection extends \Fiji\Service\DomainCollection
+class ModelCollection extends DomainCollection
 {
     
     /**
@@ -26,6 +27,16 @@ class ModelCollection extends \Fiji\Service\DomainCollection
     {
         if (method_exists($this, $method)) {
             return call_user_func_array(array($this, $method), $params);
+        }
+		
+		// loadData...() calls will trigger $this->DomainObject's loadData...() call
+		if (stristr($method, 'loadData')) {
+            foreach((array) $params[0] as $data) {
+            	$model = clone($this->getDomainObject());
+				$model->$method($data);
+				$this->push($model);
+				//var_dump(array($model, $method, $data));
+            }
         }
     }
     

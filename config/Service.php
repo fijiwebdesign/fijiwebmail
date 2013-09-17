@@ -24,18 +24,6 @@ class Service extends \Fiji\App\Config
     public $database = 'fiji_webmail2';
     public $tablePrefix = 'fiji_';
     
-    public function __construct($options = array())
-    {
-        parent::__construct($options);
-        
-        // @todo remove in production
-        if (in_array($_SERVER['HTTP_HOST'], array('fijiwebdesign.com', 'fijisoftware'))) {
-            $this->password = 'vlg4lyfe';
-            $this->database = 'fiji_cloudmail';
-        }
-        
-    }
-    
 }
 
 

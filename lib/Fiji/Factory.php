@@ -10,6 +10,9 @@
 
 namespace Fiji;
 
+use ReflectionClass;
+use Exception;
+
 class Factory
 {
     
@@ -37,16 +40,17 @@ class Factory
     */
    static function createInstance($className, Array $params = array())
    {
-        $refl = new \ReflectionClass($className);
+        $refl = new ReflectionClass($className);
         return $refl->newInstanceArgs($params);
    }
    
    /**
     * Retrieve current user
     */
-   static function getUser($className = null)
+   static function getUser($className = 'User')
    {
-       return self::getSingleton($className ? $className : 'Fiji\\App\\User');
+   	   $className = self::translateClassName($className, 'Model');
+       return self::getSingleton($className ? $className : 'Fiji\App\Model\User');
    }
    
    /**
@@ -62,7 +66,7 @@ class Factory
     */
    static function createModel($className, Array $params = array())
    {
-       return self::createInstance($className, $params);
+       return self::createInstance(self::translateClassName($className, 'Model'), $params);
    }
    
    /**
@@ -71,7 +75,7 @@ class Factory
    static function createModelCollection($className)
    {
        return self::createInstance('Fiji\\App\\ModelCollection', 
-           array(self::createModel($className)));
+           array(is_object($className) ? $className : self::createModel($className)));
    }
    
    /**
@@ -143,6 +147,47 @@ class Factory
        return Factory::getSingleton('config\\App', array($options));
    }
    
+   /**
+    * Translates classNames to intended class in a cascading fashion
+    * Each class has translations configured in config\{classParent}. 
+    * eg: config\Model or config\User or config\Widget
+    */
+   static protected function translateClassName($className, $classParent)
+   {
+   		if (class_exists($className)) {
+       		return $className;
+        }
+   		$Config = self::getConfig('config\\' . $classParent);
+   		$appName = self::getApplication()->getName();
+		
+		// get specific translation for this class or the default set of translations
+		$classNames = $Config->get($className, $Config->get('defaultClass'));
+		
+		if (!is_array($classNames) && !is_object($classNames)) {
+			$classNames = array($classNames);
+		}
+		// try each class path for existence of model class
+		foreach($classNames as $_className) {
+			$_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
+			if (class_exists($_className)) {
+				$className = $_className;
+				break;
+			}
+		}
+		
+		return $className;
+   }
+   
+   /**
+    * Retrieve widget
+    */
+   static function getWidget($className = null, $params = array())
+   {
+   	   if (!$className) {
+   	   	    throw new Exception('Widget name must be defined in parameters.');
+   	   }
+       return self::getSingleton(self::translateClassName($className, 'Widget'), $params);
+   }
+   
 }
-
 

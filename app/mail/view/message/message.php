@@ -9,6 +9,11 @@
  * @package   Fiji_Mail
  */
  
+use Fiji\Factory;
+
+// page title
+$this->Doc->title = "Email Message";
+
 ?>
 
 <article class="data-block">
@@ -22,13 +27,28 @@
                     <div class="header to"><span>to</span><?php echo $toWidget->toHtml(); ?></div>
                     <div class="header date"><span>on</span><?php echo date('D jS M Y', strtotime($message->date)); ?></div>
                     <div class="header time"><span>at</span><?php echo date('h:ia', strtotime($message->date)); ?></div>
-                    <a href="#" class="email-reply-btn btn"><span class="awe-share-alt"></span>&nbsp;Reply</a> 
+                    <?php
+                    if (count($message->labels) > 0) {
+                    	echo '<div class="header labels">';
+	                    foreach($message->labels as $label) {
+	                        echo '<span class="label label-' . $label->name . '" style="background:' . $label->color . ';background:#' . $label->color . '">'
+	                         . $label->title 
+	                         . ' <a href="?app=mail&page=message&view=removeLabel&label=' . htmlentities($label) . '&uids[]=' . $uid . '" class="awe-remove"></a></span>';
+	                    }
+						echo '</div>';
+					}
+					?>
+					<!--
+                    <a href="#" class="email-reply-btn btn"><span class="awe-share-alt"></span>&nbsp;Reply</a>
+                   -->
+                   <div class="mail-pagination pagination"><?php echo $PaginationWidget->toHtml(); ?></div>
+                   
                 </div>
             </header>
             <section class="email-body">
                 <div>
-                    <iframe id="email-body-iframe" src="?app=mail&page=message&view=body&uid=<?php echo $uid; ?>&siteTemplate=app" 
-                        sandbox="allow-same-origin" seamless style="width:100%;overflow:hidden" scrolling="no"></iframe>
+                    <iframe id="email-body-iframe" src="?app=mail&page=message&view=body&folder=<?php echo htmlentities(urlencode($this->folder)); ?>&uid=<?php echo $uid; ?>&siteTemplate=app" 
+                        sandbox="allow-same-origin" seamless style="width:100%;overflow:hidden;border:0;" scrolling="no"></iframe>
                 </div>
                 <div id="email-attachments">
                     <?php 
@@ -85,6 +105,9 @@ $(function() {
         $('.reply-fake').hide();
         $('.reply-wysiwyg').show('slow');
         focusOnReply();
+        setTimeout(function() { 
+        	//$('#btn-attach').removeClass('btn-success'); 
+        }, 2000);
     }
     $('.email-reply-btn').bind('click', showWysiwyg);
     
@@ -108,3 +131,20 @@ function autoResizeIframe(id){
     
 </script>
 
+<style type="text/css">
+
+.mail-message .pagination .pagination-list > li:first-child a {
+	border-radius: 4px 0 0 4px;
+}
+
+.mail-message .pagination .pagination-list > li:last-child a {
+	border-radius: 0 4px 4px 0;
+}
+
+.pagination-data .to {
+	display: none;
+}
+.pagination-data .end {
+	display: none;
+}
+</style>

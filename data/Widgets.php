@@ -30,11 +30,18 @@ class Widgets extends Collection
      * Widgets in Collection
      */
     protected $data = array(
-        array(
-            'name' => 'mail_nav',
-            'title' => 'Navigation',
+    	array(
+            'name' => 'user-profile',
+            'title' => 'User Profile',
             'position' => 'navigation',
-            'class' =>'app\mail\view\widget\navigation\navigation',
+            'class' =>'app\mail\widget\userProfile\userProfile',
+            'published' => 1
+        ),
+        array(
+            'name' => 'mail-nav',
+            'title' => 'Email Navigation',
+            'position' => 'navigation',
+            'class' =>'app\mail\widget\navigation\navigation',
             'published' => 1
         ),
         array(
@@ -43,7 +50,22 @@ class Widgets extends Collection
             'position' => 'header',
             'class' =>'widget\header\header',
             'published' => 1
+        ),
+        array(
+            'name' => 'mail-search',
+            'title' => 'Search Email',
+            'position' => 'mail-search',
+            'class' =>'app\mail\widget\search\search',
+            'published' => 1
+        ),
+        array(
+            'name' => 'notifications',
+            'title' => 'Site Notifications',
+            'position' => 'notifications',
+            'class' =>'widget\notifications\notifications',
+            'published' => 1
         )
+		
     );
     
 }

@@ -13,12 +13,12 @@ namespace app\mail\model;
  */
 
 use Fiji\Factory;
-
+use Fiji\App\Model;
 /**
  * Mail Flag Model (known IMAP flags)
  * @todo Complete
  */
-class Flag extends \Fiji\App\Model
+class Flag extends Model
 {
     /**
      * Flag Title

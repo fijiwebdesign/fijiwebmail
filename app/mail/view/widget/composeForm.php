@@ -12,10 +12,12 @@
  
 namespace app\mail\view\widget;
 
+use Fiji\App\Widget;
+
 /**
  * Display the Email Composition Form
  */
-class composeForm
+class composeForm extends Widget
 {
     protected $addressList; 
     
@@ -37,11 +39,11 @@ class composeForm
         ob_start();
         ?>
         
-<form id="compose-email">
+<form id="compose-email" method="post">
     <fieldset>
-        <div class="control-group">
+        <div class="controls">
             <div class="compose-headers">
-                <div class="controls control-to">
+                <div class="control-group control-to">
                     <label for="to" class="control-label">To</label>
                     <input name="to" class="input-xlarge" type="text" value="<?php echo $this->to; ?>">
                     <span class="add-bcc-wrap">
@@ -49,33 +51,40 @@ class composeForm
                         <a href="#" class="add-bcc">Bcc</a>
                     </span>
                 </div>
-                <div class="controls control-cc">
+                <div class="control-group control-cc">
                     <label for="cc" class="control-label">Cc</label>
                     <input name="cc" class="input-xlarge" type="text" value="<?php echo $this->cc; ?>">
                 </div>
-                <div class="controls control-bcc">
+                <div class="control-group control-bcc">
                     <label for="bcc" class="control-label">Bcc</label>
                     <input name="bcc" class="input-xlarge" type="text" value="<?php echo $this->bcc; ?>">
                 </div>
-                <div class="controls control-subject">
+                <div class="control-group control-subject">
                     <label for="subject" class="control-label">Subject</label>
                     <input name="subject" class="input-xlarge" type="text" value="<?php echo $this->subject; ?>">
                 </div>
             </div>
-            <div class="controls">
-                <textarea id="reply-body" name="body" class="wysihtml5" placeholder="Compose email&hellip;" rows="8"></textarea>
+            <div class="compose-body">
+            	<div class="control-group">
+	                <textarea id="reply-body" name="body" class="wysihtml5" placeholder="Compose email&hellip;" rows="8"></textarea>
+	            </div>
             </div>
         </div>
+        <div class="widget-attach">
+        	<?php $attachmentWidget->render(); ?>
+        </div>
         <div class="form-actions">
-            <?php $attachmentWidget->render(); ?>
-            <input type="hidden" name="plupload_id" value="" />
-            <button class="btn btn-alt btn-primary" id="btn-send-email" type="submit"><i class="awe-plane"></i>&nbsp;Send Email</button>
+            <button class="btn btn-alt btn-primary" id="btn-send-email" type="submit">
+            	<i class="awe-plane"></i>&nbsp;Send Email</button>
+            <button class="btn btn-alt btn-small" id="btn-save-email" type="submit" name="saveDraft" value="1">
+            	<i class="awe-save"></i>&nbsp;Save Draft</button>
         </div>
     </fieldset>
     <input type="hidden" name="In-Reply-To" value="<?php echo htmlentities($this->inReplyTo); ?>">
     <input type="hidden" name="app" value="mail">
     <input type="hidden" name="page" value="compose">
     <input type="hidden" name="func" value="send">
+    <input type="hidden" name="plupload_id" value="" />
 </form>
 
 <!-- Wysihtml5 -->
@@ -99,33 +108,49 @@ class composeForm
             event.preventDefault();
         });
         
-        // form handler
-        $('#btn-send-email').bind('click', function(event) {
+        // drafts
+        $('#reply-body').bind('keyup', function() {
+        	console.log($(this).val())
+        });
+        
+        // form submit buttons handling
+        $('#btn-send-email').bind('click', formValidation);
+        $('#btn-save-email').bind('click', formValidation);
+        
+        // validate form and upload files
+        function formValidation(event) {
             if (!$('[name=to]').val()) {
-                return formError('Please enter a recepient.', event);
+                return formError('Please enter a recepient.', event, $('[name=to]'));
             }
             if (!$('[name=subject]').val()) {
-                return formError('Please enter a subject.', event);
+                return formError('Please enter a subject.', event, $('[name=subject]'));
             }
             if (!$('[name=body]').val()) {
-                return formError('Please enter a message.', event);
+                return formError('Please enter a message.', event, $('[name=body]'));
             }
             
             // upload attachments
             uploadFiles(event);
-        });
+        }
         
         // display form errors
-        function formError(msg, event) {
-            event.preventDefault();
+        function formError(msg, event, el) {
+        	this.timer && clearTimeout(this.timer);
             $('#form-error-body').html(msg);
-            $('#form-error').modal('show');
+            $('#form-error').fadeIn('slow');
+            this.timer = setTimeout(function() {
+            	$('#form-error').fadeOut('slow');
+            	$('.control-group').removeClass('error');
+            }, 4000);
+            $('.control-group').removeClass('error');
+            $(el) && $(el).parent() && $(el).parent().addClass('error'); // @todo find parent .control-group instead of .parent()
+            event.preventDefault();
             return false;
         }
         
         // attachments
         $('.plupload').hide();
-        $('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="awe-facetime-video"></i>&nbsp;Attach Files</a></li>');
+        $('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="awe-paper-clip"></i>&nbsp;Attach Files</a></li>');
         $('.pl_start').remove();
         $('.pl_add').addClass('btn-success');
         $('#btn-attach').bind('click', function(event) {
@@ -163,55 +188,13 @@ class composeForm
             }
         };
         
+        // full email compose message
+        // @todo only show on siteTemplate=ajax
+        //formError('This is quick compose. You can go to <a href="?app=mail&page=message&view=compose">full compose here</a>.');
+        
     });
     
 </script>
-
-<div class="modal hide fade" id="form-error">
-  <div class="modal-header">
-    <a class="close" data-dismiss="modal">×</a>
-    <h3>Error</h3>
-  </div>
-  <div class="modal-body">
-    <p id="form-error-body"></p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" data-dismiss="modal" class="btn btn-primary">Ok</a>
-  </div>
-</div>
-
-<style>
-    
-.controls label {
-    width: 100px;
-}
-
-.controls input {
-    width: 60%;
-}
-
-.controls label, .controls input {
-    display: inline-block;
-}
-
-.compose-headers {
-    margin-bottom: 10px;
-}
-
-.control-cc, .control-bcc {
-    display: none;
-}
-
-.add-bcc, .add-cc {
-    margin-left: 5px;
-}
-
-.add-bcc-wrap {
-    /* float: right; */
-}
-
-</style>
-
 
 <link rel='stylesheet' type='text/css' href='templates/chromatron/css/plugins/bootstrap-wysihtml5.css'>
 
@@ -220,6 +203,14 @@ class composeForm
         return ob_get_clean();
     
     }
+
+	/**
+	 * Render the widget
+	 */
+	public function render($format = 'html')
+	{
+		echo $this->toHtml();
+	}
     
     
 }

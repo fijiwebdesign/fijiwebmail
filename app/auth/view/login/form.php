@@ -11,9 +11,9 @@
 use Fiji\Factory;
  
 // get the document
-$Doc = Factory::getSingleton('Fiji\App\Document');
-$App = Factory::getSingleton('Fiji\App\Application');
-$User = Factory::getSingleton('Fiji\App\User');
+$Doc = Factory::getDocument();
+$App = Factory::getApplication();
+$User = Factory::getUser();
 
 ?>
 
@@ -30,13 +30,10 @@ $User = Factory::getSingleton('Fiji\App\User');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <!-- Styles -->
-        <link rel='stylesheet' type='text/css' href='templates/chromatron/css/chromatron-blue.css'>
+        <link rel='stylesheet' type='text/css' href='templates/chromatron/css/chromatron-blue.css' />
         
         <!-- Fav and touch icons -->
-        <link rel="shortcut icon" href="img/icons/favicon.html">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.html">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.html">
-        <link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.html">
+        <link rel="shortcut icon" href="templates/chromatron/img/icons/favicon.png" />
         
         <!-- JS Libs -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
@@ -90,7 +87,7 @@ $User = Factory::getSingleton('Fiji\App\User');
         }
         
         .login-page .login-container h1 .brand {
-            background: no-repeat bottom center url(public/images/Fiji-Mail-Cloud-Logo.png);
+            background: no-repeat bottom center url(public/images/logo_blue_80px.png);
             height: 100px;
             width: 235px;
             display: block;
@@ -188,9 +185,7 @@ $User = Factory::getSingleton('Fiji\App\User');
         <script src="templates/chromatron/js/bootstrap/bootstrap.min.js"></script>
         -->
      
-<?php 
-require $App->getPathBase() . '/templates/chromatron/widgets/notifications.php';
-?>
+		<?php echo $Doc->renderWidgets('notifications', 'html'); ?>
         
     </body>
 

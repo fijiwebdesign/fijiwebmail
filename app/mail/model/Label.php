@@ -49,5 +49,4 @@ class Label extends Flag
         return $this->title . self::SEP . $this->color;
     }
 
-
 }

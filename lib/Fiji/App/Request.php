@@ -49,5 +49,13 @@ class Request {
       $var = $this->getVar($name, $default);
       return preg_replace("/[^a-z0-9_\-]+/i", '', $var);
     }
+	
+	/**
+	 * Return the current URI
+	 */
+	public function getUri()
+	{
+		return $_SERVER['REQUEST_URI'];
+	}
     
 }

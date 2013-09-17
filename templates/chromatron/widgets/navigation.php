@@ -11,7 +11,7 @@
 use Fiji\Factory;
 
 // Widgets are attached to doc. We need the folderList widget
-$Doc = Factory::getSingleton('Fiji\App\Document');
+$Doc = Factory::getDocument();
 
 $GalleryList = Factory::createModelCollection('app\gallery\model\Gallery');
 $GalleryList->find();

@@ -123,5 +123,20 @@ class Imap {
         
         return $part;
     }
+	
+	/**
+     * Returns the Message Plain Text part or default to stripping away HTML
+     */
+    public function getMessagePlainTextPart($message)
+    {
+        $part = $message;
+        if ($message->isMultipart()) {
+            if (!$part = $this->findPartByContentType($message, 'text/plain')) {
+                $part = $this->findPartByContentType($message, 'text/html');
+            }
+        }
+        
+        return strip_tags($part);
+    }
     
 }

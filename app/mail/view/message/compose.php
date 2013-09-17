@@ -17,6 +17,10 @@ $composeForm = new app\mail\view\widget\composeForm();
     <header>
         <h2>Compose email</h2>
     </header>
+    <div id="form-error" class="alert alert-info alert-block fade in">
+        <button class="close">×</button>
+        <span id="form-error-body"></span>
+    </div>
     <section>
         <?php echo $composeForm->toHtml(); ?>
     </section>
@@ -25,7 +29,15 @@ $composeForm = new app\mail\view\widget\composeForm();
 <style>
 
 .wysihtml5-sandbox {
-    height: 280px !important;
+    height: 250px !important;
+}
+
+#form-error {
+	display: none;
+}
+
+.control-group.error .wysihtml5-sandbox {
+	border-color: #b94a48 !important;
 }
     
 </style>

@@ -12,10 +12,12 @@
  
 namespace app\mail\view\widget;
 
+use Fiji\App\Widget;
+
 /**
  * Generate HTML to display the email tools list (read/unread/star etc.)
  */
-class emailTools
+class emailTools extends Widget
 {
     /**
      * @var String HTMLElement Id
@@ -72,5 +74,10 @@ class emailTools
         
         return $html;
     }
+	
+	public function render($format = 'html')
+	{
+		echo $this->toHtml();
+	}
     
 }

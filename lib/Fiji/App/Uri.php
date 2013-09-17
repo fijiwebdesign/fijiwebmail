@@ -24,7 +24,7 @@ class Uri {
     
     
     public function __construct() {
-        $this->Req = Factory::getSingleton('Fiji\App\Request');
+        $this->Req = Factory::getRequest();
     }
     
     public function getBase()

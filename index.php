@@ -53,42 +53,26 @@ Container::setDefaultManager($manager);
 // application and page requested. App is the module, and page is the controller
 $app = $Req->getAlphaNum('app', $Config->get('defaultApp'));
 
-// email search widget
-ob_start();
-require 'app/mail/view/widget/search.php';
-$Doc->search = ob_get_clean();
-
 // main content
+// @todo Move this to application. 
+// @example Factory::getApplication($app)->execute()
+// 			\__ app\mail\http()->execute()
+//				\__ app\mail\controller\mail()->execute() etc..
 if ($app) {
     ob_start();
     require( 'app/' . $app . '/index.php');
     $Doc->content = ob_get_clean();
 }
-
-// navigation menu
-ob_start();
-require 'templates/chromatron/widgets/navigation.php';
-$Doc->navigation = ob_get_clean();
-
-$Doc->breadcrumbs = '';
-
-// user profile widget
-ob_start();
-require 'templates/chromatron/widgets/userProfile.php';
-$Doc->userProfile = ob_get_clean();
-
-// growl widget
-ob_start();
-require 'templates/chromatron/widgets/notifications.php';
-$Doc->notifications = ob_get_clean();
  
 $siteTemplate = $Req->get('siteTemplate');
 
 // load template
 ob_start();
 if ($siteTemplate == 'app') {
-    require( 'templates/chromatron/app.php');
+    require('templates/chromatron/app.php');
+} elseif ($siteTemplate == 'ajax') {
+	require('templates/chromatron/ajax.php');
 } else {
-    require( 'templates/chromatron/page.php');
+    require('templates/chromatron/page.php');
 }
 ob_end_flush();

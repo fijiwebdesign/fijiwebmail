@@ -19,10 +19,7 @@
         <link rel='stylesheet' type='text/css' href='templates/chromatron/css/mail.css'>
         
         <!-- Fav and touch icons -->
-        <link rel="shortcut icon" href="img/icons/favicon.html">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/apple-touch-icon-114-precomposed.html">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/apple-touch-icon-72-precomposed.html">
-        <link rel="apple-touch-icon-precomposed" href="img/icons/apple-touch-icon-57-precomposed.html">
+        <link rel="shortcut icon" href="templates/chromatron/img/icons/favicon.png">
         
         <!-- mail specific -->
         <link rel='stylesheet' type='text/css' href='public/css/mail.css'>
@@ -69,11 +66,11 @@
                 <?php $Doc->renderWidgets('header', 'html'); ?>
                 
                 <!-- User profile -->
-                <?php echo $Doc->userProfile; ?>
+                <?php $Doc->renderWidgets('userProfile', 'html'); ?>
                 <!-- /User profile -->
                 
                 <!-- Responsive navigation -->
-                <a href="#" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-heart"></span>Apps</a>
+                <a href="javascript:;" class="btn btn-navbar btn-large" data-toggle="collapse" data-target=".nav-collapse"><span class="fam-heart"></span> Menu</a>
                 
                 <!-- Main navigation -->
                 <?php $Doc->renderWidgets('navigation', 'html'); ?>
@@ -86,7 +83,7 @@
             <!-- Right (content) side -->
             <section class="content-block" role="main">
             
-                <?php echo $Doc->breadcrumbs; ?>
+                <?php echo $Doc->renderWidgets('breadcrumbs', 'html'); ?>
                 
                 <!-- Grid row -->
                 <div class="row-fluid">
@@ -149,7 +146,7 @@
             });
         </script>
         
-        <?php echo $Doc->notifications; ?>
+        <?php echo $Doc->renderWidgets('notifications', 'html'); ?>
 
         <script type="text/javascript" src="templates/chromatron/js/plugins/smartWizard/jquery.smartWizard-2.0.js"></script>
         

@@ -15,12 +15,12 @@ use Fiji\Factory;
 use app\mail\view\widget\addressList as addressListWidget;
 
 // our application control
-$App = Factory::getSingleton('Fiji\App\Application');
-$Doc = Factory::getSingleton('Fiji\App\Document');
-$Req = Factory::getSingleton('Fiji\App\Request');
+$App = Factory::getApplication();
+$Doc = Factory::getDocument();
+$Req = Factory::getRequest();
 
 // we need a session
-$User = Factory::getSingleton('Fiji\App\User');
+$User = Factory::getUser();
 if (!$User->isAuthenticated()) {
     // set our return path and redirect to login page
     $App->setReturnUrl('?app=mail');

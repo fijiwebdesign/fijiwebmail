@@ -44,22 +44,29 @@ class message extends \Fiji\App\Controller
     
     public function __construct(\Fiji\App\View $View = null)
     {
-        $this->User = Factory::getSingleton('Fiji\App\User');
-        $this->App = Factory::getSingleton('Fiji\App\Application');
-        $this->Req = Factory::getSingleton('Fiji\App\Request');
-        $this->Doc = Factory::getSingleton('Fiji\App\Document');
+        $this->User = Factory::getUser();
+        $this->App = Factory::getApplication();
+        $this->Req = Factory::getRequest();
+        $this->Doc = Factory::getDocument();
+		
+		// we need a session
+        if (!$this->User->isAuthenticated()) {
+            // set our return path and redirect to login page
+            $this->App->setReturnUrl($this->App->getUri());
+            $this->App->redirect('?app=auth');
+        }
         
         // url params
         $this->folder = $this->Req->getVar('folder');
         $this->page = $this->Req->get('p');
         $this->query = $this->Req->get('q');
         
-        // configs @todo
+        // configs
         $this->Config = Factory::getSingleton('config\Mail');
-        $this->Cache = new Cache();
         // user imap configs
         $options = $this->User->imapOptions;
         if (!$options) {
+        	$this->App->setReturnUrl($this->Req->getUri());
             $this->App->redirect('?app=auth');
         }
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
@@ -78,26 +85,11 @@ class message extends \Fiji\App\Controller
      */       
     public function message()
     {
-        // page title
-        $this->Doc->title = "Email Message";
-        
-        // we need a session
-        if (!$this->User->isAuthenticated()) {
-            // set our return path and redirect to login page
-            $this->App->setReturnUrl('?app=mail');
-            $this->App->redirect('?app=auth');
-        }
-        
         // email message id (not the uid or Message-ID)
         $uid = $this->Req->getVar('uid', '');
         $id = $this->Imap->getNumberByUniqueId($uid);
         if (!($uid || $id)) {
             throw new Exception('Invalid Message Id');
-        }
-        
-        $folder = $this->Req->getVar('folder', null);
-        if ($folder) {
-            $this->Imap->selectFolder($folder);
         }
         
         $message = $this->ImapHelper->getMessage($id);
@@ -129,7 +121,28 @@ class message extends \Fiji\App\Controller
         
         $fromWidget = new addressListWidget($message->getHeader('from')->getAddressList());
         $toWidget = new addressListWidget($message->getHeader('to')->getAddressList());
-                
+          
+		// load the labels to flags to collection  
+		$message->labels = Factory::createModelCollection('app\mail\model\Label');
+		$flags = $message->getFlags();
+		$message->labels->loadDataFromFlag($flags);
+		
+		/* test data
+		$message->labels->setData(array(
+			array('name' => 'test', 'title' => 'test', 'color' => 'cccccc'), 
+			array('name' => 'error', 'title' => 'error', 'color' => 'red')
+		)); */
+		
+		// build the pagination
+		$sizes = $this->Imap->getSize(null, $this->folder);
+		$ids = array_reverse(array_keys($sizes));
+		$i = array_search($id, $ids);
+		$PaginationWidget = Factory::getWidget('pagination', array($i+1, 1, count($ids)));
+		$nextUid = isset($ids[$i+1]) ? $this->Imap->getUniqueId($ids[$i+1]) : 0;
+		$prevtUid = isset($ids[$i-1]) ? $this->Imap->getUniqueId($ids[$i-1]) : 0;
+		$PaginationWidget->nextUrl = '?app=mail&page=message&uid=' . $nextUid . '&folder=' . $this->folder;
+		$PaginationWidget->prevUrl = '?app=mail&page=message&uid=' . $prevtUid . '&folder=' . $this->folder;
+		        
         // @todo View class
         require __DIR__ . '/../view/message/message.php';
         
@@ -143,16 +156,10 @@ class message extends \Fiji\App\Controller
         // page title
         $this->Doc->title = "Email Message";
         
-        // we need a session
-        if (!$this->User->isAuthenticated()) {
-            // set our return path and redirect to login page
-            $this->App->setReturnUrl('?app=mail');
-            $this->App->redirect('?app=auth');
-        }
-        
         // email message id (not the uid or Message-ID)
         $uid = $this->Req->getVar('uid', '');
         $id = $this->Imap->getNumberByUniqueId($uid);
+		
         if (!($uid || $id)) {
             throw new Exception('Invalid Message Id');
         }
@@ -182,13 +189,6 @@ class message extends \Fiji\App\Controller
     {
         // page title
         $this->Doc->title = "Email Message";
-        
-        // we need a session
-        if (!$this->User->isAuthenticated()) {
-            // set our return path and redirect to login page
-            $this->App->setReturnUrl('?app=mail');
-            $this->App->redirect('?app=auth');
-        }
         
         // email message id (not the uid or Message-ID)
         $uid = $this->Req->getVar('uid', '');
@@ -490,6 +490,36 @@ class message extends \Fiji\App\Controller
         $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
         $this->App->redirect($this->App->getReturnUrl($url), 
             count($uids) . ' email(s) marked as ' . $label); 
+    }
+
+	/**
+     * Remove a label. Labels are custom flags
+     */
+    public function removeLabel()
+    {
+        $uids = $this->Req->getVar('uids', array());
+        $flag = $this->Req->getVar('flag');
+        $color = $this->Req->getVar('color');
+        $label = $this->Req->getVar('label');
+        
+        if (!$label) {
+            $label = $flag . '/' . $color;
+        }
+        
+        if (!$label) {
+            throw new \Exception('Label not defined');
+        }
+        
+        // remote messages
+        foreach($uids as $uid) {
+            $id = $this->Imap->getNumberByUniqueId($uid);
+            $this->Imap->unsetFlags($id, array($label));
+        }
+        
+        // go to requested
+        $url = '?app=mail&folder=' . $this->folder . '&p=' . $this->page . '&q=' . $this->query;
+        $this->App->redirect($this->App->getReturnUrl($url), 
+            'Removed the label ' . $label);
     }
     
 }

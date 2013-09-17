@@ -12,15 +12,16 @@
  
 namespace app\mail\view\widget;
 
-use \Fiji\Factory;
+use Fiji\Factory;
+use Fiji\App\Widget;
 
 /**
  * Generate HTML to display the pagination
  */
-class pagination
+class pagination extends Widget
 {
     /**
-     * @var Int Current Page
+     * @var Int Current Page (starts at 1, which is actually index of 0)
      */
     protected $page;
     /**
@@ -32,17 +33,37 @@ class pagination
      * @var Int Number of items
      */
     public $count;
+	
+	/**
+	 * Url for prev page
+	 */
+	public $prevUrl;
+	
+	/**
+	 * Url for next page
+	 */
+	public $nextUrl;
     
-    public function __construct($page = 0, $perPage = 10, $count = 10)
+    public function __construct($page = 1, $perPage = 10, $count = 10)
     {
-        $this->page = $page;
+        $this->page = max($page, 1); // don't pass 0 as page
         $this->perPage = $perPage;
         $this->count = $count;
     }
+	
+	public function getPage()
+	{
+		return $this->page;
+	}
+	
+	public function getPageCount()
+	{
+		return ceil($this->getCount()/$this->perPage);
+	}
     
-    public function getPage()
+    public function getPageIndex()
     {
-        return $this->page;
+        return $this->page - 1;
     }
     
     public function getPrevPage()
@@ -57,13 +78,13 @@ class pagination
     
     public function getStart()
     {
-        $start = max(($this->page-1) * $this->perPage, 0);
+        $start = max($this->page * $this->perPage - $this->perPage, 0);
         return $start;
     }
     
     public function getEnd()
     {
-        $end = min(max($this->page, 1) * $this->perPage, $this->count) - 1;
+        $end = min($this->page * $this->perPage, $this->count) - 1;
         return $end;
     }
     
@@ -74,36 +95,65 @@ class pagination
     
     public function hasNext()
     {
-        return ($this->getEnd() < $this->count-1);
+        return ($this->getPage() < $this->getPageCount());
     }
     
     public function hasPrev()
     {
-        return ($this->getStart() > 0);
+        return ($this->getPage() > 1);
     }
     
     public function toHtml()
     {
-        $folder = Factory::getSingleton('Fiji\App\Request')->getVar('folder');
-        $query =  Factory::getSingleton('Fiji\App\Request')->getVar('q');
+        $folder = Factory::getRequest()->getVar('folder');
+        $query =  Factory::getRequest()->getVar('q');
+		
+		// @todo fix
+		$prevUrl = $this->prevUrl ? $this->prevUrl : '?app=mail&folder=' . $folder . '&p=' . $this->getPrevPage();
+		$nextUrl = $this->nextUrl ? $this->nextUrl : '?app=mail&folder=' . $folder . '&p=' . $this->getNextPage();
         
         $html = '
-        <div class="pagination-data"><span class="start">' . ($this->getStart()+1) . '</span> - <span class="end">' . ($this->getEnd()+1) . '</span> of <span class="count">' . $this->getCount() . '</span></div>
+        <div class="pagination-data"><span class="start">' . ($this->getStart()+1) . '</span><span class="to"> - </span><span class="end">' . ($this->getEnd()+1) . '</span> of <span class="count">' . $this->getCount() . '</span></div>
         <ul class="pagination-list" data-page="' . $this->getPage() . '">
             <li class="' . ($this->hasPrev() ? '' : 'disabled') . '">
-                <a class="page-next" href="' . ($this->hasPrev() ? '?app=mail&folder=' . $folder . '&p=' . $this->getPrevPage() : '#') . ($query ? ('&q=' . $query) : '') . '" title="Newer Messages">
+                <a class="page-next" href="' . ($this->hasPrev() ? $prevUrl : 'javascript:;') . ($query ? ('&q=' . $query) : '') . '" title="Newer Messages">
                     <span class="awe-arrow-left"></span>
                 </a>
             </li>
             <li class="' . ($this->hasNext() ? '' : 'disabled') . '">
-                <a class="page-prev" href="' . ($this->hasNext() ? '?app=mail&folder=' . $folder . '&p=' . $this->getNextPage() : '#') . ($query ? ('&q=' . $query) : '') . '" title="Older Messages">
+                <a class="page-prev" href="' . ($this->hasNext() ? $nextUrl : 'javascript:;') . ($query ? ('&q=' . $query) : '') . '" title="Older Messages">
                     <span class="awe-arrow-right"></span>
                 </a>
             </li>
         </ul>';
+		
+		$html .= "
+		<script>
+		jQuery(function() {
+			// pagination navigation via keyboard
+		    $(window).bind('keyup', function(event) {
+		    	var keyCode = {
+		    		left: 37,
+		    		right: 39
+		    	};
+		    	if (event.keyCode == keyCode.left) {
+		    		$('.pagination .page-next')[0].click();
+		    	}
+		    	if (event.keyCode == keyCode.right) {
+		    		$('.pagination .page-prev')[0].click();
+		    	}
+		    });
+		});
+		</script>
+		";
         
         return $html;
     }
+
+	public function render($format = 'html')
+	{
+		echo $this->toHtml();
+	}
     
     
 }

@@ -59,10 +59,12 @@ abstract class DomainObject implements \ArrayAccess, \Countable
      * Set data from Array
      * @param Array $options
      */
-    public function setData(Array $options = array())
+    public function setData(Array $options = array(), $strictOnlyKeys = false)
     {
         foreach($options as $name => $value) {
-            $this->$name = $value;
+            if (!$strictOnlyKeys || in_array($name, $this->getKeys())) {
+            	$this->$name = $value;
+			}
         }
     }
     

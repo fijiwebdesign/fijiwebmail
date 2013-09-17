@@ -29,8 +29,8 @@ class Route {
     public $User;
     
     public function __construct(Config $Config = null) {
-        $this->Req = Factory::getSingleton('Fiji\App\Request');
-        $this->User = Factory::getSingleton('Fiji\App\User');
+        $this->Req = Factory::getRequest();
+        $this->User = Factory::getUser();
         $this->Config = $Config ? $Config : Factory::getConfig();
     }
     

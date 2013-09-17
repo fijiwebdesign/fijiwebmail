@@ -9,8 +9,8 @@
 
 /** Logo */
 .navigation-block header h1 a {
-    background-image: url(../images/Fiji-Mail-Cloud-Logo.png);
-    height: 92px;
+    background-image: url(../images/logo_blue_80px.png);
+    height:80px;
 }
 
 #copyright {
@@ -30,6 +30,17 @@ nav.main-navigation a > [class^="icon-"] {
 nav.main-navigation a:hover > [class^="icon-"],
 nav.main-navigation a.current > [class^="icon-"] {
     opacity: 1;
+}
+
+/**
+ * 	Navigation
+ */
+.side-note-compose {
+    text-align: center;    
+}
+
+.side-note-compose .btn-compose {
+    margin: auto;
 }
 
 /**
@@ -166,23 +177,24 @@ nav.main-navigation a.current > [class^="icon-"] {
     margin: 0;
 }
 
-.mail-mailbox .mail-pagination {
-    
+.mail-pagination {
+    float: right;
+    margin: 0;
 }
 
-.mail-mailbox .mail-pagination .pagination-list {
+.mail-pagination .pagination-list {
     float: right;
     margin-left: 6px;
 }
 
-.mail-mailbox .mail-pagination .pagination-data {
+.mail-pagination .pagination-data {
     float: left;
     display: block;  
     height: 27px;
     line-height: 27px;
 }
 
-.mail-mailbox .mail-pagination .pagination-data span {
+.mail-pagination .pagination-data span {
     font-weight: bold;
 }
 
@@ -227,7 +239,15 @@ nav.main-navigation a.current > [class^="icon-"] {
 
 .mail-message .header span {
     font-weight: normal;
-    padding: 0 5px;
+    margin: 0 5px;
+}
+
+.mail-message .header .label a,
+.mail-message .header .label a:hover,
+.mail-message .header .label a:link,
+.mail-message .header .label a:active,
+.mail-message .header .label a:visited {
+    color: inherit;
 }
 
 .mail-message .email-reply-btn {
@@ -266,6 +286,11 @@ nav.main-navigation a.current > [class^="icon-"] {
 
 .mail-message .addressList li {
     display: inline-block;
+    margin-right: 5px;
+}
+
+.mail-message .addressList li:last-child {
+    margin-right: 0;
 }
 
 .mail-message .reply-fake {
@@ -288,6 +313,49 @@ nav.main-navigation a.current > [class^="icon-"] {
     padding: 10px;
 }
 
+/**
+ * 	Email Compose Form
+ */
+.compose-headers label {
+    width: 100px;
+}
+
+.compose-headers input {
+    width: 60%;
+}
+
+.compose-headers label, .compose-headers input {
+    display: inline-block;
+}
+
+.compose-headers {
+    margin-bottom: 10px;
+}
+
+.control-cc, .control-bcc {
+    display: none;
+}
+
+.add-bcc, .add-cc {
+    margin-left: 5px;
+    margin-bottom: 9px;
+}
+
+.add-bcc-wrap {
+    display: inline-block;
+}
+
+.widget-attach {
+	padding-top: 10px;
+}
+
+#btn-save-email {
+	margin-left: 5px;
+}
+
+/**
+ * 	Attachments
+ */
 #email-attachments {
     border-top: 1px solid #eee;
     padding-top: 15px;
@@ -304,4 +372,39 @@ nav.main-navigation a.current > [class^="icon-"] {
 
 #email-attachments li img {
     margin-right: 10px;
+}
+
+/**
+ * 	Calendar
+ */
+.controls .timepicker-label {
+	display: inline-block;
+	width: auto;
+	margin-left: 5px;
+}
+
+.controls .timepicker-example {
+	display: inline-block;
+	width: auto;
+	margin-left: 5px;
+	display: none;
+}
+
+#event-details {
+	width: 95%;
+	min-width: 540px;
+	max-width: 800px;
+}
+
+/**
+ * 	Event and Email Compose modals
+ */
+.modal header.btn-group h3 {
+	float: left;
+	cursor: pointer;
+}
+.modal header.btn-group .caret {
+	margin-left: 5px;
+	margin-top: 14px;
+	border-top: 4px solid #616466;
 }

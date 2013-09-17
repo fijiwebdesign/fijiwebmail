@@ -24,7 +24,7 @@ if ($this->searchQuery) {
     <div class="data-container mail-mailbox">
         <header class="messages-title">
             <h2><?php echo htmlentities($header, ENT_QUOTES, 'UTF-8'); ?></h2>
-            <?php echo $this->Doc->search; ?>
+            <?php echo $this->Doc->renderWidgets('mail-search', 'html'); ?>
         </header>
         <section>
             
@@ -54,6 +54,8 @@ if ($this->searchQuery) {
             </div>
             
             <form id="mailbox-form">
+            	
+            <?php if (count($messages) > 0) : ?>
             <ul class="stats mailbox" data-folder="<?php echo htmlentities($this->folder); ?>">
                 
                 <?php foreach($messages as $i => $message) : ?>
@@ -69,10 +71,12 @@ if ($this->searchQuery) {
                     $messageClass[] = $message->seen ? 'seen' : 'unseen';
                     $messageClass[] = $message->flagged ? 'flagged' : 'unflagged';
                     $messageClass = implode(' ', $messageClass);
+					
+					$messageSnippet = substr($this->ImapHelper->getMessagePlainTextPart($message), 0, 100);
                 
                 ?>
                     
-                <li class="<?php echo $messageClass; ?>" data-uid="<?php echo intval($message->uid); ?>">
+                <li class="<?php echo $messageClass; ?>" data-uid="<?php echo intval($message->uid); ?>" title="<?php echo htmlentities($messageSnippet); ?>">
                     <p class="select"><input class="mail-checkbox" type="checkbox" name="uids[]" value="<?php echo intval($message->uid); ?>"></p>
                     <p class="star"><span class="<?php echo $message->flagged ? 'awe-star' : 'awe-star-empty'; ?>"></span></p>
                     <?php if ($this->folder == $sentFolder) : ?>
@@ -93,6 +97,11 @@ if ($this->searchQuery) {
                 <?php endforeach; ?>
                 
             </ul>
+            <?php else: ?>
+            	<fieldset>
+            		<p class="alert-mailbox-empty">You do not have any messages yet. You can <a href="?app=mail&page=message&view=compose">compose a message</a>. </p>
+            	</fieldset>
+            <?php endif; ?>
             </form>
             
         </section>
@@ -208,6 +217,100 @@ $(function() {
         $('.mail-checkbox:not(:checked)').closest('.msg').removeClass('selected');
     }
     
+    // compose email modal
+    showComposeEmailModal = function(url) {
+    	//event.preventDefault();
+    	$('#modal-compose-email').modal('show');
+    	
+    	// load compose form from remote if not exist
+    	loadComposeEmailModalBody(url);
+    }
+    
+    // load a url into compose email body
+    function loadComposeEmailModalBody(url) {
+    	if (!$('#modal-compose-email-body').html()) {
+	    	$.ajax(url + '&siteTemplate=ajax', {
+	    		complete: function(xhr) {
+	    			var html = xhr.responseText;
+	        		$('#modal-compose-email-body').html(html)
+	        	}
+	    	});
+    	}
+    }
+    
+    // url of email compose page
+    var composeEmailUrl = '?app=mail&page=message&view=compose';
+    
+    $('#side-note-compose-email .btn-compose').click(function(event) {
+    	event.preventDefault();
+    	showComposeEmailModal(composeEmailUrl);
+    });
+    
+    $('#modal-compose-email .btn-send-email').click(function(event) {
+    	event.preventDefault();
+    	$('#btn-send-email').click();
+    });
+    
+    // preload compose email form 
+    setTimeout(function() {
+    	loadComposeEmailModalBody(composeEmailUrl);
+    }, 50);
+    
 });
     
 </script>
+
+<div class="modal hide fade" id="modal-compose-email">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <header class="btn-group open" id="compose-select">
+        <h3 id="event-details-title" data-toggle="dropdown">Compose Email</h3>
+        <a href="#" data-toggle="dropdown" class="caret"></a>
+        <ul class="dropdown-menu">
+            <li><a href="?app=mail&page=message&view=compose">Compose Email Full View</a></li>
+        </ul>
+    </header>
+  </div>
+  <div class="modal-body">
+    <p id="modal-compose-email-body"></p>
+  </div>
+  <div class="modal-footer">
+  	<button class="btn btn-alt btn-primary btn-send-email" type="submit"><i class="awe-plane"></i>&nbsp;Send Email</button>
+    <a href="#" data-dismiss="modal" class="btn"><i class="awe-remove"></i> Close</a>
+  </div>
+</div>
+
+<style type="text/css">
+
+#modal-compose-email {
+	width: 95%;
+	min-width: 800px;
+	max-width: 1000px;
+	margin-left: -400px;	
+	position: absolute;
+}
+.modal-bottom-right {
+	margin-top: 0;
+	margin-bottom: -5px;
+	top: auto;
+	bottom: 0px;
+	right: 5px;
+	left: auto;
+}
+#modal-compose-email .wysihtml5-sandbox {
+	height: auto !important;
+}
+#modal-compose-email .form-actions .btn {
+	display: none;
+}
+#modal-compose-email fieldset {
+	padding: 15px;
+	width: auto;
+}
+#modal-compose-email .modal-body {
+	overflow-x: hidden;
+}
+#modal-compose-email .modal-body header {
+	display: none;
+}
+</style>

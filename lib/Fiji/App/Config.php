@@ -10,10 +10,12 @@
 
 namespace Fiji\App;
 
+use Fiji\Service\DomainObject;
+
 /**
  * Configuration Object
  */
-class Config extends \Fiji\Service\DomainObject
+class Config extends DomainObject
 {
     /**
      * Construct our Configuration

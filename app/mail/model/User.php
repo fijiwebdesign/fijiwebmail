@@ -8,19 +8,21 @@
  * @package   Fiji_Mail
  */
 
-namespace app\gallery\model;
+namespace app\mail\model;
 
 
 /**
  * User model for Gallery
  */
-class User extends \Fiji\App\User
+class User extends \Fiji\App\Model\User
 {
     
-    
+    /**
+	 * Construct from parent
+	 */
     public function __construct()
     {
-        
+        parent::__construct();
     }
     
     /**

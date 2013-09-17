@@ -30,9 +30,9 @@ class Auth extends \Fiji\App\Controller
     
     public function __construct(\Fiji\App\View $View = null)
     {
-        $this->User = Factory::getSingleton('Fiji\App\User');
-        $this->App = Factory::getSingleton('Fiji\App\Application');
-        $this->Request = Factory::getSingleton('Fiji\App\Request');
+        $this->User = Factory::getUser();
+        $this->App = Factory::getApplication();
+        $this->Request = Factory::getRequest();
         $this->Config = Factory::getConfig();
         
         $Authentication = $this->Config->get('Authentication');

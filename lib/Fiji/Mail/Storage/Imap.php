@@ -10,14 +10,14 @@
 
 namespace Fiji\Mail\Storage;
 
-use Fiji\Cache\File as Cache;
-use \Zend\Mail\Storage\Exception;
+use Zend\Mail\Storage\Imap as ZendImap;
+use Zend\Mail\Storage\Exception;
 use Fiji\Mail\Protocol;
 
 /**
  * Extend Zend\Mail\Storage\Imap with our own
  */
-class Imap extends \Zend\Mail\Storage\Imap
+class Imap extends ZendImap
 {
     /**
      * Extend message class with our own

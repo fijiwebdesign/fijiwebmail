@@ -14,6 +14,7 @@ namespace service\DataProvider\RedBean;
 use Fiji\Factory;
 use Fiji\Service\DataProvider;
 use Fiji\Service\DomainObject, Fiji\Service\DomainCollection;
+use Fiji\App\Config;
 
 use R;
 
@@ -28,7 +29,7 @@ class RedBean implements DataProvider
     /**
      * Construct and connect to DB
      */
-    public function __construct(\Fiji\App\Config $Config = null)
+    public function __construct(Config $Config = null)
     {
         
         if (!$Config) {

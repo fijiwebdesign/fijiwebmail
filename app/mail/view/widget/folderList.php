@@ -12,13 +12,14 @@
  
 namespace app\mail\view\widget;
 
-use \Fiji\Factory;
-use \RecursiveIteratorIterator;
+use Fiji\Factory;
+use RecursiveIteratorIterator;
+use Fiji\App\Widget;
 
 /**
  * Generate HTML to display folder list (mailboxes)
  */
-class folderList extends \Fiji\App\Widget
+class folderList extends Widget
 {
     public $id; 
     
@@ -26,11 +27,11 @@ class folderList extends \Fiji\App\Widget
     {
         $this->id = $id;
         $this->title = $title;
-        $this->User = Factory::getSingleton('Fiji\App\User');
-        $this->App = Factory::getSingleton('Fiji\App\Application');
-        $this->Req = Factory::getSingleton('Fiji\App\Request');
+        $this->User = Factory::getUser();
+        $this->App = Factory::getApplication();
+        $this->Req = Factory::getRequest();
         if (!$this->User->isAuthenticated() || !$this->User->imapOptions) {
-            $this->App->redirect('?app=auth');
+            return;
         }
         
         $options = $this->User->imapOptions;
@@ -40,11 +41,18 @@ class folderList extends \Fiji\App\Widget
     
     public function render($format = 'html')
     {
+    	if (!$this->User->isAuthenticated() || !$this->User->imapOptions) {
+            return;
+        }
         echo $this->toHtml();
     }
     
     public function toHtml()
     {
+    	if (!$this->User->isAuthenticated() || !$this->User->imapOptions) {
+            return;
+        }
+		
         $currFolder = $this->Req->getVar('folder');
         $folders = $this->Imap->getFolders();
         
@@ -72,6 +80,10 @@ class folderList extends \Fiji\App\Widget
     
     public function toHtml2()
     {
+    	if (!$this->User->isAuthenticated() || !$this->User->imapOptions) {
+            return;
+        }
+		
         $folders = $this->Imap->getFolders();
         $folders = new RecursiveIteratorIterator($folders, RecursiveIteratorIterator::SELF_FIRST);
         

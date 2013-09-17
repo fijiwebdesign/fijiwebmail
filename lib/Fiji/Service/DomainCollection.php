@@ -68,7 +68,6 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         } else {
             $this->objects[] = $data;
         }
-        
     }
     
     /**
@@ -216,5 +215,17 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return $this->currentIndex = 0;
     }
+	
+	/**
+	 * Return an Array representation of this collection
+	 */
+	public function toArray()
+	{
+		$array = array();
+		foreach($this->objects as $object) {
+			$array[] = $object->toArray();
+		}
+		return $array;
+	}
     
 }

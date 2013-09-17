@@ -16,15 +16,19 @@ use Fiji\Factory;
  * Application control
  */
 class Application {
-    
-    public $User;
+	
+	protected $name;
+	
+	protected $User;
     
     public function __construct(Controller $Controller = null) {
-        $this->User = Factory::getSingleton('Fiji\App\User');
         
         $this->Controller = $Controller;
+		
+		// @todo is this a bug? or misunderstanding of PHP dynamic properties?
+		unset($this->User); // allow dynamic getting of User
     }
-    
+	
     /**
      * A URL to return to after performing a function
      */
@@ -58,14 +62,30 @@ class Application {
         return dirname(dirname(dirname(__DIR__)));
     }
     
-    public function getName()
-    {
-        return Factory::getRequest()->get('app');
-    }
+    /**
+	 * Return the application name
+	 */
+	public function getName()
+	{
+		if (!isset($this->name)) {
+			$this->name = Factory::getRequest()->get('app', Factory::getConfig()->get('defaultApp'));
+		}
+		return $this->name;
+	}
     
+	/**
+	 * Return application path
+	 */
     public function getPath()
     {
         return $this->getPathBase() . '/app/' . $this->getName();
     }
     
+	public function __get($name)
+	{
+		if ($name == 'User') {
+			return Factory::getUser();
+		}
+	}
+	
 }

@@ -10,7 +10,9 @@
 
 namespace config;
 
-class Mail extends \Fiji\App\Config 
+use Fiji\App\Config;
+
+class Mail extends Config
 {
     /**
      * Cache IMAP calls
@@ -57,6 +59,11 @@ class Mail extends \Fiji\App\Config
     );
     
     public $dev = true;
+	
+	/**
+	 * Messages to how per page in mailbox view
+	 */
+    public $messagesPerPage = 10;
     
     /**
      * Overrides for development hosts

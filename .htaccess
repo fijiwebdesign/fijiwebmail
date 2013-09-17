@@ -28,4 +28,7 @@ RewriteCond %{REQUEST_URI} !^index\.php
 RewriteCond %{REQUEST_FILENAME} !-f
 # and the requested path and file doesn't directly match a physical folder
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*) index.php?q=$1 [QSA,L]
+RewriteRule ^(.*) index.php?rewriteQuery=$1 [QSA,L]
+
+## @todo We need to make sure 404s don't go to PHP as it will load the default app page.
+## Instead we must load a 404 for all unrouted requests

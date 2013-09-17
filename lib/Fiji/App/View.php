@@ -25,7 +25,7 @@ class View {
      * 
      */
     public function __construct(Application $App = null) {
-        $this->App = $App ? $App : Factory::getSingleton('Fiji\App\Application');
+        $this->App = $App ? $App : Factory::getApplication();
     }
     
     /**

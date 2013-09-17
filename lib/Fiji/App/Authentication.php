@@ -10,6 +10,8 @@
 
 namespace Fiji\App;
 
+use Fiji\App\Model\User;
+
 /**
  * user authentication against default service
  */
@@ -17,7 +19,7 @@ class Authentication {
     
     protected $User;
     
-    public function __construct(\Fiji\App\User $User)
+    public function __construct(User $User)
     {
         $this->User = $User;
     }

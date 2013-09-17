@@ -17,9 +17,10 @@ use Fiji\Factory;
  */
 abstract class Widget {
     
-    public $User;
-    public $Doc;
-    public $App;
+    protected $User;
+    protected $Doc;
+    protected $App;
+	protected $Req;
     
     /**
      * Widget name/id
@@ -34,10 +35,11 @@ abstract class Widget {
     /**
      * Require a Widget Name
      */
-    public function __construct($name) {
-        $this->User = Factory::getSingleton('Fiji\App\User');
-        $this->Doc = Factory::getSingleton('Fiji\App\Document');
-        $this->App = Factory::getSingleton('Fiji\App\Application');
+    public function __construct($name = null) {
+        $this->User = Factory::getUser();
+        $this->Doc = Factory::getDocument();
+        $this->App = Factory::getApplication();
+		$this->Req = Factory::getRequest();
         
         $this->name = $name;
     }

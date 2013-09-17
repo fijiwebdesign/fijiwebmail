@@ -38,9 +38,9 @@ class Compose
     
     public function __construct()
     {
-        $this->User = Factory::getSingleton('Fiji\App\User');
-        $this->App = Factory::getSingleton('Fiji\App\Application');
-        $this->Req = Factory::getSingleton('Fiji\App\Request');
+        $this->User = Factory::getUser();
+        $this->App = Factory::getApplication();
+        $this->Req = Factory::getRequest();
         // configs @todo
         $this->Config = Factory::getSingleton('config\Mail');
         // user imap configs
@@ -112,6 +112,7 @@ class Compose
         
         // @todo configurable
         $saveFolder = $this->Config->get('folders')->get('sent', 'Sent Mail');
+		$draftsFolder = $this->Config->get('folders')->get('drafts', 'Drafts');
         
         $fromAddressList = new AddressList($this->User->username, $this->User->name);
         $toAddressList = new AddressList($to);
@@ -166,10 +167,28 @@ class Compose
         } else {
             $message->getHeaders()->get('content-type')->setType(Mime::MULTIPART_ALTERNATIVE);
         }
-        
+		
+		// save draft
+		$saveDraft = $this->Req->get('saveDraft');
+		if ($saveDraft) {
+            
+            // create sent folder if not exist
+            if (!$this->Imap->folderExists($draftsFolder)) {
+                $this->Imap->createFolder($draftsFolder);
+            }
+            
+            // save to drafts folder
+            $this->Imap->appendMessage($message->toString(), $draftsFolder, array());
+			
+			// latest draft is this saved message in drafts folder?
+			$this->Imap->selectFolder($draftsFolder);
+			// @todo find this through search
+			$draftId = array_pop($this->Imap->getUniqueId());
+			
+			$this->App->redirect('?app=mail&page=message&folder=' . $draftsFolder .'&uid=' . $draftId, 'Your message has been saved.');
+        }
         
         $transport = $this->getMailTransport();
-        
         $transport->send($message);
         
         if ($saveFolder) {
@@ -184,7 +203,6 @@ class Compose
         }
             
         $this->App->redirect('?app=mail&page=mailbox', 'Your message has been sent.');
-        
         
     }
     

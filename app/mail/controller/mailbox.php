@@ -36,10 +36,10 @@ class mailbox extends \Fiji\App\Controller
     
     public function __construct(\Fiji\App\View $View = null)
     {
-        $this->User = Factory::getSingleton('Fiji\App\User');
-        $this->App = Factory::getSingleton('Fiji\App\Application');
-        $this->Req = Factory::getSingleton('Fiji\App\Request');
-        $this->Doc = Factory::getSingleton('Fiji\App\Document');
+        $this->User = Factory::getUser();
+        $this->App = Factory::getApplication();
+        $this->Req = Factory::getRequest();
+        $this->Doc = Factory::getDocument();
         
         // configs
         $this->Config = Factory::getSingleton('config\Mail');
@@ -51,8 +51,8 @@ class mailbox extends \Fiji\App\Controller
         
         //makesure user is logged in
         if (!$this->User->isAuthenticated()) {
-            $this->App->setReturnUrl('?app=mail&folder=' . $this->folder . '&q=' . $this->searchQuery);
-            $this->App->redirect('?app=auth');
+            $this->App->setReturnUrl($this->Req->getUri());
+            $this->App->redirect('?app=auth', 'Please login to access your email.');
         }
         
         // user imap configs
@@ -95,8 +95,7 @@ class mailbox extends \Fiji\App\Controller
         }
         
         // number of messages to show 
-        // @todo configuration
-        $perPage = 10;
+        $perPage = $this->Config->get('messagesPerPage', 10);
         
         // current page
         $page = intval($this->Req->getVar('p', 1));
@@ -173,5 +172,31 @@ class mailbox extends \Fiji\App\Controller
         var_dump($flags);
         
     }
+	
+	public function testMailIds()
+	{
+		$ids = $this->Imap->getUniqueId();
+		$ids = array_reverse(array_keys($ids));
+		
+		var_dump($ids);
+		
+		foreach($ids as $id) {
+			$uid = $this->Imap->getUniqueId($id);
+			
+			var_dump($uid);
+			
+			$id = $this->Imap->getNumberByUniqueId($uid);
+			
+			var_dump($id);
+		}
+	}
+	
+	public function testModel()
+	{
+		
+		$User = Factory::createModel('User');
+		var_dump($User);
+		
+	}
 
 }

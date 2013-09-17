@@ -12,21 +12,24 @@ namespace app\mail\lib\App;
  */
 
 use Fiji\Factory;
+use Fiji\App\Model\User;
+use Fiji\App\Authentication as AuthenticationInterface;
+use Exception;
 
 /**
  * Authentication against Email Server
  */
-class Authentication extends \Fiji\App\Authentication
+class Authentication extends AuthenticationInterface
 {
    
-   public function __construct(\Fiji\App\User $User)
+   public function __construct(User $User)
    {
         parent::__construct($User);
    }
     
    public function authenticate($username, $password)
    {
-       
+	   
        $Config = Factory::getConfig('config\\Mail');
        
        $authServer = $Config->get('authServer');
@@ -57,9 +60,6 @@ class Authentication extends \Fiji\App\Authentication
         $this->User->isAuthenticated(true);
         $this->User->imapOptions = $options;
         
-        // persist user to session
-        $this->User->persist();
-        
         // find this user in local user via email or create it
         $this->User->find(array('email' => $username));
         if (!$this->User->id) {
@@ -68,8 +68,9 @@ class Authentication extends \Fiji\App\Authentication
                 throw new \Exception('Could not save user');
             }
         }
-        
-        
+		
+		// persist user to session
+        $this->User->persist();
         
         return true;
    }
