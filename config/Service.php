@@ -10,10 +10,12 @@
 
 namespace config;
 
+use Fiji\App\Config;
+
 /**
  * Base Config
  */
-class Service extends \Fiji\App\Config
+class Service extends Config
 {
     
     public $dataProvider = 'service\\DataProvider\\RedBean\\RedBean';

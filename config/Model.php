@@ -10,10 +10,12 @@
 
 namespace config;
 
+use Fiji\App\Config;
+
 /**
  * Model configurations
  */
-class Model extends \Fiji\App\Config
+class Model extends Config
 {
 	/**
 	 * Default model class paths

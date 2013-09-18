@@ -10,10 +10,12 @@
 
 namespace config;
 
+use Fiji\App\Config;
+
 /**
  * Application Config
  */
-class App extends \Fiji\App\Config
+class App extends Config
 {
     const MODE_DEV = 'dev';
     const MODE_PROD = 'prod';
