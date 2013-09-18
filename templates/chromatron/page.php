@@ -47,8 +47,10 @@
                 });
                 
                 // Tooltips for content
-                $('.content-block [title]').tooltip({
-                    placement: 'top'
+                $('.content-block [title]').each(function() {
+                	$(this).tooltip({
+	                    placement: $(this).attr('data-tooltip-placement') || 'top'
+	                });
                 });
                 
             });

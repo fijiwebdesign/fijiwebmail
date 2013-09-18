@@ -11,6 +11,7 @@ namespace app\mail\controller;
  * @package   Fiji_Mail
  */
  
+use Fiji\App\Controller;
 use Fiji\Mail\Storage\Imap;
 use Fiji\Cache\File as Cache;
 use Fiji\Factory;
@@ -23,7 +24,7 @@ use app\mail\view\widget\addLabel;
 /**
  * Email Message
  */
-class mailbox extends \Fiji\App\Controller
+class mailbox extends Controller
 {
     
     protected $User;

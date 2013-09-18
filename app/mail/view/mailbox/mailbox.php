@@ -251,6 +251,11 @@ $(function() {
     	$('#btn-send-email').click();
     });
     
+    $('#modal-compose-email .btn-save-email').click(function(event) {
+    	event.preventDefault();
+    	$('#btn-save-email').click();
+    });
+    
     // preload compose email form 
     setTimeout(function() {
     	loadComposeEmailModalBody(composeEmailUrl);
@@ -276,7 +281,7 @@ $(function() {
   </div>
   <div class="modal-footer">
   	<button class="btn btn-alt btn-primary btn-send-email" type="submit"><i class="awe-plane"></i>&nbsp;Send Email</button>
-    <a href="#" data-dismiss="modal" class="btn"><i class="awe-remove"></i> Close</a>
+    <button class="btn btn-alt btn-small btn-save-email" type="submit" name="saveDraft" value="1"><i class="awe-save"></i>&nbsp;Save Draft</button>
   </div>
 </div>
 

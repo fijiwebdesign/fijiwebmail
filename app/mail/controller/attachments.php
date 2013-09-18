@@ -11,18 +11,20 @@ namespace app\mail\controller;
  * @package   Fiji_App
  */
 
+use Fiji\App\Controller;
+use Fiji\App\View;
 use Fiji\Factory;
 use Exception;
 
 /**
  * Attachments controller
  */
-class attachments extends \Fiji\App\Controller
+class attachments extends Controller
 {
     
     public $Service;
     
-    public function __construct(\Fiji\App\View $View = null)
+    public function __construct(View $View = null)
     {
         // @todo set from caller
         $View = Factory::getView('app\mail\view\Attachment');

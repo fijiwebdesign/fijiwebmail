@@ -121,7 +121,7 @@ class pagination extends Widget
                 </a>
             </li>
             <li class="' . ($this->hasNext() ? '' : 'disabled') . '">
-                <a class="page-prev" href="' . ($this->hasNext() ? $nextUrl : 'javascript:;') . ($query ? ('&q=' . $query) : '') . '" title="Older Messages">
+                <a class="page-prev" href="' . ($this->hasNext() ? $nextUrl : 'javascript:;') . ($query ? ('&q=' . $query) : '') . '" title="Older Messages" data-tooltip-placement="left">
                     <span class="awe-arrow-right"></span>
                 </a>
             </li>

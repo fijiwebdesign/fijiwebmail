@@ -10,7 +10,8 @@ namespace app\mail\controller;
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  * @package   Fiji_Mail
  */
- 
+
+use Fiji\App\Controller;
 use Zend\Mail;
 use Fiji\Mail\Storage\Imap;
 use Fiji\Cache\File as Cache;
@@ -21,7 +22,7 @@ use Exception;
 /**
  * Email Message
  */
-class message extends \Fiji\App\Controller
+class message extends Controller
 {
     
     protected $User;
