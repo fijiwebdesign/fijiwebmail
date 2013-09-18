@@ -33,7 +33,7 @@ $this->Doc->title = "Email Message";
 	                    foreach($message->labels as $label) {
 	                        echo '<span class="label label-' . $label->name . '" style="background:' . $label->color . ';background:#' . $label->color . '">'
 	                         . $label->title 
-	                         . ' <a href="?app=mail&page=message&view=removeLabel&label=' . htmlentities($label) . '&uids[]=' . $uid . '" class="awe-remove"></a></span>';
+	                         . ' <a href="?app=mail&page=message&folder=' . htmlentities($this->folder) . '&view=removeLabel&label=' . htmlentities($label) . '&uids[]=' . $uid . '" class="awe-remove"></a></span>';
 	                    }
 						echo '</div>';
 					}

@@ -14,7 +14,7 @@ use Fiji\Factory;
 $Doc = Factory::getDocument();
 $Req = Factory::getRequest();
 
-$Doc->folderListWidget = new app\mail\view\widget\folderList('folder-list');
+$folderListWidget = new app\mail\view\widget\folderList('folder-list');
 
 $app = $Req->get('app', 'mail');
 $folder = $Req->get('folder', 'inbox');
@@ -61,12 +61,12 @@ $this->addMenuItem('Spam', '?app=mail&folder=Spam', 'awe-warning-sign', '', $fol
 </section>
 
 <section class="side-note side-note-compose" id="side-note-folderlist">
-    <p><?php echo $Doc->folderListWidget->toHtml(); ?></p>
+    <p><?php echo $folderListWidget->toHtml(); ?></p>
 </section>
 
 <script>
 $(function() {
-   $('#<?php echo htmlentities($Doc->folderListWidget->id); ?>').bind('change', function() {
+   $('#<?php echo htmlentities($folderListWidget->id); ?>').bind('change', function() {
       location = '?app=mail&folder=' + this.value; 
    });
 });

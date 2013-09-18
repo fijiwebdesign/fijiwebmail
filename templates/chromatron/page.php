@@ -31,6 +31,8 @@
         <script src="templates/chromatron/js/libs/modernizr.js"></script>
         <script src="templates/chromatron/js/libs/selectivizr.js"></script>
         
+        <?php $Doc->head->render(); ?>
+        
         <script>
             $(document).ready(function(){
                 

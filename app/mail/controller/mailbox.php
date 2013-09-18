@@ -74,6 +74,7 @@ class mailbox extends \Fiji\App\Controller
         $this->ImapHelper = Factory::getSingleton('app\mail\helper\Imap', array($this->Imap));
         
         $this->Doc->title = 'Mailbox';
+		$this->Doc->head->addJavascript('public/js/mail.keyboardshortcuts.js');
         
         // call the controllers correct method
         parent::__construct($View, false);

@@ -13,11 +13,12 @@ namespace Fiji\App\Model;
  */
  
 use Fiji\Factory;
+use Fiji\App\Model;
 
 /**
  * Application Widgets (Modules in Joomla / Blocks in Drupal etc.)
  */
-class Widget extends \Fiji\App\Model
+class Widget extends Model
 {
     /**
      * ID of widget. Used in HTML/JSON/XML as ID of widget
@@ -38,12 +39,6 @@ class Widget extends \Fiji\App\Model
      * @param String $title
      */
     public $title;
-    
-    /**
-     * HTML Output
-     * @var HTML
-     */
-    public $html;
     
     /**
      * Parameter/Options of widget
@@ -73,11 +68,12 @@ class Widget extends \Fiji\App\Model
     }
     
     /**
-     * Handle getting URLs ($this->url);
+     * render the widget
      */
-    public function getHtml()
+    public function render()
     {
-        
+    	$Widget = Factory::createInstance($this->class, array($this));
+    	$Widget->render();
     }
 
 }

@@ -28,6 +28,7 @@ class Widget extends Config
 		'app\\{App}\\widget\\{Widget}\\{Widget}',
 		'app\\{App}\\view\\widget\\{Widget}',
 		'app\\{App}\\view\\widget\\{Widget}\\{Widget}',
+		'widget\\{Widget}\\{Widget}',
 		'Fiji\\App\\Widget\\{Widget}'
 	);
     

@@ -12,13 +12,14 @@
 namespace app\mail\widget\navigation;
 
 use Fiji\Factory;
+use Fiji\App\Widget;
 
 /**
- * Generate HTML to display an Zend\Mail\AddressList list of emails
+ * Generate HTML to display a navigation menu
  * @todo create Menu Model. Navigation widget then creates Nav by Menu Model search
  * @todo incorporate Badges
  */
-class navigation extends \Fiji\App\Widget
+class navigation extends Widget
 {
     protected $model;
     

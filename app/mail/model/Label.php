@@ -46,7 +46,7 @@ class Label extends Flag
     
     public function __toString()
     {
-        return $this->title . self::SEP . $this->color;
+        return $this->title . ($this->color ? self::SEP . $this->color : '');
     }
 
 }

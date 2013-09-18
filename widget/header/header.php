@@ -9,13 +9,14 @@
  * @package   Fiji_Mail
  */
 
- 
 namespace widget\header;
+
+use Fiji\App\Widget;
 
 /**
  * Generate HTML to display an Zend\Mail\AddressList list of emails
  */
-class header extends \Fiji\App\Widget
+class header extends Widget
 {
 
     public function render($format = 'html')
