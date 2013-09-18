@@ -11,6 +11,7 @@ namespace app\gallery\controller;
  * @package   Fiji_App
  */
 
+ use Fiji\App\Controller;
 use Fiji\Factory;
 
 /**
@@ -21,7 +22,7 @@ class GalleryException extends \Exception {}
 /**
  * GalleryController
  */
-class Gallery extends \Fiji\App\Controller
+class Gallery extends Controller
 {
     
     public $Service;

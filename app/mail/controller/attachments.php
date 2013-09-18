@@ -69,7 +69,7 @@ class attachments extends Controller
         $this->View->set('mail', $mail);
         $this->View->set('Attachment', $Attachment);
         
-        $this->View->display('Attachment');
+        $this->View->display('attachment');
     }
     
     /**

@@ -17,10 +17,10 @@
     overflow: hidden;
 }
 
-.media {
+.medias .media {
     float: left;
     display: block;
-    margin-right: 20px;
+    margin: 0 20px 20px 0;
 }
 
 .media img {
@@ -45,7 +45,7 @@
         <section>
             <ul class="medias">
             <?php foreach($Gallery->getMedia() as $Media) : ?>
-                <li class="media">
+                <li class="media well">
                     <a href="?app=gallery&view=media&id=<?php echo $Media->getId(); ?>">
                         <h3><?php echo htmlentities($Media->title); ?></h3>
                         <img src="<?php echo htmlentities($Media->url); ?>" />

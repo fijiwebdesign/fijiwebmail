@@ -10,9 +10,9 @@
 
 namespace Fiji\Mail\Protocol;
 
-use \Zend\Stdlib\ErrorHandler;
-use \Zend\Mail\Protocol\Imap as ZendImap;
-use \Fiji\Factory;
+use Zend\Stdlib\ErrorHandler;
+use Zend\Mail\Protocol\Imap as ZendImap;
+use Fiji\Factory;
 
 class Imap extends ZendImap
 {

@@ -14,10 +14,12 @@ use Fiji\Factory;
 $Doc = Factory::getDocument();
 $Req = Factory::getRequest();
 
-$folderListWidget = new app\mail\view\widget\folderList('folder-list');
-
 $app = $Req->get('app', 'mail');
 $folder = $Req->get('folder', 'inbox');
+
+if ($app == 'mail') {
+	$folderListWidget = new app\mail\view\widget\folderList('folder-list');
+}
 
 // add the menu items @todo move to configuration or service
 $this->addMenuItem('Inbox', '?app=mail', 'awe-envelope', '', $folder == 'inbox');

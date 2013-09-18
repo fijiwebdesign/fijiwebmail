@@ -10,9 +10,10 @@
 
 namespace Fiji\Mail\Storage;
 
+use Zend\Mail\Storage\Message;
 use Zend\Stdlib\ErrorHandler;
 
-class Message extends \Zend\Mail\Storage\Message
+class Message extends Message
 {
     /**
      * Returns the Content type of message
