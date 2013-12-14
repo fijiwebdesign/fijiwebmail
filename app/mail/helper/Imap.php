@@ -12,6 +12,7 @@ namespace app\mail\helper;
 
 use Zend\Mail\Storage;
 use Fiji\Factory;
+use Fiji\Mail\Storage\Imap as FijiImap;
 
 class Imap {
     
@@ -26,7 +27,7 @@ class Imap {
         'flagged'  => Storage::FLAG_FLAGGED
     );
     
-    public function __construct($Imap)
+    public function __construct(FijiImap $Imap)
     {
         $this->Imap = $Imap;
     }

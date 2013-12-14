@@ -18,6 +18,7 @@ use Fiji\Cache\File as Cache;
 use Fiji\Factory;
 use app\mail\view\widget\addressList as addressListWidget;
 use Exception;
+use app\mail\helper\Imap as ImapHelper;
 
 /**
  * Email Message
@@ -75,7 +76,7 @@ class message extends Controller
         if ($this->folder) {
             $this->Imap->selectFolder($this->folder);
         }
-        $this->ImapHelper = new \app\mail\helper\Imap($this->Imap);
+        $this->ImapHelper = new ImapHelper($this->Imap);
         
         parent::__construct($View, false);
         $this->execute($this->Req->getAlphaNum('view', 'message', 'trim'));

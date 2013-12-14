@@ -9,8 +9,9 @@
  * @package   Fiji_Mail
  */
 
- 
 namespace app\mail\view\widget;
+
+use Zend\Mail\AddressList as ZendAddressList;
 
 /**
  * Generate HTML to display an Zend\Mail\AddressList list of emails
@@ -19,7 +20,7 @@ class addressList
 {
     protected $addressList; 
     
-    public function __construct(\Zend\Mail\AddressList $addressList)
+    public function __construct(ZendAddressList $addressList)
     {
         $this->addressList = $addressList;
         return $this;

@@ -18,6 +18,8 @@ class Mailbox extends \Fiji\App\User
 {
     
     public $email;
+	
+	public $userid;
     
     public $password;
     

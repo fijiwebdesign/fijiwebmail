@@ -11,13 +11,15 @@ namespace app\mail\model;
  * @package    Fiji_App
  * @subpackage Gallery
  */
- 
+
+use Fiji\App\Model;
 use Fiji\Factory;
+use Fiji\Mail\AddressList;
 
 /**
  * Email Message model
  */
-class Message extends \Fiji\App\Model
+class Message extends Model
 {
     
     public $subject;
@@ -35,13 +37,66 @@ class Message extends \Fiji\App\Model
     public $to;
     
     /**
-     * Unique Message ID on IMAP server
+     * Unique Message ID on IMAP server. 
+	 * $uid+$folder should always be unique. 
+	 * $uid changes when folder changes.
      */
-    public $messageid;
+    public $uid;
     
     /**
      * Raw Mime Message
      */
-    public $body;
+    public $mime;
+	
+	/**
+	 * Folder message is in
+	 */
+	public $folder;
+	
+	public function __construct($data = null)
+	{
+		// dynamic properties
+		unset($this->from);
+		unset($this->to);
+		
+		// set properties
+		parent::__construct($data);
+	}
+	
+	public function getFrom()
+	{
+		if (is_object($this->from)) {
+			return $this->from;
+		} else {
+			return new AddressList($this->from);
+		}
+	}
+	
+	public function setFrom($value)
+	{
+		if (is_object($this->from)) {
+			$this->from = $value;
+		} else {
+			$this->from = new AddressList($value);
+		}
+	}
+	
+	public function getTo()
+	{
+		if (is_object($this->to)) {
+			return $this->to;
+		} else {
+			return new AddressList($this->to);
+		}
+	}
+	
+	public function setTo($value)
+	{
+		if (is_object($this->to)) {
+			$this->to = $value;
+		} else {
+			$this->to = new AddressList($value);
+		}
+	}
 
 }

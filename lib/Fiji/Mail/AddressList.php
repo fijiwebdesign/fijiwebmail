@@ -10,10 +10,12 @@
 
 namespace Fiji\Mail;
 
+use Zend\Mail\AddressList as ZendAddressList;
+
 /**
  * Parses an address into parts
  */
-class AddressList extends \Zend\Mail\AddressList
+class AddressList extends ZendAddressList
 {
     
     public function __construct($emails)
@@ -33,6 +35,23 @@ class AddressList extends \Zend\Mail\AddressList
             $this->add(new Address($email));
         }
     }
+	
+	/**
+	 * Convert addresses to string in the form 
+	 * "Name <user@domain.com>, Name2 <user2@domain.com>"
+	 */
+	public function __toString()
+	{
+		$this->rewind();
+        $str = '';
+        while($this->valid()) {
+            $name = htmlentities(trim($this->current()->getName(), ' "'), ENT_QUOTES, 'UTF-8');
+            $email = htmlentities(trim($this->current()->getEmail()), ENT_QUOTES, 'UTF-8');
+            $html .= ($name ? '"' . $name . '" ' : '') . $email; 
+            $this->next();
+        }
+        return $str;
+	}
      
 }
 

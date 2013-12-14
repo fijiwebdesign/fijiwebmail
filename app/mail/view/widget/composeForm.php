@@ -144,6 +144,7 @@ class composeForm extends Widget
             }, 4000);
             $('.control-group').removeClass('error');
             $(el) && $(el).parent() && $(el).parent().addClass('error'); // @todo find parent .control-group instead of .parent()
+            $(el).focus();
             event.preventDefault();
             return false;
         }

@@ -10,10 +10,12 @@
 
 namespace Fiji\Mail;
 
+use Zend\Mail\Address as ZendAddress;
+
 /**
  * Parses an address into parts
  */
-class Address extends \Zend\Mail\Address
+class Address extends ZendAddress
 {
     /**
      * email domain
