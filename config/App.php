@@ -27,8 +27,11 @@ class App extends Config
     // zend frameworl library path 
     // /var/lib/zf2 on my debian linux (via aptitude)
     // /usr/share/php/Zend/ on CentoOS (via yum)
-    //      to file path use: rpm -ql php-ZendFramework2-Loader 
-    public $zendPath = '/usr/share/php/Zend';
+    //      to find the file path use: rpm -ql php-ZendFramework2-Loader 
+    // vendor/zendframework/zendframework/library/Zend/ via composer 
+    //          cd /path/to/fiji/framework/
+    //          composer install 
+    public $zendPath = 'vendor/zendframework/zendframework/library/Zend/';
 
     public $baseUrl = '/webmail/fijiwebmail/';
     
