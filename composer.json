@@ -1,0 +1,18 @@
+{
+    "name": "fijisoftware/webmail",
+    "description": "Fiji Webmail is a beautiful webmail client supporting any major email server such as postfix, exim, qmail with IMAP enabled. You can also use a 3rd party server such as Gmail, Yahoo! Mail or Fiji Cloud Email servers.",
+    "require": {
+        "zendframework/zendframework": "2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "license": "Open Source",
+    "authors": [
+        {
+            "name": "Gabe Lalasava",
+            "email": "gabe@fijiwebdesign.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

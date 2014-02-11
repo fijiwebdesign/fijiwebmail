@@ -20,16 +20,29 @@ class Uri {
     /**
      * @var Fiji\App\Request
      */
-    public $Req;
+    protected $Req;
+
+    /**
+    * @var String
+    */
+    protected $base;
     
     
     public function __construct() {
         $this->Req = Factory::getRequest();
     }
+
+    public function setBase($url)
+    {
+        $this->base = $url;
+    }
     
     public function getBase()
     {
-        return str_replace('index.php', '', $_SERVER['PHP_SELF']);
+        if (!$this->base) {
+            $this->base = str_replace('index.php', '', $_SERVER['PHP_SELF']);
+        }
+        return $this->base;
     }
     
 }

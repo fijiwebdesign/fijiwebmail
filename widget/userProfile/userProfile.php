@@ -8,8 +8,8 @@
  * @package   Fiji_Mail
  */
 
-namespace app\mail\widget\userProfile;
-
+namespace widget\userProfile;
+ 
 use Fiji\Factory;
 
 class userProfile extends \Fiji\App\Widget

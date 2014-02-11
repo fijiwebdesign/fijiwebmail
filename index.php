@@ -1,6 +1,5 @@
 <?php
 
-use Zend\Loader\StandardAutoloader;
 use Fiji\Factory;
 
 // autoloading Fiji classes
@@ -11,22 +10,12 @@ $Config = Factory::getSingleton('config\\App');
 
 // turn on errors in development mode
 if ($Config->get('mode') == config\App::MODE_DEV) {
-    error_reporting(E_ALL);
+    error_reporting(E_ALL ^E_USER_DEPRECATED);
     ini_set('display_errors', 1);
 }
 
 // necessary file paths
 $base_path = __DIR__;
-$zendPath = $Config->get('zendPath');
-
-// autoloading zf2 classes
-require_once $zendPath . '/library/Zend/Loader/StandardAutoloader.php';
-$loader = new StandardAutoloader(array('autoregister_zf' => true));
-$loader->register();
-
-// Zend framework compat
-require $zendPath . '/library/Zend/Stdlib/compatibility/autoload.php';
-require $zendPath . '/library/Zend/Session/compatibility/autoload.php';
 
 // Required instances
 $Req = Factory::getRequest();
@@ -34,21 +23,10 @@ $Doc = Factory::getDocument();
 $App = Factory::getApplication();
 $Uri = Factory::getSingleton('Fiji\\App\\Uri');
 
-$options = array(
-    'remember_me_seconds' => 2419200,
-    'use_cookies' => true,
-    'cookie_httponly' => true
-);
-
-use Zend\Session;
-use Zend\Session\Config\SessionConfig;
-use Zend\Session\SessionManager;
-use Zend\Session\Container;
-
-$config = new SessionConfig();
-$config->setOptions($options);
-$manager = new SessionManager($config);
-Container::setDefaultManager($manager);
+// base URL
+if ($base_url = $Config->get('baseUrl')) {
+    $Uri->setBase($base_url);
+}
 
 // application and page requested. App is the module, and page is the controller
 $app = $Req->getAlphaNum('app', $Config->get('defaultApp'));

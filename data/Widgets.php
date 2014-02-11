@@ -34,14 +34,14 @@ class Widgets extends Collection
             'name' => 'user-profile',
             'title' => 'User Profile',
             'position' => 'navigation',
-            'class' =>'app\mail\widget\userProfile\userProfile',
+            'class' =>'widget\userProfile\userProfile',
             'published' => 1
         ),
         array(
             'name' => 'mail-nav',
             'title' => 'Email Navigation',
             'position' => 'navigation',
-            'class' =>'app\mail\widget\navigation\navigation',
+            'class' =>'widget\navigation\navigation',
             'published' => 1
         ),
         array(

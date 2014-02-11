@@ -24,37 +24,24 @@ class App extends Config
     
     public $supportEmail = 'info@fijiwebdesign.com';
     
-    // zend frameworl library path (/var/lib/zf2 on my linux)
-    public $zendPath = 'C:\wamp\www\fijicloud\zf2';
+    // zend frameworl library path 
+    // /var/lib/zf2 on my debian linux (via aptitude)
+    // /usr/share/php/Zend/ on CentoOS (via yum)
+    //      to file path use: rpm -ql php-ZendFramework2-Loader 
+    public $zendPath = '/usr/share/php/Zend';
+
+    public $baseUrl = '/webmail/fijiwebmail/';
     
     public $defaultApp = 'mail';    
     
     public $mode = self::MODE_DEV;
-    
-    public $service = array(
-        'dataProvider' => 'service\\DataProvider\\MySql',
-        'host' => 'localhost',
-        'user' => 'root',
-        'password' => '',
-        'database' => 'fiji_webmail2'
-    );
     
     /**
      * Authentication Handling Class
      */
     public $Authentication = 'app\\mail\\lib\\App\\Authentication';
     
-    public function __construct($options = array())
-    {
-        parent::__construct($options);
-        
-        // @todo remote in production
-        if (in_array($_SERVER['HTTP_HOST'], array('fijiwebdesign.com', 'fijisoftware.com'))) {
-            $this->zendPath = '/var/lib/zf2/';
-        }
-        
-    }
-    
+
 }
 
 

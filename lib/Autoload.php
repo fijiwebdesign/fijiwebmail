@@ -34,6 +34,18 @@ spl_autoload_register( function( $className ) use ($includePaths)
     
 });
 
+/**
+ * Autoload Zend Framework 2 classes 
+ * 
+ * @param string $className 
+ */
+spl_autoload_register( function( $className ) use ($includePaths)
+{
+    if (substr($className, 0, 5) == "Zend\\") {
+        require_once __DIR__ . '/ZendFramework2/Autoload.php';
+    }
+});
+
 // opentok library path
 $openTokPath = __DIR__ . '/Opentok';
 

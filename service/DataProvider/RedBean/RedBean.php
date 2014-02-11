@@ -15,6 +15,7 @@ use Fiji\Factory;
 use Fiji\Service\DataProvider;
 use Fiji\Service\DomainObject, Fiji\Service\DomainCollection;
 use Fiji\App\Config;
+use Exception;
 
 use R;
 
@@ -33,7 +34,7 @@ class RedBean implements DataProvider
     {
         
         if (!$Config) {
-            $Config = Factory::getSingleton('config\\App');
+            $Config = Factory::getSingleton('config\\Service');
         }
         
         $dbtype = $Config->get('dbtype', 'mysql');

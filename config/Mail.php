@@ -71,7 +71,8 @@ class Mail extends Config
     public function __construct(Array $options = array())
     {
         // dev settings
-        if (in_array($_SERVER['HTTP_HOST'], array('fijiwebdesign.com', 'fijisoftware'))) {
+        if (in_array($_SERVER['HTTP_HOST'], 
+            array('fijiwebdesign.com', 'fijisoftware', 'h2o.localdomain.hp.com'))) {
             $this->authServer = array(
                 'host'     => 'imap.gmail.com',
                 'port'     => 993,

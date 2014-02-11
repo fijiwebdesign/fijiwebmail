@@ -16,6 +16,12 @@ use Fiji\App\Model\User;
 use Fiji\App\Authentication as AuthenticationInterface;
 use Exception;
 
+use Zend\Loader\StandardAutoloader;
+use Zend\Session;
+use Zend\Session\Config\SessionConfig;
+use Zend\Session\SessionManager;
+use Zend\Session\Container;
+
 /**
  * Authentication against Email Server
  */
@@ -24,6 +30,20 @@ class Authentication extends AuthenticationInterface
    
    public function __construct(User $User)
    {
+
+        // zend session options
+        $options = array(
+            'remember_me_seconds' => 2419200,
+            'use_cookies' => true,
+            'cookie_httponly' => true
+        );
+
+        // initialize zend session
+        $config = new SessionConfig();
+        $config->setOptions($options);
+        $manager = new SessionManager($config);
+        Container::setDefaultManager($manager);
+
         parent::__construct($User);
    }
     

@@ -63,6 +63,7 @@ abstract class Model extends DomainObject
         if (method_exists($this, $method)) {
             return call_user_func_array(array($this, $method), $params);
         }
+        return isset($params[0]) ? $params[0] : null;
     }
     
     /**
@@ -71,7 +72,8 @@ abstract class Model extends DomainObject
     public function findById($id)
     {
         if ($this->onFindById($id) !== false) {
-            return parent::findById($id);
+            $model = parent::findById($id);
+            return $this->afterFindById($model, $id);
         }
     }
     
@@ -81,7 +83,8 @@ abstract class Model extends DomainObject
     public function find($query)
     {
         if ($this->onFind($query) !== false) {
-            return parent::find($query);
+            $model = parent::find($query);
+            return $this->afterFind($model, $query);
         }
     }
     
@@ -91,7 +94,8 @@ abstract class Model extends DomainObject
     public function save()
     {
         if ($this->onSave() !== false) {
-            return parent::save();
+            $result = parent::save();
+            return $this->afterSave($result);
         }
     }
     
@@ -101,7 +105,8 @@ abstract class Model extends DomainObject
     public function delete()
     {
         if ($this->onDelete() !== false) {
-            return parent::delete();
+            $result = parent::delete();
+            return $this->afterDelete($result);
         }
     }
 
