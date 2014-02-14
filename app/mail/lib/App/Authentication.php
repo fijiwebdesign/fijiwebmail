@@ -39,6 +39,7 @@ class Authentication extends AuthenticationInterface
         );
 
         // initialize zend session
+        // @todo Session should be moved to a service
         $config = new SessionConfig();
         $config->setOptions($options);
         $manager = new SessionManager($config);
@@ -71,25 +72,26 @@ class Authentication extends AuthenticationInterface
         } catch(Exception $e) {
             return false;
         }
+
+        // find user
+        $this->User->find(array('email' => $username));
         
-        // populate user
-        $this->User->username = $username;
-        $this->User->name = substr($username, 0, strpos($username, '@'));
-        $this->User->email = $username;
-        $this->User->password = $password;
+        // populate user with new data
+        if (!$this->User->getId()) {
+            $this->User->username = $username;
+            $this->User->name = substr($username, 0, strpos($username, '@'));
+            $this->User->email = $username;
+            
+        }
+
+        $this->User->password = $password; // User model handles hashing
         $this->User->isAuthenticated(true);
         $this->User->imapOptions = $options;
         
         // find this user in local user via email or create it
-        $this->User->find(array('email' => $username));
-        if (!$this->User->id) {
-            $this->User->save();
-            if (!$this->User->id) {
-                throw new \Exception('Could not save user');
-            }
-        }
+        $this->User->save();
 		
-		// persist user to session
+		    // persist user to session
         $this->User->persist();
         
         return true;

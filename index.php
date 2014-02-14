@@ -1,4 +1,12 @@
 <?php
+/**
+ * Fiji Mail Server 
+ *
+ * @link      http://www.fijiwebdesign.com/
+ * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Fiji_Mail
+ */
 
 use Fiji\Factory;
 
@@ -8,10 +16,9 @@ require_once 'lib/Autoload.php';
 // our base application configuration
 $Config = Factory::getSingleton('config\\App');
 
-// turn on errors in development mode
+// developement mode requires finer error reporting
 if ($Config->get('mode') == config\App::MODE_DEV) {
-    error_reporting(E_ALL ^E_USER_DEPRECATED);
-    ini_set('display_errors', 1);
+    require 'dev.php';
 }
 
 // necessary file paths

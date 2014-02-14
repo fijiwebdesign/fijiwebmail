@@ -152,7 +152,7 @@ class Factory
     * Each class has translations configured in config\{classParent}. 
     * eg: config\Model or config\User or config\Widget
     */
-   static protected function translateClassName($className, $classParent)
+   static public function translateClassName($className, $classParent)
    {
    		if (class_exists($className)) {
        		return $className;
@@ -160,22 +160,22 @@ class Factory
    		$Config = self::getConfig('config\\' . $classParent);
    		$appName = self::getApplication()->getName();
 		
-		// get specific translation for this class or the default set of translations
-		$classNames = $Config->get($className, $Config->get('defaultClass'));
-		
-		if (!is_array($classNames) && !is_object($classNames)) {
-			$classNames = array($classNames);
-		}
-		// try each class path for existence of model class
-		foreach($classNames as $_className) {
-			$_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
-			if (class_exists($_className)) {
-				$className = $_className;
-				break;
-			}
-		}
-		
-		return $className;
+  		// get specific translation for this class or the default set of translations
+  		$classNames = $Config->get($className, $Config->get('defaultClass'));
+  		
+  		if (!is_array($classNames) && !is_object($classNames)) {
+  		    $classNames = array($classNames);
+  		}
+  		// try each class path for existence of model class
+  		foreach($classNames as $_className) {
+  			$_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
+  			if (class_exists($_className)) {
+  				$className = $_className;
+  				break;
+  			}
+  		}
+  		
+  		return $className;
    }
    
    /**

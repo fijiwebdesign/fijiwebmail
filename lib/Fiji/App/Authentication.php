@@ -30,7 +30,9 @@ class Authentication {
     public function authenticate($username, $password)
     {
         // @todo Implement event/observer pattern authentication
-        $this->User->find(array('username' => $username, 'password' => $password));
+        $this->User->username = $username;
+        $this->User->password = $password; // User model handles hashing
+        $this->User->find(array('username' => $username, 'password' => $this->User->password));
         return $this->User->isAuthenticated($this->User->getId());
     }
     

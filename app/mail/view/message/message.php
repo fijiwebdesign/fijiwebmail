@@ -47,7 +47,7 @@ $this->Doc->title = "Email Message";
             </header>
             <section class="email-body">
                 <div>
-                    <iframe id="email-body-iframe" src="?app=mail&page=message&view=body&folder=<?php echo htmlentities(urlencode($this->folder)); ?>&uid=<?php echo $uid; ?>&siteTemplate=app" 
+                    <iframe id="email-body-iframe" src="?app=mail&page=message&view=body&folder=<?php echo htmlentities(urlencode($this->folder)); ?>&uid=<?php echo $uid; ?>&siteTemplate=ajax" 
                         sandbox="allow-same-origin" seamless style="width:100%;overflow:hidden;border:0;" scrolling="no"></iframe>
                 </div>
                 <div id="email-attachments">

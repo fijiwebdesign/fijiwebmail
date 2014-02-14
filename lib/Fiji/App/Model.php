@@ -36,10 +36,10 @@ abstract class Model extends DomainObject
     public function __get($name)
     {
         $method = 'get' . ucfirst($name);
-        if (is_callable(array($this, $method))) {
+        if (method_exists($this, $method)) {
             return $this->$method();
         }
-        return $this->$name;
+        return isset($this->$name) ? $this->$name : null;
     }
     
     /**
@@ -49,10 +49,23 @@ abstract class Model extends DomainObject
     public function __set($name, $value)
     {
         $method = 'set' . ucfirst($name);
-        if (is_callable(array($this, $method))) {
+        if (method_exists($this, $method)) {
             return $this->$method($value);
         }
         return $this->$name = $value;
+    }
+
+    /**
+     * Custom property isset() calls 
+     * @example isset($this->foo) will work as intended
+     */
+    public function __isset($name)
+    {
+        $method = 'get' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            return true;
+        }
+        return isset($this->$name) ? true : false;
     }
     
     /**
@@ -108,6 +121,16 @@ abstract class Model extends DomainObject
             $result = parent::delete();
             return $this->afterDelete($result);
         }
+    }
+
+    /**
+     * Retrieve HTML encoded property
+     * @todo decorate from template?
+     * @param $name {String} Property name
+     */
+    public function html($name, $quotes = ENT_QUOTES, $encoding = 'utf-8')
+    {
+        return htmlspecialchars($this->$name, $quotes, $encoding);
     }
 
 }

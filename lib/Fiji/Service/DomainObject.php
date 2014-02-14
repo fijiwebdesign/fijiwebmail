@@ -17,7 +17,7 @@ use ReflectionClass, ReflectionProperty;
 /**
  * Base Domain Object
  */
-abstract class DomainObject implements \ArrayAccess, \Countable
+abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * Model Id key/attribute name
@@ -231,6 +231,13 @@ abstract class DomainObject implements \ArrayAccess, \Countable
     public function setService(\Fiji\Service\Service $Service)
     {
         $this->Service = $Service;
+    }
+
+    /**
+     * IteratorAggregate Interface
+     */
+    public function getIterator() {
+        return new \ArrayIterator($this->toArray());
     }
     
 }

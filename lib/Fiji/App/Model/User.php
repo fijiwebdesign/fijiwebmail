@@ -16,6 +16,12 @@ use Fiji\App\Model;
 
 /**
  * Allows user management
+ *
+ * @todo parent::getKeys() should also look for getters eg: __get{Key}() 
+ *          This way we can make keys protected properties and have a getter that is visible as a model key
+ * @todo Move the getPersistentKeys() out and use separate configs per service. 
+ *       The Session would require a Service created. (Session is just another Service Interface)
+ *       This also moves Zend session code out of Application. 
  */
 class User extends Model {
     
@@ -35,9 +41,11 @@ class User extends Model {
     
     public $email;
     
-    public $password;
+    protected $password;
     
-    private $imapOptions;
+    protected $imapOptions;
+
+    public $secret;
     
     public function __construct() {
         
@@ -48,11 +56,30 @@ class User extends Model {
        if ($this->isAuthenticated()) {
            
            // get from session
-           foreach($this->getKeys() as $key) {
-           		$this[$key] = $this->Session->$key;
+           foreach($this->getPersistKeys() as $key) {
+           		$this->$key = $this->Session->$key;
            }
        }
+
+       $Config = Factory::getConfig();
+       $this->secret = $Config->get('secret');
         
+    }
+
+    /**
+     * Return keys we want to save to storage
+     */
+    public function getKeys()
+    {
+        return array('id', 'username', 'name', 'email', 'password', 'secret');
+    }
+
+    /**
+     * Return keys we want to save to session
+     */
+    public function getPersistKeys()
+    {
+        return array('id', 'username', 'name', 'email', 'password', 'imapOptions');
     }
     
     /**
@@ -73,14 +100,6 @@ class User extends Model {
     }
     
     /**
-     * Allow persisting custom values
-     */
-    public function getPersistKeys()
-    {
-        return isset($this->persist) ? $this->persist : $this->getKeys();
-    }
-    
-    /**
      * Persist user data to session
      */
     public function persist()
@@ -88,25 +107,7 @@ class User extends Model {
         foreach($this->getPersistKeys() as $key) {
             $this->Session->$key = $this->$key;
         }
-    }
-    
-    /**
-     * Gets persistent propery of Fiji\App\User to session
-     * @param String $name Property name
-     */
-    public function __get($name)
-    {
-        return isset($this->Session->$name) ? $this->Session->$name : null;
-    }
-    
-    /**
-     * Sets persistent property of Fiji\App\User to session
-     * @param String $name
-     * @param String $value
-     */
-    public function __set($name, $value)
-    {
-        return $this->Session->$name = $value;
+        log_debug($this->Session->$key);
     }
     
     /**
@@ -168,6 +169,21 @@ class User extends Model {
     {
         $this->isAuthenticated(false);
     }
-    
+
+    /**
+     * Make sure the saved password is encrypted
+     */
+    public function setPassword($password)
+    {
+        $this->password = sha1($password . $this->secret);
+    }
+
+    /**
+     * Retrieve password
+     */
+    public function getPassword()
+    {
+        return isset($this->password) ? $this->password : null;
+    }
     
 }

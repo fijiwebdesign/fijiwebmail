@@ -21,6 +21,8 @@ class App extends Config
     const MODE_PROD = 'prod';
     
     public $error_reporting = E_ALL;
+
+    public $secret = '3scjDSs8*D@dszpxcSDsdoijdDsz';
     
     public $supportEmail = 'info@fijiwebdesign.com';
     

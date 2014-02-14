@@ -57,6 +57,9 @@ class mailbox extends Controller
         }
         
         // user imap configs
+        if (!isset($this->User->imapOptions)) {
+            throw new \Exception('Error accessing your email account');
+        }
         $options = $this->User->imapOptions;
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
         // select the folder, create it if it doesn't exist

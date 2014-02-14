@@ -26,13 +26,15 @@ class userProfile extends \Fiji\App\Widget
 		if (!$this->User->isAuthenticated()) {
 		    return false;
 		}
+
+        $name = $this->User->name ? $this->User->html('name') : $this->User->html('username');
 		
         ?>
 <section class="user-profile">
     <figure>
-        <img alt="Avatar" src="http://www.gravatar.com/avatar/<?php echo md5(strtolower($this->User->username)); ?>">
+        <img alt="Avatar" src="//www.gravatar.com/avatar/<?php echo md5(strtolower($this->User->email)); ?>">
         <figcaption>
-            <strong><a href="#" class=""><?php echo $this->User->username; ?></a></strong>
+            <strong><a href="#" class="" title="<?php echo $this->User->html('email'); ?>"><?php echo $name; ?></a></strong>
             <em><?php echo isset($this->User->group) ? $this->User->group : 'Member'; ?></em>
             <ul>
                 <li><a class="btn btn-primary btn-flat" href="#" title="Edit your settings">settings</a></li>

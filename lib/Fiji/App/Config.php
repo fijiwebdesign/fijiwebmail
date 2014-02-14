@@ -15,7 +15,7 @@ use Fiji\Service\DomainObject;
 /**
  * Configuration Object
  */
-class Config extends DomainObject
+class Config extends DomainObject implements \IteratorAggregate
 {
     /**
      * Construct our Configuration
@@ -26,12 +26,8 @@ class Config extends DomainObject
     {
         parent::__construct($options);
         
-        // make each property an instance of Fiji\App\Config for each access
-        foreach($this->toArray() as $name => $value) {
-            if (is_array($value)) {
-                $this->$name = new Config($value);
-            }
-        }
+        // make each property an instance of Fiji\App\Config for easy access
+        $this->setArraysToConfig();
     }
     
     /**
@@ -61,6 +57,25 @@ class Config extends DomainObject
         }
         
         return $array;
+    }
+
+    /**
+     * Make all Array propeties a Config object
+     */
+    public function setArraysToConfig()
+    {
+        foreach($this as $name => $value) {
+            if (is_array($value)) {
+                $this->$name = new Config($value);
+            }
+        }
+    }
+
+    /**
+     * IteratorAggregate Interface
+     */
+    public function getIterator() {
+        return new \ArrayIterator($this);
     }
 }
 

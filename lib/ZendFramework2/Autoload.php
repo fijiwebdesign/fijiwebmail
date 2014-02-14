@@ -23,5 +23,7 @@ $loader = new StandardAutoloader(array('autoregister_zf' => true));
 $loader->register();
 
 // Zend framework compat
-require $zendPath . '/Stdlib/compatibility/autoload.php';
-require $zendPath . '/Session/compatibility/autoload.php';
+try {
+    @require $zendPath . '/Stdlib/compatibility/autoload.php';
+    @require $zendPath . '/Session/compatibility/autoload.php';
+} catch(\Exception $e) { /* not necessary */ }

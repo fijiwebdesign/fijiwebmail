@@ -71,12 +71,10 @@ if ($this->searchQuery) {
                     $messageClass[] = $message->seen ? 'seen' : 'unseen';
                     $messageClass[] = $message->flagged ? 'flagged' : 'unflagged';
                     $messageClass = implode(' ', $messageClass);
-					
-					$messageSnippet = substr($this->ImapHelper->getMessagePlainTextPart($message), 0, 100);
                 
                 ?>
                     
-                <li class="<?php echo $messageClass; ?>" data-uid="<?php echo intval($message->uid); ?>" title="<?php echo htmlentities($messageSnippet); ?>">
+                <li class="<?php echo $messageClass; ?>" data-uid="<?php echo intval($message->uid); ?>">
                     <p class="select"><input class="mail-checkbox" type="checkbox" name="uids[]" value="<?php echo intval($message->uid); ?>"></p>
                     <p class="star"><span class="<?php echo $message->flagged ? 'awe-star' : 'awe-star-empty'; ?>"></span></p>
                     <?php if ($this->folder == $sentFolder) : ?>
