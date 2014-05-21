@@ -17,38 +17,9 @@ $Req = Factory::getRequest();
 $app = $Req->get('app', 'mail');
 $folder = $Req->get('folder', 'inbox');
 
-if ($app == 'mail') {
+if ($app == 'mail') :
 	$folderListWidget = new app\mail\view\widget\folderList('folder-list');
-}
-
-// add the menu items @todo move to configuration or service
-$this->addMenuItem('Inbox', '?app=mail', 'awe-envelope', '', $folder == 'inbox');
-$this->addMenuItem('Sent Mail', '?app=mail&folder=Sent Mail', 'awe-plane', '', $folder == 'Sent Mail');
-$this->addMenuItem('Drafts', '?app=mail&folder=Drafts', 'awe-edit', '', $folder == 'Drafts');
-$this->addMenuItem('Archive', '?app=mail&folder=Archive', 'awe-briefcase', '', $folder == 'Archive');
-$this->addMenuItem('Trash', '?app=mail&folder=Trash', 'awe-trash', '', $folder == 'Trash');
-$this->addMenuItem('Spam', '?app=mail&folder=Spam', 'awe-warning-sign', '', $folder == 'Spam');
-
 ?>
-
-<nav class="main-navigation nav-collapse" role="navigation">
-    <ul>
-        <li<?php if ($app == 'mail') : echo ' class="current"'; endif; ?>>
-            <a href="?app=mail" class="no-submenu"><span class="fam-email"></span>Mail</a>
-            <ul>
-                <?php foreach($this->getMenuItems() as $item) {
-                    echo '<li><a href="' . $item->link . '" class="no-submenu ' . $item->className . '"><i class="' . $item->icon . '"></i>&nbsp;' . $item->text . '</a></li>';
-                }
-                ?>
-            </ul>
-        </li>
-        <li<?php if ($app == 'calendar') : echo ' class="current"'; endif; ?>>
-            <a href="?app=calendar" class="no-submenu"><span class="fam-calendar-view-day"></span>Calendar</a>
-        </li>
-    </ul>
-</nav>
-
-<?php if ($app == 'mail') : ?>
 <section class="side-note side-note-compose" id="side-note-compose-email">
 	<p>
 	<div class="btn-group">
@@ -91,3 +62,112 @@ $(function() {
 </section>
 
 <?php endif; ?>
+
+<script>
+
+jQuery(function() {
+    // compose email modal
+    showComposeEmailModal = function(url) {
+        //event.preventDefault();
+        $('#modal-compose-email').modal({"backdrop": "static"});
+        
+        // load compose form from remote if not exist
+        loadComposeEmailModalBody(url);
+    }
+    
+    // load a url into compose email body
+    function loadComposeEmailModalBody(url) {
+        if (!$('#modal-compose-email-body').html()) {
+
+            var modal = $('#modal-compose-email').detach();
+            $(document.body).append(modal);
+
+            $.ajax(url + '&siteTemplate=ajax', {
+                complete: function(xhr) {
+                    var html = xhr.responseText;
+                    $('#modal-compose-email-body').html(html)
+                }
+            });
+        }
+    }
+    
+    // url of email compose page
+    var composeEmailUrl = '?app=mail&page=message&view=compose';
+    
+    $('#side-note-compose-email .btn-compose').click(function(event) {
+        event.preventDefault();
+        showComposeEmailModal(composeEmailUrl);
+    });
+    
+    $('#modal-compose-email .btn-send-email').click(function(event) {
+        event.preventDefault();
+        $('#btn-send-email').click();
+    });
+    
+    $('#modal-compose-email .btn-save-email').click(function(event) {
+        event.preventDefault();
+        $('#btn-save-email').click();
+    });
+    
+    // preload compose email form 
+    setTimeout(function() {
+        loadComposeEmailModalBody(composeEmailUrl);
+    }, 50);
+});
+
+</script>
+
+<div class="modal hide fade" id="modal-compose-email">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <header class="btn-group open" id="compose-select">
+        <h3 id="event-details-title" data-toggle="dropdown">Compose Email</h3>
+        <a href="#" data-toggle="dropdown" class="caret"></a>
+        <ul class="dropdown-menu">
+            <li><a href="?app=mail&page=message&view=compose">Compose Email Full View</a></li>
+        </ul>
+    </header>
+  </div>
+  <div class="modal-body">
+    <p id="modal-compose-email-body"></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-alt btn-primary btn-send-email" type="submit"><i class="awe-plane"></i>&nbsp;Send Email</button>
+    <button class="btn btn-alt btn-small btn-save-email" type="submit" name="saveDraft" value="1"><i class="awe-save"></i>&nbsp;Save Draft</button>
+  </div>
+</div>
+
+<style type="text/css">
+
+#modal-compose-email {
+    width: 95%;
+    min-width: 800px;
+    max-width: 1000px;  
+    position: absolute;
+    right: 5px;
+}
+.modal-bottom-right {
+    margin-top: 0;
+    margin-bottom: -5px;
+    top: auto;
+    bottom: 0px;
+    right: 5px;
+    left: auto;
+}
+#modal-compose-email .wysihtml5-sandbox {
+    height: auto !important;
+}
+#modal-compose-email .form-actions .btn {
+    display: none;
+}
+#modal-compose-email fieldset {
+    padding: 15px;
+    width: auto;
+}
+#modal-compose-email .modal-body {
+    overflow-x: hidden;
+}
+#modal-compose-email .modal-body header {
+    display: none;
+}
+</style>

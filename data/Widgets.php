@@ -38,10 +38,17 @@ class Widgets extends Collection
             'published' => 1
         ),
         array(
+            'name' => 'main-nav',
+            'title' => 'Main Navigation',
+            'position' => 'navigation',
+            'class' =>'widget\navigation\navigation',
+            'published' => 1
+        ),
+        array(
             'name' => 'mail-nav',
             'title' => 'Email Navigation',
             'position' => 'navigation',
-            'class' =>'widget\navigation\navigation',
+            'class' =>'app\mail\widget\navigation\navigation',
             'published' => 1
         ),
         array(
