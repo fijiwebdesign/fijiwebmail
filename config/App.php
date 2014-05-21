@@ -33,9 +33,9 @@ class App extends Config
     // vendor/zendframework/zendframework/library/Zend/ via composer 
     //          cd /path/to/fiji/framework/
     //          composer install 
-    public $zendPath = 'vendor/zendframework/zendframework/library/Zend/';
+    public $zendPath = '/var/lib/zf2/library/Zend/';
 
-    public $baseUrl = '/webmail/fijiwebmail/';
+    public $baseUrl = '/fijicoup/apps/';
     
     public $defaultApp = 'mail';    
     

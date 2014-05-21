@@ -22,7 +22,7 @@ class Service extends Config
     
     public $host = 'localhost';
     public $user = 'root';
-    public $password = '';
+    public $password = 'vlg4lyfe';
     public $database = 'fiji_webmail';
     public $tablePrefix = 'fiji_';
     

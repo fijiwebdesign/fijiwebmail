@@ -171,17 +171,9 @@ class User extends Model {
     }
 
     /**
-     * Make sure the saved password is encrypted
-     */
-    public function setPassword($password)
-    {
-        $this->password = sha1($password . $this->secret);
-    }
-
-    /**
      * Retrieve password
      */
-    public function getPassword()
+    public function getPasswordHash()
     {
         return isset($this->password) ? $this->password : null;
     }

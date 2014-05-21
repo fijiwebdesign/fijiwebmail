@@ -25,7 +25,7 @@ class Mail extends Config
     public $authServer = array(
         'host'     => 'localhost',
         'port'     => 143,
-        'ssl'      => ''
+        'ssl'      => 'tls'
     );
     
     /**
@@ -41,7 +41,7 @@ class Mail extends Config
         'connection_config' => array(
             'username' => '',
             'password' => '',
-            //'ssl' => ''
+            'ssl' => 'tls' 
         ),
     );
     
@@ -80,9 +80,11 @@ class Mail extends Config
             );
             
             $this->mailTransportOptions = array(
-                'name'=> 'smtp.gmail.com',
-                'host'=> 'smtp.gmail.com',
+                'name' => 'smtp.gmail.com',
+                'host' => 'smtp.gmail.com',
                 'port' => 587,
+                'auth' => 'login',
+                'ssl' => 'tls',
                 'connection_class'  => 'login',
                 'connection_config' => array(
                     'username' => '',

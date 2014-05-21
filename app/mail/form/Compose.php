@@ -71,8 +71,7 @@ class Compose
         // @todo dynamic configuration
         // we should add a method to config/Mail to get as data/options
         // eg: $stmpOptions->toString() or $smtpOptions->toOptions()
-        $ssl = $stmpOptions->get('connection_config');
-        $ssl = isset($ssl['ssl']) ? $ssl['ssl'] : null;
+        $ssl = isset($stmpOptions->connection_config->ssl) ? $stmpOptions->connection_config->ssl : '';
         $options   = new SmtpOptions(array(
             'name'=> $stmpOptions->get('name'),
             'host'=> $stmpOptions->get('host'),
@@ -81,9 +80,13 @@ class Compose
             'connection_config' => array(
                 'username' => $this->User->username,
                 'password' => $this->User->password,
-                'ssl' => $ssl
+                'ssl' => $ssl,
             ),
         ));
+
+        //var_dump($this->User->password);
+        //var_dump($this->User);
+        //die;
 
         $transport->setOptions($options);
         return $transport;

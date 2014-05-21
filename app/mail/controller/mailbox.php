@@ -20,6 +20,7 @@ use app\mail\view\widget\folderList as folderListWidget;
 use app\mail\view\widget\pagination;
 use app\mail\view\widget\emailTools;
 use app\mail\view\widget\addLabel;
+use Zend\Mail\AddressList;
 
 /**
  * Email Message
@@ -151,9 +152,14 @@ class mailbox extends Controller
             $message = $this->ImapHelper->getMessage($id);
             
             $message->uid = $this->Imap->getUniqueId($id);
+
+            $fromHeader = $message->getHeader('from');
+            $toHeader = $message->getHeader('to');
+            $fromAddressList = is_callable(array($fromHeader, 'getAddressList')) ? $fromHeader->getAddressList() : new AddressList;
+            $toAddressList = is_callable(array($toHeader, 'getAddressList')) ? $toHeader->getAddressList() : new AddressList;
             
-            $message->fromWidget = new addressListWidget($message->getHeader('from')->getAddressList());
-            $message->toWidget = new addressListWidget($message->getHeader('to')->getAddressList());
+            $message->fromWidget = new addressListWidget($fromAddressList);
+            $message->toWidget = new addressListWidget($toAddressList);
             
             $messages[] = $message;
             
