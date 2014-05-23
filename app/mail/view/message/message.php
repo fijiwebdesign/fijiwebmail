@@ -48,7 +48,7 @@ $this->Doc->title = "Email Message";
             <section class="email-body">
                 <div>
                     <iframe id="email-body-iframe" src="?app=mail&page=message&view=body&folder=<?php echo htmlentities(urlencode($this->folder)); ?>&uid=<?php echo $uid; ?>&siteTemplate=ajax" 
-                        sandbox="allow-same-origin" seamless style="width:100%;overflow:hidden;border:0;" scrolling="no"></iframe>
+                        seamless style="width:100%;overflow:hidden;border:0;" scrolling="no"></iframe>
                 </div>
                 <div id="email-attachments">
                     <?php 
@@ -113,20 +113,26 @@ $(function() {
     
     $('.reply-textarea').bind('click', showWysiwyg);
     
-    // @todo figure out a better way to do this
-    setInterval(function() {
+    // resize message iframe width and height to fix message
+    var autoResizeIframeTimer = setInterval(function() {
         autoResizeIframe('email-body-iframe');
-    }, 500);
+    }, 100);
+    // stop resizing when message is loaded
+    document.getElementById('email-body-iframe').onload = function() {
+        clearInterval(autoResizeIframeTimer);
+        autoResizeIframe('email-body-iframe');
+    }
     
 });
 
-function autoResizeIframe(id){
+function autoResizeIframe(id, stop) {
     
     var height =document.getElementById(id).contentWindow.document .body.scrollHeight;
     var width =document.getElementById(id).contentWindow.document .body.scrollWidth;
 
     document.getElementById(id).height= (height) + "px";
     document.getElementById(id).width= (width) + "px";
+
 }
     
 </script>

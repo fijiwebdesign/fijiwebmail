@@ -25,7 +25,7 @@ class Mail extends Config
     public $authServer = array(
         'host'     => 'localhost',
         'port'     => 143,
-        'ssl'      => 'tls'
+        'ssl'      => ''
     );
     
     /**
@@ -41,7 +41,7 @@ class Mail extends Config
         'connection_config' => array(
             'username' => '',
             'password' => '',
-            'ssl' => 'tls' 
+            'ssl' => '' 
         ),
     );
     
@@ -72,7 +72,7 @@ class Mail extends Config
     {
         // dev settings
         if (in_array($_SERVER['HTTP_HOST'], 
-            array('fijiwebdesign.com', 'fijisoftware', 'h2o.localdomain.hp.com'))) {
+            array('fijiwebdesign.com', 'fijisoftware.com', 'h2o.localdomain.hp.com', 'fijicoup.org'))) {
             $this->authServer = array(
                 'host'     => 'imap.gmail.com',
                 'port'     => 993,
@@ -83,8 +83,6 @@ class Mail extends Config
                 'name' => 'smtp.gmail.com',
                 'host' => 'smtp.gmail.com',
                 'port' => 587,
-                'auth' => 'login',
-                'ssl' => 'tls',
                 'connection_class'  => 'login',
                 'connection_config' => array(
                     'username' => '',

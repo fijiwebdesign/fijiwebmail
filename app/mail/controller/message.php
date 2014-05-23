@@ -177,6 +177,9 @@ class message extends Controller
         $body = $htmlPart->getContent();
         if ($htmlPart->getContentType() == 'text/plain') {
             $body = nl2br($body);
+        } else {
+            // links must open in new window. @todo better implementation
+            $body = preg_replace("/<a(.*?)>/i", "<a target=_blank$1>", $body);
         }
                 
         // @todo View class

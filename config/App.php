@@ -35,7 +35,7 @@ class App extends Config
     //          composer install 
     public $zendPath = '/var/lib/zf2/library/Zend/';
 
-    public $baseUrl = '/fijicoup/apps/';
+    public $baseUrl = '/apps/';
     
     public $defaultApp = 'mail';    
     
