@@ -84,10 +84,6 @@ class Compose
             ),
         ));
 
-        //var_dump($this->User->password);
-        //var_dump($this->User);
-        //die;
-
         $transport->setOptions($options);
         return $transport;
     }

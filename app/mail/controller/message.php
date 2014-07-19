@@ -54,7 +54,7 @@ class message extends Controller
 		// we need a session
         if (!$this->User->isAuthenticated()) {
             // set our return path and redirect to login page
-            $this->App->setReturnUrl($this->App->getUri());
+            $this->App->setReturnUrl($this->Req->getUri());
             $this->App->redirect('?app=auth');
         }
         

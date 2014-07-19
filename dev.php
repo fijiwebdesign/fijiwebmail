@@ -44,8 +44,8 @@ function log_exception( Exception $e, $title = 'Exception Occured')
     print "<tr style='background-color:rgb(240,240,240);'><th>Message</th><td>{$e->getMessage()}</td></tr>";
     print "<tr style='background-color:rgb(230,230,230);'><th>File</th><td>{$e->getFile()}</td></tr>";
     print "<tr style='background-color:rgb(240,240,240);'><th>Line</th><td>{$e->getLine()}</td></tr>";
-    //print "<tr style='background-color:rgb(240,240,240);'><th colspan=2>Backtrace</th></tr>";
-    //print "<tr style='background-color:rgb(240,240,240);'><td colspan=2><pre>" . print_r(debug_backtrace(), true) . "</pre></td></tr>";
+    print "<tr style='background-color:rgb(240,240,240);'><th colspan=2>Backtrace</th></tr>";
+    print "<tr style='background-color:rgb(240,240,240);'><td colspan=2><pre>" . print_r(debug_backtrace(), true) . "</pre></td></tr>";
     print "</table></div>";
 }
 
