@@ -19,8 +19,16 @@ use Fiji\Factory;
  */
 class Folder extends \Fiji\App\Model
 {
-    public $id;
+    /**
+     * The unique name for the folder
+     * @var String Eg: INBOX.sent
+     */
+    public $name;
     
+    /**
+     * Human readable name for folder
+     * @var String Eg: "Sent Mail"
+     */
     public $title;
     
     public $mailbox_id;
@@ -29,7 +37,7 @@ class Folder extends \Fiji\App\Model
     
     public $caption;
     
-    public $created;
+    public $created_date;
     
     public $created_by;
     

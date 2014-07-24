@@ -30,7 +30,7 @@ class userProfile extends \Fiji\App\Widget
         ?>
 <section class="user-profile">
     <figure>
-        <img alt="Avatar" src="http://www.gravatar.com/avatar/<?php echo md5(strtolower($this->User->username)); ?>">
+        <img alt="Avatar" src="//www.gravatar.com/avatar/<?php echo md5(strtolower($this->User->username)); ?>">
         <figcaption>
             <strong><a href="#" class=""><?php echo $this->User->username; ?></a></strong>
             <em><?php echo isset($this->User->group) ? $this->User->group : 'Member'; ?></em>

@@ -19,7 +19,7 @@ use Fiji\Factory;
 class Collection extends ModelCollection
 {
     
-    protected $Model = 'Fiji\App\Model';
+    protected $Model = 'Fiji\Data\Object';
     
     /**
      * Data in Collection

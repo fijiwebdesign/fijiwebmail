@@ -13,18 +13,20 @@ use Fiji\Factory;
 // Widgets are attached to doc. We need the folderList widget
 $Doc = Factory::getDocument();
 $Req = Factory::getRequest();
+$Config = Factory::getConfig('config\Mail');
+
+$DefaultFolders = Factory::getSingleton('data\Folders');
 
 $app = $Req->get('app', 'mail');
 $folder = $Req->get('folder', 'inbox');
 
-
-// add the menu items @todo move to configuration or service
-$this->addMenuItem('Inbox', '?app=mail', 'awe-envelope', '', $folder == 'inbox');
-$this->addMenuItem('Sent Mail', '?app=mail&folder=Sent Mail', 'awe-plane', '', $folder == 'Sent Mail');
-$this->addMenuItem('Drafts', '?app=mail&folder=Drafts', 'awe-edit', '', $folder == 'Drafts');
-$this->addMenuItem('Archive', '?app=mail&folder=Archive', 'awe-briefcase', '', $folder == 'Archive');
-$this->addMenuItem('Trash', '?app=mail&folder=Trash', 'awe-trash', '', $folder == 'Trash');
-$this->addMenuItem('Spam', '?app=mail&folder=Spam', 'awe-warning-sign', '', $folder == 'Spam');
+foreach($DefaultFolders as $DefaultFolder) {
+    $def_name = $DefaultFolder->def_name;
+    $name = $DefaultFolder->name;
+    $title = $DefaultFolder->title;
+    $icon = $DefaultFolder->icon;
+    $this->addMenuItem($title, '?app=mail&folder=' . $name, $icon, '', $folder == $name);
+}
 
 ?>
 

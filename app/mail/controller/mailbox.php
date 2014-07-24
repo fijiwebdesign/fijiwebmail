@@ -166,48 +166,13 @@ class mailbox extends Controller
         }
         
         $sentFolder = $this->Config->get('folders')->get('sent');
+
+        // default folders configuration
+        // @todo move to config
+        $DefaultFolders = Factory::getSingleton('data\Folders');
         
         // template
         require( __DIR__ . '/../view/mailbox/mailbox.php');
     }
-
-    public function test()
-    {
-        
-        // all flags for all messages in mailbox
-        $flags = $this->Imap->getFlags(1, INF);
-        // unique flags
-        $flags = array_unique(iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($flags))));
-        
-        echo '<pre>';
-        var_dump($flags);
-        
-    }
-	
-	public function testMailIds()
-	{
-		$ids = $this->Imap->getUniqueId();
-		$ids = array_reverse(array_keys($ids));
-		
-		var_dump($ids);
-		
-		foreach($ids as $id) {
-			$uid = $this->Imap->getUniqueId($id);
-			
-			var_dump($uid);
-			
-			$id = $this->Imap->getNumberByUniqueId($uid);
-			
-			var_dump($id);
-		}
-	}
-	
-	public function testModel()
-	{
-		
-		$User = Factory::createModel('User');
-		var_dump($User);
-		
-	}
 
 }

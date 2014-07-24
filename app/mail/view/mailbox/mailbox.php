@@ -12,7 +12,9 @@
 <?php
 $header =  'Inbox';
 if ($this->folder) {
-    $header = $this->folder;
+    if (!$header = $DefaultFolders->filter(array('name' => $this->folder))->current()->title) {
+        $header = $this->folder;
+    }
 }
 if ($this->searchQuery) {
     $header = 'Search - ' . $this->searchQuery;

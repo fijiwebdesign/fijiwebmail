@@ -41,21 +41,22 @@ class Mail extends Config
         'connection_config' => array(
             'username' => '',
             'password' => '',
-            'ssl' => '' 
-        ),
+            'ssl' => 'tls'
+         ),
     );
     
     
     /**
-     * Folders required by email
+     * Default Email folders
+     * @note Only sub folders of INBOX are creatable on our Postfix/Dovecot setup
      */
     public $folders = array(
         'inbox' => 'INBOX',
-        'sent' => 'Sent Mail',
-        'drafts' => 'Drafts',
-        'archive' => 'Archive',
-        'spam' => 'Spam',
-        'trash' => 'Trash'
+        'sent' => 'INBOX.Sent',
+        'drafts' => 'INBOX.Drafts',
+        'archive' => 'INBOX.Archive',
+        'spam' => 'INBOX.Spam',
+        'trash' => 'INBOX.Trash'
     );
     
     public $dev = true;

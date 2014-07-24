@@ -70,4 +70,29 @@ class ModelCollection extends DomainCollection
         }
     }
 
+    /**
+     * Filters Objects in Collection by a field. 
+     * Does not retrieve from storage. Only existing objects are filtered.
+     * @param $query Array 
+     * @return \Fiji\App\ModelCollection
+     */
+    public function filter($query)
+    {
+        $clone = new ModelCollection($this->DomainObject);
+        foreach($this->objects as $object)
+        {
+            $match = true;
+            foreach($query as $name => $value)
+            {
+                if ($object->$name != $value) {
+                    $match = false;
+                    break;
+                }
+            }
+            if ($match) {
+                $clone->push($object);
+            }
+        }
+        return $clone;
+    }
 }
