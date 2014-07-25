@@ -66,9 +66,40 @@ class Attachment extends \Fiji\App\Model
         $this->content = $Attachment->getContent();
     }
     
+    /**
+     * @todo use getMimeType() functions
+     */
     public function isImage()
     {
-        return strpos($this->mimetype, 'image/') === 0;
+        if (strpos($this->mimetype, 'image/') === 0) {
+            return true;
+        } else {
+            $image_exts = array('jpg', 'jpeg', 'gif', 'png');
+            foreach($image_exts as $ext) {
+                if (strpos($this->filename, $ext) === strlen($this->filename) - strlen($ext)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @todo implement
+     */
+    function getMimeType()
+    {
+        $mimetype = false;
+        if(function_exists('finfo_fopen')) {
+            // open with FileInfo
+        } elseif(function_exists('getimagesize')) {
+            // open with GD
+        } elseif(function_exists('exif_imagetype')) {
+           // open with EXIF
+        } elseif(function_exists('mime_content_type')) {
+           $mimetype = mime_content_type($filename);
+        }
+        return $mimetype;
     }
     
     /**
