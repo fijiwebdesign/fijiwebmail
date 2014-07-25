@@ -29,6 +29,8 @@ class composeForm extends Widget
         $this->inReplyTo = $inReplyTo;
         $this->bcc = $bcc; 
         $this->cc = $cc;
+
+        parent::__construct('compose-form');
     }
     
     public function toHtml()
@@ -39,7 +41,7 @@ class composeForm extends Widget
         ob_start();
         ?>
         
-<form id="compose-email" method="post">
+<form id="<?php echo $this->guid; ?>" class="compose-form" method="post">
     <fieldset>
         <div class="controls">
             <div class="compose-headers">
@@ -66,7 +68,7 @@ class composeForm extends Widget
             </div>
             <div class="compose-body">
             	<div class="control-group">
-	                <textarea id="reply-body" name="body" class="wysihtml5" placeholder="Compose email&hellip;" rows="8"></textarea>
+	                <textarea name="body" class="wysihtml5" placeholder="Compose email&hellip;" rows="8"></textarea>
 	            </div>
             </div>
         </div>
@@ -93,40 +95,42 @@ class composeForm extends Widget
 
 <script>
     $(document).ready(function() {
+
+        var $composeForm = $('#<?php echo $this->guid; ?> ');
         
-        $('.wysihtml5').wysihtml5();
+        $composeForm.find('.wysihtml5').wysihtml5();
         
-        $('.add-cc').bind('click', function(event) {
+        $composeForm.find('.add-cc').bind('click', function(event) {
             $(this).hide();
-            $('.control-cc').show();
+            $composeForm.find('.control-cc').show();
             event.preventDefault();
         });
         
-        $('.add-bcc').bind('click', function(event) {
+        $composeForm.find('.add-bcc').bind('click', function(event) {
             $(this).hide();
-            $('.control-bcc').show();
+            $composeForm.find('.control-bcc').show();
             event.preventDefault();
         });
         
         // drafts
-        $('#reply-body').bind('keyup', function() {
-        	console.log($(this).val())
+        $composeForm.find('[name=body]').bind('keyup', function() {
+        	//console.log($(this).val())
         });
         
         // form submit buttons handling
-        $('#btn-send-email').bind('click', formValidation);
-        $('#btn-save-email').bind('click', formValidation);
+        $composeForm.find('#btn-send-email').bind('click', formValidation);
+        $composeForm.find('#btn-save-email').bind('click', formValidation);
         
         // validate form and upload files
         function formValidation(event) {
-            if (!$('[name=to]').val()) {
-                return formError('Please enter a recepient.', event, $('[name=to]'));
+            if (!$composeForm.find('[name=to]').val()) {
+                return formError('Please enter a recepient.', event, $composeForm.find('[name=to]'));
             }
-            if (!$('[name=subject]').val()) {
-                return formError('Please enter a subject.', event, $('[name=subject]'));
+            if (!$composeForm.find('[name=subject]').val()) {
+                return formError('Please enter a subject.', event, $composeForm.find('[name=subject]'));
             }
-            if (!$('[name=body]').val()) {
-                return formError('Please enter a message.', event, $('[name=body]'));
+            if (!$composeForm.find('[name=body]').val()) {
+                return formError('Please enter a message.', event, $composeForm.find('[name=body]'));
             }
             
             // upload attachments
@@ -136,13 +140,13 @@ class composeForm extends Widget
         // display form errors
         function formError(msg, event, el) {
         	this.timer && clearTimeout(this.timer);
-            $('#form-error-body').html(msg);
-            $('#form-error').fadeIn('slow');
+            $composeForm.find('#form-error-body').html(msg);
+            $composeForm.find('#form-error').fadeIn('slow');
             this.timer = setTimeout(function() {
-            	$('#form-error').fadeOut('slow');
-            	$('.control-group').removeClass('error');
+            	$composeForm.find('#form-error').fadeOut('slow');
+            	$composeForm.find('.control-group').removeClass('error');
             }, 4000);
-            $('.control-group').removeClass('error');
+            $composeForm.find('.control-group').removeClass('error');
             $(el) && $(el).parent() && $(el).parent().addClass('error'); // @todo find parent .control-group instead of .parent()
             $(el).focus();
             event.preventDefault();
@@ -150,21 +154,21 @@ class composeForm extends Widget
         }
         
         // attachments
-        $('.plupload').hide();
-        $('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="awe-paper-clip"></i>&nbsp;Attach Files</a></li>');
-        $('.pl_start').remove();
-        $('.pl_add').addClass('btn-success');
-        $('#btn-attach').bind('click', function(event) {
+        $composeForm.find('.plupload').hide();
+        $composeForm.find('.wysihtml5-toolbar').append('<li><a id="btn-attach" href="#" class="btn  btn-success"><i class="awe-paper-clip"></i>&nbsp;Attach Files</a></li>');
+        $composeForm.find('.pl_start').remove();
+        $composeForm.find('.pl_add').addClass('btn-success');
+        $composeForm.find('#btn-attach').bind('click', function(event) {
             event.preventDefault();
-            $('.plupload').show();
+            $composeForm.find('.plupload').show();
             focusOnAttachments();
-            $('.pl_add').trigger('click');
+            $composeForm.find('.pl_add').trigger('click');
         });
-        $('.pl_add').prepend('<i class="awe-plus"></i>&nbsp;');
+        $composeForm.find('.pl_add').prepend('<i class="awe-plus"></i>&nbsp;');
         
         function focusOnAttachments() {
             $('body, document').animate({
-                scrollTop: $('.plupload').offset().top
+                scrollTop: $composeForm.find('.plupload').offset().top
             }, 500, 'linear', function() {
                 
             });
@@ -172,20 +176,20 @@ class composeForm extends Widget
         
         // make sure attachments have been uploaded before submitting form
         function uploadFiles(event) {
-            if ($('.plupload').pluploadQueue().files.length > 0) {
+            if ($composeForm.find('.plupload').pluploadQueue().files.length > 0) {
                 // stop the form submit
                 event.preventDefault();
                 
                 // listen for plupload completion
-                $('.plupload').pluploadQueue().bind('StateChanged', function(up) {
+                $composeForm.find('.plupload').pluploadQueue().bind('StateChanged', function(up) {
                     // Called when the state of the queue is changed
                     if (up.state == plupload.STOPPED) {
-                        $('[name=plupload_id]').val($('.plupload').pluploadQueue().id);
-                        $('#compose-email').submit();
+                        $composeForm.find('[name=plupload_id]').val($composeForm.find('.plupload').pluploadQueue().id);
+                        $composeForm.submit();
                     }
                 });
                 // start upload
-                $('.plupload').pluploadQueue().start();
+                $composeForm.find('.plupload').pluploadQueue().start();
             }
         };
         

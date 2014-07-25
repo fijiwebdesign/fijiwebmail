@@ -21,6 +21,11 @@ abstract class Widget {
     protected $Doc;
     protected $App;
 	protected $Req;
+
+    /**
+     * Generated Unique ID of widget
+     */
+    public $guid; 
     
     /**
      * Widget name/id
@@ -31,6 +36,11 @@ abstract class Widget {
      * Autoloading paths
      */
     static $includePaths = array();
+
+    /**
+     * Number of times we've invoked this object
+     */
+    static $invoke_count = 0;
     
     /**
      * Require a Widget Name
@@ -42,6 +52,9 @@ abstract class Widget {
 		$this->Req = Factory::getRequest();
         
         $this->name = $name;
+
+        self::$invoke_count++;
+        $this->guid = (is_object($name) ? crc32(serialize($name)) : $name) . '-' . self::$invoke_count;
     }
     
     /**

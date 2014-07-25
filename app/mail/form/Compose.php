@@ -110,8 +110,8 @@ class Compose
         $inReplyTo = $this->Req->getVar('In-Reply-To', '');
         
         // @todo configurable
-        $saveFolder = $this->Config->get('folders')->get('sent', 'Sent Mail');
-		$draftsFolder = $this->Config->get('folders')->get('drafts', 'Drafts');
+        $saveFolder = $this->Config->get('folders')->get('sent', 'INBOX.Sent');
+		$draftsFolder = $this->Config->get('folders')->get('drafts', 'INBOX.Drafts');
         
         $fromAddressList = new AddressList($this->User->username, $this->User->name);
         $toAddressList = new AddressList($to);
