@@ -7,6 +7,11 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  * @package   Fiji_Mail
  */
+
+use Fiji\Factory;
+
+$Config = Factory::getConfig('config\\Mail');
+
 ?>
 
 <?php
@@ -112,6 +117,9 @@ if ($this->searchQuery) {
 <script type="text/javascript">
   
 $(function() {
+
+    // default folders configuration
+    var DefaultFolders = <?php echo json_encode($Config->get('folders')); ?>;
     
     // initalization
     handleMailSelections();
@@ -125,19 +133,19 @@ $(function() {
     $('.btn-delete').bind('click', function(event) {
         event.preventDefault();
         if (!mailCheckboxHasSelections()) return;
-        location = '?app=mail&page=message&view=move&to=Trash&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
+        location = '?app=mail&page=message&view=move&to=' + DefaultFolders['trash'] + '&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
     });
     
     $('.btn-spam').bind('click', function(event) {
         event.preventDefault();
         if (!mailCheckboxHasSelections()) return;
-        location = '?app=mail&page=message&view=move&to=Spam&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
+        location = '?app=mail&page=message&view=move&to=' + DefaultFolders['spam'] + '&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
     });
     
     $('.btn-archive').bind('click', function(event) {
         event.preventDefault();
         if (!mailCheckboxHasSelections()) return;
-        location = '?app=mail&page=message&view=move&to=Archive&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
+        location = '?app=mail&page=message&view=move&to=' + DefaultFolders['archive'] + '&folder=' + $('.mailbox').attr('data-folder') + '&' + $('#mailbox-form').serialize();        
     });
     
     // Folder dropdown list
