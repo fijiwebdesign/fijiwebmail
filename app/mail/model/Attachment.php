@@ -107,8 +107,10 @@ class Attachment extends \Fiji\App\Model
      */
     public function getUrl($uid)
     {
+        $folder = Factory::getRequest()->getVar('folder');
+
         $url = '?app=mail&page=message&view=attachment&uid=' . $uid 
-            . '&filename=' . htmlspecialchars(urlencode($this->filename));
+            . '&filename=' . htmlspecialchars(urlencode($this->filename)) . '&folder=' . htmlentities($folder);
         return $url;
                             
     }
