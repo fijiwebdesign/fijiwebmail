@@ -51,13 +51,15 @@ if ($app) {
  
 $siteTemplate = $Req->get('siteTemplate');
 
+$template = $Config->get('template', 'chromatron');
+
 // load template
 ob_start();
 if ($siteTemplate == 'app') {
-    require('templates/chromatron/app.php');
+    require('templates/' . $template . '/app.php');
 } elseif ($siteTemplate == 'ajax') {
-	require('templates/chromatron/ajax.php');
+	require('templates/' . $template . '/ajax.php');
 } else {
-    require('templates/chromatron/page.php');
+    require('templates/' . $template . '/page.php');
 }
 ob_end_flush();
