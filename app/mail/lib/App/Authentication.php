@@ -90,9 +90,6 @@ class Authentication extends AuthenticationInterface
         
         // find this user in local user via email or create it
         $this->User->save();
-		
-		    // persist user to session
-        $this->User->persist();
         
         return true;
    }

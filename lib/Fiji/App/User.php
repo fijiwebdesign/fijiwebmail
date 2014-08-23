@@ -44,6 +44,8 @@ class User extends Model {
     private $imapOptions;
     
     public function __construct() {
+
+        throw new Exception('Class Deprecated. Use Fiji\App\Model\User.');
         
        $this->Session = Factory::getSingleton('Zend\Session\Container', array('user'));
        $this->Session->setExpirationSeconds($this->expiresSecs);

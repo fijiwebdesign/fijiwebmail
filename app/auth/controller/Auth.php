@@ -34,11 +34,7 @@ class Auth extends \Fiji\App\Controller
         $this->App = Factory::getApplication();
         $this->Request = Factory::getRequest();
         $this->Config = Factory::getConfig();
-        
-        $Authentication = $this->Config->get('Authentication');
-        
-        $this->Auth = Factory::getSingleton($Authentication, array($this->User));
-        
+
         parent::__construct($View);
     }
     
@@ -56,10 +52,8 @@ class Auth extends \Fiji\App\Controller
         $username = $this->Request->getVar('username', '');
         $password = $this->Request->getVar('password', '');
         
-        // @todo implement calls to authentication modules
-        $this->Auth->authenticate($username, $password);
-        
-        if (!$this->User->isAuthenticated()) {
+        // authenticate the user
+        if (!$this->User->authenticate($username, $password)) {
             return $this->App->redirect('?app=auth&status=fail');
         }
         
@@ -69,7 +63,7 @@ class Auth extends \Fiji\App\Controller
     
     public function logout()
     {
-        $this->Auth->logout();
+        $this->User->logout();
         // redirect to app that called the login module
         $this->App->redirect($this->App->getReturnUrl('?'));
     }

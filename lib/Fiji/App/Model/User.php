@@ -47,8 +47,9 @@ class User extends Model {
 
     public $secret;
     
-    public function __construct() {
-        
+    public function __construct()
+    { 
+        // @todo We need a session interface
        $this->Session = Factory::getSingleton('Zend\Session\Container', array('user'));
        $this->Session->setExpirationSeconds($this->expiresSecs);
        
@@ -61,9 +62,6 @@ class User extends Model {
            }
        }
 
-       $Config = Factory::getConfig();
-       $this->secret = $Config->get('secret');
-        
     }
 
     /**
@@ -107,7 +105,6 @@ class User extends Model {
         foreach($this->getPersistKeys() as $key) {
             $this->Session->$key = $this->$key;
         }
-        log_debug($this->Session->$key);
     }
     
     /**
@@ -115,9 +112,13 @@ class User extends Model {
      */
     public function authenticate($username, $password)
     {
-        // @todo Implement event/observer pattern authentication
-        $this->find(array('username' => $username, 'password' => $password));
-        return $this->isAuthenticated($this->getId());
+        // 3rd party authentication class
+        $Auth = Factory::getAuthentication();
+        if ($Auth->authenticate($username, $password)) {
+            $this->persist(); // persist user to session. Handled here so third party only handles authentication. 
+            return $this->isAuthenticated( true  );
+        }
+        return $this->isAuthenticated( false  );
     }
     
     /**
@@ -163,19 +164,14 @@ class User extends Model {
     }
     
     /**
-     * Delete users session
+     * Log user out of application. 
+     * @return {Bool} Status. TRUE for successful logout of 3rd party Auth service. FALSE for failure. 
      */
     public function logout()
     {
-        $this->isAuthenticated(false);
-    }
-
-    /**
-     * Retrieve password
-     */
-    public function getPasswordHash()
-    {
-        return isset($this->password) ? $this->password : null;
+        $Auth = Factory::getAuthentication();
+        $this->isAuthenticated(false); // force a logout from app even if 3rd party fails.
+        return $Auth->logout(); // third party auth service logout status.
     }
     
 }
