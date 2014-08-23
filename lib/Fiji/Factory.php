@@ -146,6 +146,17 @@ class Factory
        }
        return Factory::getSingleton('config\\App', array($options));
    }
+
+   /**
+    * Retrieve the Authentication
+    */
+   static public function getAuthentication($className = null, $options = array())
+   {
+      $Config = self::getConfig();
+      $User = self::getUser();
+      $AuthenticationClass = $Config->get('Authentication');
+      return self::getSingleton($AuthenticationClass, array($User));
+   }
    
    /**
     * Translates classNames to intended class in a cascading fashion

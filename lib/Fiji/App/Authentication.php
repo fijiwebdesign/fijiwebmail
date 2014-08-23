@@ -11,6 +11,7 @@
 namespace Fiji\App;
 
 use Fiji\App\Model\User;
+use Fiji\Factory;
 
 /**
  * user authentication against default service
@@ -29,17 +30,33 @@ class Authentication {
      */
     public function authenticate($username, $password)
     {
-        // @todo Implement event/observer pattern authentication
-        $this->User->username = $username;
-        $this->User->password = $password; // User model handles hashing
-        $this->User->find(array('username' => $username, 'password' => $this->User->password));
-        return $this->User->isAuthenticated($this->User->getId());
+        $this->User->find(array('username' => $username));
+        if ($this->User->id) {
+            $hash = $this->getPasswordHash($password, $this->User->secret);
+            if ($hash == $this->User->password) {
+                return true;
+            }
+        }
+        return false;
     }
     
+    /**
+     * Log the user out. 
+     * @return Bool log out status. TRUE For successfully logging user out. FALSE for error.
+     */
     public function logout()
-   {
+    {
        $this->User->isAuthenticated(false);
-   }
+       return true;
+    }
+
+    /**
+     * Retrieve password
+     */
+    public function getPasswordHash($password, $secret)
+    {
+        return sha1($password . $secret);
+    }
     
     
 }
