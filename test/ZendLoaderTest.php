@@ -2,10 +2,8 @@
 /**
  * Test case for ZendLoaderTest
  * @author gabe@fijiwebdesign.com
- * @example Using PHPUnit in vendor/ 
- *            ./vendor/phpunit/phpunit/phpunit.php --verbose test/ZendLoaderTest.php
- *          Using PHPUnit installed globally
- *            phpunit --verbose test/ZendLoaderTest.php
+ * @example phpunit --verbose test/ZendLoaderTest.php
+ *          Do not use phpunit from composer as it depends on composer autoloader which also loads the tested classes giving false posiives. 
  */
 
 class ZendLoaderTest extends PHPUnit_Framework_TestCase
@@ -34,7 +32,7 @@ class ZendLoaderTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * /../vendor/audoload.php loads Zend\Session\Container
+     * ../lib/Autoload.php loads Zend\Session\Container
      */
     public function testZendLoaderUsingFijiAutoloader()
     {
