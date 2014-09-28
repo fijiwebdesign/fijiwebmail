@@ -154,7 +154,7 @@ class RedBean implements DataProvider
         
         // @todo batch save
         foreach($DomainCollection as $DomainObject) {
-            $this->save($DomainObject);
+            $this->saveOne($DomainObject);
         }
         
         return true;
