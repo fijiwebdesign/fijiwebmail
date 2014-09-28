@@ -21,8 +21,8 @@ abstract class Model extends DomainObject
 {
     
     /**
-     * Construct and set the service used to retrieve/store data
-     * @param $Service {Fiji\App\Service} Service Instance
+     * Construct and set data
+     * @param $data {Array} Data Array
      */
     public function __construct(Array $data = null)
     {

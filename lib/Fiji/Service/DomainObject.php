@@ -42,11 +42,16 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     /**
      * @var Unique ID of domain object instance
      */
-    public $id;
+    protected $id;
+
+    /**
+     * @var Only the keys given by $this->getKeys() can be set
+     */
+    protected $strictOnlyKeys = true;
     
     /**
-     * Construct and set the service used to retrieve/store data
-     * @param $Service {Fiji\App\Service} Service Instance
+     * Construct and set data
+     * @param $data {Array} Data Array
      */
     public function __construct(Array $data = null)
     {
@@ -59,13 +64,22 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
      * Set data from Array
      * @param Array $options
      */
-    public function setData(Array $options = array(), $strictOnlyKeys = false)
+    public function setData(Array $options = array())
     {
         foreach($options as $name => $value) {
-            if (!$strictOnlyKeys || in_array($name, $this->getKeys())) {
+            if (!$this->strictOnlyKeys || in_array($name, $this->getKeys())) {
             	$this->$name = $value;
 			}
         }
+    }
+
+    /**
+     * Set flag for strict setting of data (only keys)
+     * @param Bool $flag True for strictly properties in getKeys() or false for any properties
+     */
+    public function setStrictOnlyKeys($flag = true)
+    {
+        $this->strictOnlyKeys = $flag;
     }
     
     /**
@@ -158,10 +172,11 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
             $ref = new ReflectionClass($this);
             $refProps = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
             
-            $this->keys = array();
+            $this->keys = array('id'); // id mandatory for storage
             foreach($refProps as $refProp) {
                 $this->keys[] = $refProp->name;
             }
+            $this->keys = array_unique($this->keys);
         }
         return $this->keys;
     }
