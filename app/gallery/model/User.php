@@ -14,7 +14,7 @@ namespace app\gallery\model;
 /**
  * User model for Gallery
  */
-class User extends \Fiji\App\User
+class User extends \Fiji\App\Model\User
 {
 
 }
