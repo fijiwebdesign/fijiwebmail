@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -19,35 +19,72 @@ class App extends Config
 {
     const MODE_DEV = 'dev';
     const MODE_PROD = 'prod';
-    
+
+    /**
+     * Error Reporting
+     * @var Int
+     * @type checkbox
+     */
     public $error_reporting = E_ALL;
 
+    /**
+     * Random Secret
+     * @var String
+     */
     public $secret = '3scjDSs8*D@dszpxcSDsdoijdDsz';
-    
+
     public $supportEmail = 'info@fijiwebdesign.com';
-    
-    // zend frameworl library path 
+
+    // zend framework library path
     // /var/lib/zf2 on my debian linux (via aptitude)
     // /usr/share/php/Zend/ on CentoOS (via yum)
-    //      to find the file path use: rpm -ql php-ZendFramework2-Loader 
-    // vendor/zendframework/zendframework/library/Zend/ via composer 
-    //          cd /path/to/fiji/framework/
-    //          composer install 
+    //      to find the file path use: rpm -ql php-ZendFramework2-Loader
+    //
+    // vendor/zendframework/zendframework/library/Zend/ via composer
+    // To install via composer, cd to the app's base directory eg:
+    //          cd /www/var/webmail/
+    //          composer install
+    /**
+     * @type directory
+     * @validate file_exists $zendPath
+     */
     public $zendPath = '/var/lib/zf2/library/Zend/';
 
-    public $baseUrl = '/apps/';
-    
-    public $defaultApp = 'mail';    
-    
+    /**
+     * Base URL of our app. Can be set dynamically via $_SERVER['REQUEST_URI']
+     */
+    public $baseUrl = '/webmail/';
+
+    /**
+     * Base Application Folder. Can be set dynamically via realpath('/../')
+     */
+    public $basePath;
+
+    public $defaultApp = 'mail';
+
     public $mode = self::MODE_DEV;
-    
+
     /**
      * Authentication Handling Class
      */
-    public $Authentication = 'app\\mail\\lib\\App\\Authentication';
-    
+    public $Authentication = 'Fiji\\App\\Authentication';
+
+    /**
+     * Base site template
+     * @type select
+     * @options chromatron|emerald
+     * @validate file_exists $Config->basePath . '/templates/$template/'
+     */
+    public $template = 'chromatron';
+
+    /**
+     * Set the dynamic settings
+     */
+    public function __construct()
+    {
+        // dynamic options
+        $this->baseUrl = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+        $this->basePath = realpath('/../');
+    }
 
 }
-
-
-
