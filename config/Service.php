@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -11,22 +11,43 @@
 namespace config;
 
 use Fiji\App\Config;
+use Fiji\Factory;
 
 /**
- * Base Config
+ * Base Storage Configuration
  */
 class Service extends Config
 {
-    
+    /**
+     * DataProvider class namespace that provide storage interface implementation
+     * @example service\\DataProvider\\RedBean\\RedBean or service\\DataProvider\\MySQL
+     */
     public $dataProvider = 'service\\DataProvider\\RedBean\\RedBean';
-    
+
+    /**
+     * Type of database
+     */
+    public $dbtype = 'sqlite';
+
+    /**
+     * Path to create database file in case of $dbtype = sqlite
+     */
+    public $path = '/tmp/.db/';
+
+    /**
+     *
+     */
     public $host = 'localhost';
     public $user = 'root';
-    public $password = '***';
+    public $password = '';
     public $database = 'fiji_webmail';
     public $tablePrefix = 'fiji_';
-    
+
+    public function __construct()
+    {
+        $this->path = sys_get_temp_dir() . '/.db/'; // .db/ directory in temp directory eg: /tmp/.db
+        // Important: This is unsafe as it is in web accessible directory. Needs to be secured if you use this or use it for development.
+        //$this->path = realpath(__DIR__ . '/../.db/'); // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
+    }
+
 }
-
-
-
