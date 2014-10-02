@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -50,8 +50,8 @@ if (file_exists($zf2Path . '/Loader/StandardAutoloader.php')) {
 
 // Zend framework compat
 try {
-    @require $zf2Path . '/Stdlib/compatibility/autoload.php';
-    @require $zf2Path . '/Session/compatibility/autoload.php';
+    @include $zf2Path . '/Stdlib/compatibility/autoload.php';
+    @include $zf2Path . '/Session/compatibility/autoload.php';
 } catch(\Exception $e) { /* not necessary */ }
 
 // check again autoloading works and we have at least Zend\Session
