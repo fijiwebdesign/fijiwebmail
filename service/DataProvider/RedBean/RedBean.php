@@ -45,14 +45,20 @@ class RedBean implements DataProvider
 
         $this->tablePrefix = $Config->get('tablePrefix');
 
+        $conn_str = $dbtype . ':host=' . $host . ';dbname=' . $database;
+
         require_once(__DIR__ . '/rb.php');
+
         if ($dbtype == 'sqlite') {
-          R::setup($dbtype . ':' . $Config->get('path') . '/host=' . $host . ';dbname=' . $database,
-              $user, $password);
-        } else {
-          R::setup($dbtype . ':host=' . $host . ';dbname=' . $database,
-              $user, $password);
+            if (!is_dir($Config->get('path'))) {
+                if (!mkdir($Config->get('path'))) {
+                    throw new Exception('Failed to create path to sqlite database. The "path" in config/Service.php needs to be writable by php.');
+                }
+            }
+            $conn_str = $dbtype . ':' . $Config->get('path') . '/host=' . $host . ';dbname=' . $database;
         }
+
+        R::setup($conn_str, $user, $password);
 
         R::setStrictTyping(false);
     }
