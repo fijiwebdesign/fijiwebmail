@@ -17,6 +17,7 @@ class notifications extends \Fiji\App\Widget
     
     public function __construct($model = null)
     {
+        $this->User = Factory::getUser();
         parent::__construct($model);
     }
     

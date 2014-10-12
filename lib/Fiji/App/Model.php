@@ -19,7 +19,7 @@ use Fiji\Service\DomainObject;
  */
 abstract class Model extends DomainObject
 {
-    
+
     /**
      * Construct and set data
      * @param $data {Array} Data Array
@@ -28,9 +28,9 @@ abstract class Model extends DomainObject
     {
         parent::__construct($data);
     }
-    
+
     /**
-     * Custom property getters 
+     * Custom property getters
      * @example retrieving $this->foo maps to $this->getFoo()
      */
     public function __get($name)
@@ -41,9 +41,9 @@ abstract class Model extends DomainObject
         }
         return isset($this->$name) ? $this->$name : null;
     }
-    
+
     /**
-     * Custom property setters 
+     * Custom property setters
      * @example setting $this->foo = $bar maps to $this->setFoo($bar)
      */
     public function __set($name, $value)
@@ -56,7 +56,7 @@ abstract class Model extends DomainObject
     }
 
     /**
-     * Custom property isset() calls 
+     * Custom property isset() calls
      * @example isset($this->foo) will work as intended
      */
     public function __isset($name)
@@ -67,7 +67,7 @@ abstract class Model extends DomainObject
         }
         return isset($this->$name) ? true : false;
     }
-    
+
     /**
      * Custom method calls
      */
@@ -78,7 +78,7 @@ abstract class Model extends DomainObject
         }
         return isset($params[0]) ? $params[0] : null;
     }
-    
+
     /**
      * Trigger onFindById()
      */
@@ -89,7 +89,7 @@ abstract class Model extends DomainObject
             return $this->afterFindById($model, $id);
         }
     }
-    
+
     /**
      * Trigger onFind()
      */
@@ -100,7 +100,7 @@ abstract class Model extends DomainObject
             return $this->afterFind($model, $query);
         }
     }
-    
+
     /**
      * Trigger onSave()
      */
@@ -111,7 +111,7 @@ abstract class Model extends DomainObject
             return $this->afterSave($result);
         }
     }
-    
+
     /**
      * Trigger onDelete()
      */
@@ -127,10 +127,11 @@ abstract class Model extends DomainObject
      * Retrieve HTML encoded property
      * @todo decorate from template?
      * @param $name {String} Property name
+     * @deprecated violates SRP. Models should not be concerned with view (rendering)
      */
     public function html($name, $quotes = ENT_QUOTES, $encoding = 'utf-8')
     {
-        return htmlspecialchars($this->$name, $quotes, $encoding);
+        throw new \Exception('The Model::html() method is deprecated.');
     }
 
 }
