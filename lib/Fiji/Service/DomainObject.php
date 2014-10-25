@@ -13,6 +13,7 @@ namespace Fiji\Service;
 
 use Fiji\Factory;
 use ReflectionClass, ReflectionProperty;
+use Fiji\Service\Service;
 
 /**
  * Base Domain Object
@@ -23,22 +24,22 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
      * Model Id key/attribute name
      */
     protected $idKey = 'id';
-    
+
     /**
      * Name of object
      */
     protected $objectName = null;
-    
+
     /**
      * Attributes of Domain Object
      */
     protected $keys = array();
-    
+
     /**
      * Service interface
      */
     protected $Service;
-    
+
     /**
      * @var Unique ID of domain object instance
      */
@@ -48,7 +49,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
      * @var Only the keys given by $this->getKeys() can be set
      */
     protected $strictOnlyKeys = true;
-    
+
     /**
      * Construct and set data
      * @param $data {Array} Data Array
@@ -59,18 +60,43 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
             $this->setData($data);
         }
     }
-    
+
     /**
      * Set data from Array
      * @param Array $options
      */
     public function setData(Array $options = array())
     {
+        // set new data
         foreach($options as $name => $value) {
             if (!$this->strictOnlyKeys || in_array($name, $this->getKeys())) {
-            	$this->$name = $value;
+                // set from external so we trigger $this->__set()
+            	Service::setDomainObjectProperty($this, $name, $value);
 			}
         }
+        return $this;
+    }
+
+    /**
+     * Clear the data from the model
+     */
+    public function clearData()
+    {
+        // clear storables
+        foreach($this->getKeys() as $key) {
+            if(isset($this->$key) && !is_null($this->$key)) {
+                $this->$key = null;
+            }
+        }
+        // clear references
+        foreach($this->References as $name => $class) {
+            // __isset() and __set() invoked if property doesn't exist. Even within the same class!
+            if (property_exists($this, $name) && isset($this->$name)) {
+                $this->$name = null;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -80,26 +106,31 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     public function setStrictOnlyKeys($flag = true)
     {
         $this->strictOnlyKeys = $flag;
+        return $this;
     }
-    
+
     /**
      * Load data to model given the ID
      * @var $id Unique domain object ID
      */
     public function findById($id)
     {
+        $this->clearData();
         $this->setData($this->getService()->findById($this, $id));
+        return $this;
     }
-    
+
     /**
      * Load data to model given the query
      * @var $id Unique domain object ID
      */
     public function find($query)
     {
+        $this->clearData();
         $this->setData($this->getService()->findOne($this, $query));
+        return $this;
     }
-    
+
     /**
      * Save the domain object to the service
      */
@@ -107,7 +138,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return $this->getService()->saveOne($this);
     }
-    
+
     /**
      * Delete the domain object from the service
      */
@@ -115,7 +146,23 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return $this->getService()->deleteOne($this);
     }
-    
+
+    /**
+     * Retrieve a reference to another Model
+     * @note By convention References named '{name}Collection' are Collections
+     */
+    public function findReference($name)
+    {
+        $className = $this->References[$name];
+        // if classname has 'Collection' create a ModelCollection instead of a Model
+        $obj = stristr($name, 'Collection') ?
+            Factory::createModelCollection($className) : Factory::createModel($className);
+        // make sure we use the same service for the reference
+        $obj->setService($this->getService()); 
+        $obj->setData($obj->getService()->findReference($this, $obj, $name));
+        return $obj;
+    }
+
     /**
      * Return the name of the ID attribute/key
      */
@@ -123,7 +170,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return $this->idKey;
     }
-    
+
     /**
      * Return the name of the ID attribute/key
      */
@@ -131,21 +178,40 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return $this->{$this->getIdKey()};
     }
-    
+
     /**
-     * Return name of Domain Object mapped to storage
+     * Set the name of the ID attribute/key
+     */
+    public function setId($id)
+    {
+        return $this->{$this->getIdKey()} = is_null($id) ? $id : intval($id);
+    }
+
+    /**
+     * @deprecated Use getObjectName()
      */
     public function getName()
     {
+        return $this->getObjectName();
+    }
+
+    /**
+     * Return name of Domain Object mapped to storage
+     */
+    public function getObjectName()
+    {
         if (!$this->objectName) {
             $className = get_class($this);
-            $className = substr($className, strrpos($className, '\\')+1);
+            // take only last class name if namespaced
+            if (($pos = strrpos($className, '\\')) !== false) {
+                $className = substr($className, $pos+1);
+            }
             $this->objectName = strtolower($className);
         }
-        
+
         return $this->objectName;
     }
-    
+
     /**
      * Get an Array of Domain Object Properties
      * @return Array Associative key/value pairs
@@ -153,15 +219,15 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     public function toArray()
     {
         $keys = $this->getKeys();
-        
+
         $array = array();
         foreach($keys as $name) {
             $array[$name] = $this->$name;
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Return Domain Object Keys
      * @return Array Keys
@@ -171,7 +237,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         if (empty($this->keys)) {
             $ref = new ReflectionClass($this);
             $refProps = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
-            
+
             $this->keys = array('id'); // id mandatory for storage
             foreach($refProps as $refProp) {
                 $this->keys[] = $refProp->name;
@@ -180,7 +246,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         }
         return $this->keys;
     }
-    
+
     /**
      * Return Domain Object values as
      * @return Array
@@ -189,7 +255,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return array_values($this->toArray());
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -198,7 +264,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         $vars = $this->toArray();
         return isset($vars[$i]);
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -207,7 +273,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         $vars = $this->toArray();
         return isset($vars[$i]) ? $vars[$i] : null;
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -215,7 +281,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         $this->$i = $value;
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -223,7 +289,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         $this->$i = null;
     }
-    
+
     /**
      * Countable interface
      */
@@ -231,7 +297,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return count($this->toArray());
     }
-    
+
     /**
      * Retrieve the Service
      */
@@ -239,11 +305,11 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     {
         return isset($this->Service) ? $this->Service : Factory::getService();
     }
-    
+
     /**
      * Set the Service providing data
      */
-    public function setService(\Fiji\Service\Service $Service)
+    public function setService(Service $Service)
     {
         $this->Service = $Service;
     }
@@ -254,5 +320,5 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     public function getIterator() {
         return new \ArrayIterator($this->toArray());
     }
-    
+
 }

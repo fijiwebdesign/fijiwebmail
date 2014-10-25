@@ -2,14 +2,13 @@
 /**
  * Test case for Fiji\App\Model
  * @author gabe@fijiwebdesign.com
- * @example Using PHPUnit in vendor/ 
- *            ./vendor/phpunit/phpunit/phpunit.php --verbose test/ModelTest.php
+ * @example Using PHPUnit in vendor/
+ *          php  ./vendor/phpunit/phpunit/phpunit.php --verbose test/ModelTest.php
  *          Using PHPUnit installed globally
  *            phpunit --verbose test/ModelTest.php
  */
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../lib/Autoload.php';
+require_once __DIR__ . '/../lib/Autoload.php';
 
 use Fiji\Factory;
 use Fiji\App\Model;
@@ -32,7 +31,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Model methods __set() and __get() expose protected properties allowing them to be set and get. 
+     * Model methods __set() and __get() expose protected properties allowing them to be set and get.
      * @dataProvider provider
      */
     public function testGettersAndSetters($className, Array $params = array())
@@ -46,6 +45,33 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('public', $Actual->public);
         $this->assertNull($Actual->private); // should not be set
         $this->assertEquals('protected', $Actual->protected); // accessed through __set() and __get()
+
+    }
+
+    /**
+     * Model methods __isset() works as intended
+     * @dataProvider provider
+     */
+    public function testIsset($className, Array $params = array())
+    {
+        $Actual = Factory::createModel($className);
+
+        $this->assertFalse(isset($Actual->public));
+        $this->assertFalse(isset($Actual->protected));
+        $this->assertFalse(isset($Actual->private));
+
+        $Actual->public = 'public';
+        $Actual->private = 'private';
+        $Actual->protected = 'protected';
+
+        $this->assertTrue(isset($Actual->public));
+        $this->assertTrue(isset($Actual->protected)); // return by __isset()
+        $this->assertFalse(isset($Actual->private)); // not accessible
+
+        $this->assertTrue($Actual->_isset('public'));
+        $this->assertTrue($Actual->_isset('protected')); // direct access to property
+        $this->assertTrue($Actual->_isset('private')); // model has access to it's private properties
+
 
     }
 
@@ -163,7 +189,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
  * Model Mockup
  */
 class ModelMock extends Model {
-    
+
     /**
      * @var private
      */
@@ -172,6 +198,14 @@ class ModelMock extends Model {
     protected $protected;
 
     public $public;
+
+    /**
+     * Test if isset works as intended within model
+     */
+    public function _isset($name)
+    {
+        return isset($name);
+    }
 
 }
 
@@ -204,7 +238,7 @@ class ModelMockGetKeysSetter extends ModelMockGetKeys {
     }
 
     /**
-     * Set $this->protected 
+     * Set $this->protected
      */
     public function setProtected($value)
     {

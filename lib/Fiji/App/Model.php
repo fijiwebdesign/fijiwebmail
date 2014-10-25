@@ -13,12 +13,19 @@ namespace Fiji\App;
 
 use Fiji\Factory;
 use Fiji\Service\DomainObject;
+use Exception;
+use Fiji\App\ModelCollection;
 
 /**
  * Base Model
  */
 abstract class Model extends DomainObject
 {
+    /**
+     * List of properties that are references to other Models or ModelCollections
+     * @var Array
+     */
+    protected $References = array();
 
     /**
      * Construct and set data
@@ -39,6 +46,13 @@ abstract class Model extends DomainObject
         if (method_exists($this, $method)) {
             return $this->$method();
         }
+        // retrieve a reference to another Model
+        if (in_array($name, array_keys($this->References))) {
+            // check if property exists since isset() returns true if it doesn't
+            if (!property_exists($this, $name) || !isset($this->$name)) {
+                $this->$name = $this->findReference($name);
+            }
+        }
         return isset($this->$name) ? $this->$name : null;
     }
 
@@ -52,6 +66,12 @@ abstract class Model extends DomainObject
         if (method_exists($this, $method)) {
             return $this->$method($value);
         }
+        // references can only be models or ModelCollections
+        if (in_array($name, array_keys($this->References))) {
+            if (!($value instanceof Model || $value instanceof ModelCollection)) {
+                throw new Exception('Invalid type set to reference. Must be Model or ModelCollection.');
+            }
+        }
         return $this->$name = $value;
     }
 
@@ -61,8 +81,13 @@ abstract class Model extends DomainObject
      */
     public function __isset($name)
     {
+        // properties with getters are always set
         $method = 'get' . ucfirst($name);
         if (method_exists($this, $method)) {
+            return true;
+        }
+        // references are always set since they are lazy loaded
+        if (in_array($name, array_keys($this->References))) {
             return true;
         }
         return isset($this->$name) ? true : false;
@@ -70,6 +95,8 @@ abstract class Model extends DomainObject
 
     /**
      * Custom method calls
+     * Allows arbitrary method calls that return the first parameter if no method exists
+     * Used in the onFind(), afterFind() etc. events
      */
     public function __call($method, $params = array())
     {
@@ -84,10 +111,11 @@ abstract class Model extends DomainObject
      */
     public function findById($id)
     {
-        if ($this->onFindById($id) !== false) {
+        if ($result = $this->onFindById($id) !== false) {
             $model = parent::findById($id);
-            return $this->afterFindById($model, $id);
+            $result = $this->afterFindById($model, $id);
         }
+        return $result;
     }
 
     /**
@@ -95,10 +123,11 @@ abstract class Model extends DomainObject
      */
     public function find($query)
     {
-        if ($this->onFind($query) !== false) {
+        if ($result = $this->onFind($query) !== false) {
             $model = parent::find($query);
-            return $this->afterFind($model, $query);
+            $result = $this->afterFind($model, $query);
         }
+        return $result;
     }
 
     /**
@@ -106,10 +135,11 @@ abstract class Model extends DomainObject
      */
     public function save()
     {
-        if ($this->onSave() !== false) {
+        if ($result = $this->onSave() !== false) {
             $result = parent::save();
-            return $this->afterSave($result);
+            $result = $this->afterSave($result);
         }
+        return $result;
     }
 
     /**
@@ -117,10 +147,23 @@ abstract class Model extends DomainObject
      */
     public function delete()
     {
-        if ($this->onDelete() !== false) {
+        if ($result = $this->onDelete() !== false) {
             $result = parent::delete();
-            return $this->afterDelete($result);
+            $result = $this->afterDelete($result);
         }
+        return $result;
+    }
+
+    /**
+     * Retrieve a reference to another Model
+     */
+    public function findReference($name)
+    {
+        if ($result = $this->onFindReference($name) !== false) {
+            $result = parent::findReference($name);
+            $result = $this->afterFindReference($result);
+        }
+        return $result;
     }
 
     /**
@@ -131,7 +174,7 @@ abstract class Model extends DomainObject
      */
     public function html($name, $quotes = ENT_QUOTES, $encoding = 'utf-8')
     {
-        throw new \Exception('The Model::html() method is deprecated.');
+        throw new Exception('The Model::html() method is deprecated.');
     }
 
 }
