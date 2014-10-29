@@ -28,6 +28,12 @@ abstract class Model extends DomainObject
     protected $References = array();
 
     /**
+     * List of properties that are references to other Models or ModelCollections
+     * @var Array
+     */
+    protected $DynamicProps = array();
+
+    /**
      * Construct and set data
      * @param $data {Array} Data Array
      */
@@ -48,10 +54,22 @@ abstract class Model extends DomainObject
         }
         // retrieve a reference to another Model
         if (in_array($name, array_keys($this->References))) {
+            // dynamic references
+            if (isset($this->DynamicProps[$name])) {
+                if ($this->DynamicProps[$name]->id) {
+                    return $this->DynamicProps[$name];
+                } else {
+                    return $this->DynamicProps[$name] = $this->findReference($name);
+                }
+            }
             // check if property exists since isset() returns true if it doesn't
             if (!property_exists($this, $name) || !isset($this->$name)) {
                 $this->$name = $this->findReference($name);
             }
+        }
+        // get a dynamically set property
+        if (!property_exists($this, $name) && isset($this->DynamicProps[$name])) {
+            return $this->DynamicProps[$name];
         }
         return isset($this->$name) ? $this->$name : null;
     }
@@ -62,15 +80,24 @@ abstract class Model extends DomainObject
      */
     public function __set($name, $value)
     {
+
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method($value);
+        }
+        // dynamically set a reference 
+        if ($value instanceof Model || $value instanceof ModelCollection) {
+            $this->References[$name] = get_class($value);
         }
         // references can only be models or ModelCollections
         if (in_array($name, array_keys($this->References))) {
             if (!($value instanceof Model || $value instanceof ModelCollection)) {
                 throw new Exception('Invalid type set to reference. Must be Model or ModelCollection.');
             }
+        }
+        // dynamic properties
+        if (!property_exists($this, $name)) {
+            return $this->DynamicProps[$name] = $value;
         }
         return $this->$name = $value;
     }
@@ -89,6 +116,10 @@ abstract class Model extends DomainObject
         // references are always set since they are lazy loaded
         if (in_array($name, array_keys($this->References))) {
             return true;
+        }
+        // dynamic properties
+        if (!property_exists($this, $name)) {
+            return isset($this->DynamicProps[$name]);
         }
         return isset($this->$name) ? true : false;
     }
