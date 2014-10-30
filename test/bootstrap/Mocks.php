@@ -108,7 +108,7 @@ class Service extends Fiji\App\Config
         // so we can view db in dev because :memory" db isn't across session
         ///$this->path = (__DIR__ . '/../.db/test.db');
         //echo "db: " . $this->path . PHP_EOL;
-        parent::construct();
+        parent::__construct();
     }
 
     public function clearStorage()
@@ -122,7 +122,7 @@ class Service extends Fiji\App\Config
 
 /**
  * Mock our factory so we can mock data provider for our models
- * @todo We should have Factory::setCreateModel(function() {}); 
+ * @todo We should have Factory::setCreateModel(function() {});
  *       to make Factory extensible without changing namespace.
  *       or we could set an autoloader for Fiji\Factory poiting to this
  */

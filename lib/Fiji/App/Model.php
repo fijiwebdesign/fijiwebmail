@@ -56,15 +56,12 @@ abstract class Model extends DomainObject
         if (in_array($name, array_keys($this->References))) {
             // dynamic references
             if (isset($this->DynamicProps[$name])) {
-                if ($this->DynamicProps[$name]->id) {
-                    return $this->DynamicProps[$name];
-                } else {
-                    return $this->DynamicProps[$name] = $this->findReference($name);
-                }
+                return $this->DynamicProps[$name];
             }
             // check if property exists since isset() returns true if it doesn't
             if (!property_exists($this, $name) || !isset($this->$name)) {
-                $this->$name = $this->findReference($name);
+                // @note if !property_exists($this, $name) then $this->$name resolves to $this->DynamipProps[$name]
+                $this->$name = $this->findReference($name); 
             }
         }
         // get a dynamically set property
@@ -80,7 +77,7 @@ abstract class Model extends DomainObject
      */
     public function __set($name, $value)
     {
-
+        // call custom set method
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method($value);
@@ -121,7 +118,29 @@ abstract class Model extends DomainObject
         if (!property_exists($this, $name)) {
             return isset($this->DynamicProps[$name]);
         }
-        return isset($this->$name) ? true : false;
+        return isset($this->$name);
+    }
+
+    /**
+     * Custom property unset
+     * @example unset($this->foo) will work as intended
+     */
+    public function __unset($name)
+    {
+        // call custom unset method
+        $method = 'unset' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            return $this->$method($name);
+        }
+        // references need to be removed from references map
+        if (in_array($name, array_keys($this->References))) {
+            unset($this->References[$name]);
+        }
+        // unset dynamic properties
+        if (!property_exists($this, $name)) {
+            unset($this->DynamicProps[$name]);
+        }
+        unset($this->$name);
     }
 
     /**
