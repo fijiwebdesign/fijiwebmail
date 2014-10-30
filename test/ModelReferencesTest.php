@@ -1,6 +1,6 @@
 <?php
 /**
- * Test case for Fiji\App\Model persistence
+ * Test case for Fiji\App\Model references
  * @author gabe@fijiwebdesign.com\
  * @example Using PHPUnit in vendor/
  *          php ./vendor/phpunit/phpunit/phpunit.php --verbose test/ModelReferencesTest.php
@@ -18,7 +18,7 @@ require_once __DIR__ . '/bootstrap/Mocks.php';
  * Test the References are being lazy loaded and work correctly when __isset(), __get(), __set()
  * @group model
  */
-class ModelDataPersistenceTest extends PHPUnit_Framework_TestCase
+class ModelReferencesTest extends PHPUnit_Framework_TestCase
 {
 
     /**
