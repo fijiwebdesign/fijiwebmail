@@ -93,23 +93,20 @@ class RedBean implements DataProvider
         // @todo support all mysql queries
         $where = array();
         $query = is_array($query) ? $query : array();
+        $_query = array();
         foreach($query as $name => $value) {
+            $_query[':' . $name] = $value;
             $where[] = "`$name` = :$name";
         }
         $where = implode(' AND ', $where);
 
-        $query = array_flip($query);
-        $query = array_map(function($value) {
-            return ":" . $value;
-        }, $query);
-        $query = array_flip($query);
-
-        $bean = R::findOne($tableName, $where, $query);
+        $bean = R::findOne($tableName, $where, $_query);
         return $bean ? $bean->getProperties() : array();
     }
 
     /**
      * Find Domain Objects matching query
+     * @todo impose limit and lazy load
      */
     public function find(DomainObject $DomainObject, $query = array(), $start = 0, $limit = 10) {
         $tableName = $this->getTableName($DomainObject);
@@ -118,16 +115,12 @@ class RedBean implements DataProvider
         // @todo support all mysql queries
         $where = array();
         $query = is_array($query) ? $query : array();
+        $_query = array();
         foreach($query as $name => $value) {
+            $_query[':' . $name] = $value;
             $where[] = "`$name` = :$name";
         }
         $where = implode(' AND ', $where);
-
-        $query = array_flip($query);
-        $query = array_map(function($value) {
-            return ":" . $value;
-        }, $query);
-        $query = array_flip($query);
 
         $beans = R::find($tableName, $where, $query);
 
