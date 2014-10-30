@@ -1,0 +1,5 @@
+vendor
+.db
+.remote-sync.json
+sftp-config.json
+composer.lock

@@ -23,7 +23,15 @@ class Service
      * Storage specific data provider
      */
     protected $DataProvider;
-    
+
+    /**
+     * Set a property on a domain object publically so we trigger it's __set() method
+     */
+    static function setDomainObjectProperty(DomainObject $DomainObject, $name, $value)
+    {
+        $DomainObject->$name = $value;
+    }
+
     /**
      * Construct and set the service used to retrieve/store data
      * @param $Service {Fiji\App\Service} Service Instance
@@ -32,7 +40,7 @@ class Service
     {
         $this->DataProvider =  isset($DataProvider) ? $DataProvider : Factory::getDataProvider();
     }
-    
+
     /**
      * Load data to domain object given the ID
      * @
@@ -44,67 +52,77 @@ class Service
         $data = $this->DataProvider->findById($DomainObject, $id);
         return $data;
     }
-    
+
     /**
      * Find first object matching query
      * @return Array Single associative array of model properties and values
-     * 
+     *
      */
     public function findOne(DomainObject $DomainObject, $query = array())
     {
         $data = $this->DataProvider->findOne($DomainObject, $query);
         return $data;
     }
-    
+
     /**
      * Find  objects matching query
      * @return Array A List of data arrays representing a list of domain objects
-     * 
+     *
      */
     public function find(DomainObject $DomainObject, $query = array(), $start = 0, $limit = 10)
     {
         $data = $this->DataProvider->find($DomainObject, $query, $start, $limit);
         return $data;
     }
-    
+
     /**
      * Store the object
      * @return Bool success or fail
-     * 
+     *
      */
     public function saveOne(DomainObject $DomainObject)
     {
         return $this->DataProvider->saveOne($DomainObject);
     }
-    
+
     /**
      * Store the object
      * @return Bool success or fail
-     * 
+     *
      */
     public function save(DomainCollection $DomainCollection)
     {
         return $this->DataProvider->save($DomainCollection);
     }
-    
+
     /**
      * Delete the object
      * @return Bool success or fail
-     * 
+     * @param Fiji\Service\DomainObject
      */
     public function deleteOne(DomainObject $DomainObject)
     {
         return $this->DataProvider->deleteOne($DomainObject);
     }
-    
+
     /**
      * Delete the objects in the DomainCollection
      * @return Bool success or fail
-     * 
+     * @param Fiji\Service\DomainCollection
      */
     public function delete(DomainCollection $DomainCollection)
     {
         return $this->DataProvider->delete($DomainCollection);
     }
-    
+
+    /**
+     * Retrieves a referenced DomainObject or DomainCollection
+     * @return Fiji\Service\DomainCollection | Fiji\Service\DomainObject
+     *
+     */
+    public function findReference($DomainObject, $RefObject, $name)
+    {
+        return $this->DataProvider->findReference($DomainObject, $RefObject, $name);
+    }
+
 }

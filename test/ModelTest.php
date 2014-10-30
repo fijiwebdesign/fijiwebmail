@@ -2,14 +2,13 @@
 /**
  * Test case for Fiji\App\Model
  * @author gabe@fijiwebdesign.com
- * @example Using PHPUnit in vendor/ 
- *            ./vendor/phpunit/phpunit/phpunit.php --verbose test/ModelTest.php
+ * @example Using PHPUnit in vendor/
+ *          php  ./vendor/phpunit/phpunit/phpunit.php --verbose test/ModelTest.php
  *          Using PHPUnit installed globally
  *            phpunit --verbose test/ModelTest.php
  */
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../lib/Autoload.php';
+require_once __DIR__ . '/../lib/Autoload.php';
 
 use Fiji\Factory;
 use Fiji\App\Model;
@@ -32,20 +31,67 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Model methods __set() and __get() expose protected properties allowing them to be set and get. 
+     * Model methods __set() and __get() expose protected properties allowing them to be set and get.
      * @dataProvider provider
      */
     public function testGettersAndSetters($className, Array $params = array())
     {
         $Actual = Factory::createModel($className);
 
+        // set the properties from external context
         $Actual->public = 'public';
         $Actual->private = 'private';
         $Actual->protected = 'protected';
+        $Actual->nonExistent = 'blabla';
 
+        // rules for availability of properties in external context
         $this->assertEquals('public', $Actual->public);
         $this->assertNull($Actual->private); // should not be set
         $this->assertEquals('protected', $Actual->protected); // accessed through __set() and __get()
+        $this->assertEquals('blabla', $Actual->nonExistent); // dynamic public properties are ok
+
+        // set the properties directly within the class context
+        $Actual->_set('public', 'public');
+        $Actual->_set('private', 'private');
+        $Actual->_set('protected', 'protected');
+        $Actual->_set('nonExistent', 'blabla');
+
+        // all properties should exist inside the class context
+        $this->assertEquals('public', $Actual->_get('public')); // accessed directly
+        $this->assertEquals('private', $Actual->_get('private')); // accessed directly
+        $this->assertEquals('protected', $Actual->_get('protected')); // accessed directly
+        $this->assertEquals('blabla', $Actual->_get('nonExistent')); // dynamic public properties available inside model through __get()
+
+    }
+
+    /**
+     * Model methods __isset() works as intended
+     * @dataProvider provider
+     */
+    public function testIsset($className, Array $params = array())
+    {
+        $Actual = Factory::createModel($className);
+
+        $this->assertFalse(isset($Actual->public));
+        $this->assertFalse(isset($Actual->protected));
+        $this->assertFalse(isset($Actual->private));
+        $this->assertFalse(isset($Actual->nonExistent));
+
+        $Actual->public = 'public';
+        $Actual->private = 'private';
+        $Actual->protected = 'protected';
+        $Actual->nonExistent = 'blabla';
+
+        $this->assertTrue(isset($Actual->public));
+        $this->assertTrue(isset($Actual->protected)); // return by __isset()
+        $this->assertFalse(isset($Actual->private)); // not accessible
+        $this->assertTrue(isset($Actual->nonExistent)); // dynamic property is set
+
+        $this->assertTrue($Actual->_isset('public'));
+        $this->assertTrue($Actual->_isset('protected')); // direct access to property
+        $this->assertTrue($Actual->_isset('private')); // model has access to it's private properties
+        $this->assertTrue($Actual->_isset('nonExistent')); // dynamic property is accessible inside class
+
 
     }
 
@@ -60,12 +106,14 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $Model->public = 'public';
         $Model->private = 'private';
         $Model->protected = 'protected';
+        $Model->nonExistent = 'blabla';
 
         $Actual = $Model->toArray();
 
         $Expected = array(
             'id' => null,
-            'public' => 'public'
+            'public' => 'public',
+            //'nonExistent' => 'blabla' // @todo should we save dynamic properties to storage? Maybe for dynamic models only?
         );
 
         $this->assertEquals($Expected, $Actual);
@@ -79,14 +127,44 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testSetterCall($className, Array $params = array())
     {
 
-        $Model = $this->getMock($className, array('setProtected'));
+        $Model = $this->getMock($className, array('setProtected', 'setNonExistent'));
         $Model->expects($this->once())
              ->method('setProtected')
              ->with($this->equalTo('protected'));
+        $Model->expects($this->once())
+             ->method('setNonExistent')
+             ->with($this->equalTo('blabla'));
 
         $Model->public = 'public';
         $Model->private = 'private';
         $Model->protected = 'protected'; // triggers call $Model->setProtected('protected')
+        $Model->nonExistent = 'blabla'; // triggers call $Model->setNonExistent('blabla')
+
+    }
+
+    /**
+     * Model::get{Property}() method is called when protected {property} is got
+     * @dataProvider provider
+     */
+    public function testGetterCall($className, Array $params = array())
+    {
+
+        $Model = $this->getMock($className, array('getProtected', 'getNonExistent'));
+        $Model->expects($this->exactly(2))
+             ->method('getProtected');
+        $Model->expects($this->exactly(2))
+             ->method('getNonExistent');
+
+        $protected = $Model->protected; // triggers call $Model->getProtected()
+        $setNonExistent = $Model->nonExistent; // triggers call $Model->getNonExistent()
+
+        $Model->protected = 'protected'; // triggers call $Model->setProtected('protected')
+        $Model->nonExistent = 'blabla'; // triggers call $Model->setNonExistent('blabla')
+
+        $protected = $Model->protected; // triggers call $Model->getProtected()
+        // note: $Model->nonExistent is never set, it actually is added to $Model->DynamicProps[nonExistent]
+        //        This allows lazy loading $Model->nonExistent by allways calling $Model->getNonExistent() 
+        $setNonExistent = $Model->nonExistent; // triggers call $Model->getNonExistent() 
 
     }
 
@@ -112,6 +190,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($Expected, $Actual);
+
+        foreach($Model as $name => $value) {
+             $this->assertEquals($Expected[$name], $Model->$name);
+        }
 
     }
 
@@ -163,7 +245,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
  * Model Mockup
  */
 class ModelMock extends Model {
-    
+
     /**
      * @var private
      */
@@ -172,6 +254,30 @@ class ModelMock extends Model {
     protected $protected;
 
     public $public;
+
+    /**
+     * Test if isset works as intended within model
+     */
+    public function _isset($name)
+    {
+        return isset($name);
+    }
+
+    /**
+     * Get the value directly inside model
+     */
+    public function _get($name)
+    {
+        return $this->$name;
+    }
+
+    /**
+     * Set the value directly inside model
+     */
+    public function _set($name, $value)
+    {
+        return $this->$name = $value;
+    }
 
 }
 
@@ -204,7 +310,7 @@ class ModelMockGetKeysSetter extends ModelMockGetKeys {
     }
 
     /**
-     * Set $this->protected 
+     * Set $this->protected
      */
     public function setProtected($value)
     {

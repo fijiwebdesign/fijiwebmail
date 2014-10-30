@@ -13,24 +13,37 @@ namespace Fiji\App;
 
 use Fiji\Factory;
 use Fiji\Service\DomainObject;
+use Exception;
+use Fiji\App\ModelCollection;
 
 /**
  * Base Model
  */
 abstract class Model extends DomainObject
 {
-    
     /**
-     * Construct and set the service used to retrieve/store data
-     * @param $Service {Fiji\App\Service} Service Instance
+     * List of properties that are references to other Models or ModelCollections
+     * @var Array
+     */
+    protected $References = array();
+
+    /**
+     * List of properties that are references to other Models or ModelCollections
+     * @var Array
+     */
+    protected $DynamicProps = array();
+
+    /**
+     * Construct and set data
+     * @param $data {Array} Data Array
      */
     public function __construct(Array $data = null)
     {
         parent::__construct($data);
     }
-    
+
     /**
-     * Custom property getters 
+     * Custom property getters
      * @example retrieving $this->foo maps to $this->getFoo()
      */
     public function __get($name)
@@ -39,37 +52,101 @@ abstract class Model extends DomainObject
         if (method_exists($this, $method)) {
             return $this->$method();
         }
+        // retrieve a reference to another Model
+        if (in_array($name, array_keys($this->References))) {
+            // dynamic references
+            if (isset($this->DynamicProps[$name])) {
+                return $this->DynamicProps[$name];
+            }
+            // check if property exists since isset() returns true if it doesn't
+            if (!property_exists($this, $name) || !isset($this->$name)) {
+                // @note if !property_exists($this, $name) then $this->$name resolves to $this->DynamipProps[$name]
+                $this->$name = $this->findReference($name); 
+            }
+        }
+        // get a dynamically set property
+        if (!property_exists($this, $name) && isset($this->DynamicProps[$name])) {
+            return $this->DynamicProps[$name];
+        }
         return isset($this->$name) ? $this->$name : null;
     }
-    
+
     /**
-     * Custom property setters 
+     * Custom property setters
      * @example setting $this->foo = $bar maps to $this->setFoo($bar)
      */
     public function __set($name, $value)
     {
+        // call custom set method
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method($value);
+        }
+        // dynamically set a reference 
+        if ($value instanceof Model || $value instanceof ModelCollection) {
+            $this->References[$name] = get_class($value);
+        }
+        // references can only be models or ModelCollections
+        if (in_array($name, array_keys($this->References))) {
+            if (!($value instanceof Model || $value instanceof ModelCollection)) {
+                throw new Exception('Invalid type set to reference. Must be Model or ModelCollection.');
+            }
+        }
+        // dynamic properties
+        if (!property_exists($this, $name)) {
+            return $this->DynamicProps[$name] = $value;
         }
         return $this->$name = $value;
     }
 
     /**
-     * Custom property isset() calls 
+     * Custom property isset() calls
      * @example isset($this->foo) will work as intended
      */
     public function __isset($name)
     {
+        // properties with getters are always set
         $method = 'get' . ucfirst($name);
         if (method_exists($this, $method)) {
             return true;
         }
-        return isset($this->$name) ? true : false;
+        // references are always set since they are lazy loaded
+        if (in_array($name, array_keys($this->References))) {
+            return true;
+        }
+        // dynamic properties
+        if (!property_exists($this, $name)) {
+            return isset($this->DynamicProps[$name]);
+        }
+        return isset($this->$name);
     }
-    
+
+    /**
+     * Custom property unset
+     * @example unset($this->foo) will work as intended
+     */
+    public function __unset($name)
+    {
+        // call custom unset method
+        $method = 'unset' . ucfirst($name);
+        if (method_exists($this, $method)) {
+            return $this->$method($name);
+        }
+        // references need to be removed from references map
+        if (in_array($name, array_keys($this->References))) {
+            unset($this->References[$name]);
+        }
+        // unset dynamic properties
+        if (!property_exists($this, $name)) {
+            unset($this->DynamicProps[$name]);
+        }
+        unset($this->$name);
+    }
+
     /**
      * Custom method calls
+     * Allows arbitrary method calls that return the first parameter if no method exists
+     * Used in the onFind(), afterFind() etc. events
      */
     public function __call($method, $params = array())
     {
@@ -78,59 +155,76 @@ abstract class Model extends DomainObject
         }
         return isset($params[0]) ? $params[0] : null;
     }
-    
+
     /**
      * Trigger onFindById()
      */
     public function findById($id)
     {
-        if ($this->onFindById($id) !== false) {
+        if ($result = $this->onFindById($id) !== false) {
             $model = parent::findById($id);
-            return $this->afterFindById($model, $id);
+            $result = $this->afterFindById($model, $id);
         }
+        return $result;
     }
-    
+
     /**
      * Trigger onFind()
      */
     public function find($query)
     {
-        if ($this->onFind($query) !== false) {
+        if ($result = $this->onFind($query) !== false) {
             $model = parent::find($query);
-            return $this->afterFind($model, $query);
+            $result = $this->afterFind($model, $query);
         }
+        return $result;
     }
-    
+
     /**
      * Trigger onSave()
      */
     public function save()
     {
-        if ($this->onSave() !== false) {
+        if ($result = $this->onSave() !== false) {
             $result = parent::save();
-            return $this->afterSave($result);
+            $result = $this->afterSave($result);
         }
+        return $result;
     }
-    
+
     /**
      * Trigger onDelete()
      */
     public function delete()
     {
-        if ($this->onDelete() !== false) {
+        if ($result = $this->onDelete() !== false) {
             $result = parent::delete();
-            return $this->afterDelete($result);
+            $result = $this->afterDelete($result);
         }
+        return $result;
+    }
+
+    /**
+     * Retrieve a reference to another Model
+     */
+    public function findReference($name)
+    {
+        if ($result = $this->onFindReference($name) !== false) {
+            $result = parent::findReference($name);
+            $result = $this->afterFindReference($result);
+        }
+        return $result;
     }
 
     /**
      * Retrieve HTML encoded property
      * @todo decorate from template?
      * @param $name {String} Property name
+     * @deprecated violates SRP. Models should not be concerned with view (rendering)
      */
     public function html($name, $quotes = ENT_QUOTES, $encoding = 'utf-8')
     {
-        return htmlspecialchars($this->$name, $quotes, $encoding);
+        throw new Exception('The Model::html() method is deprecated.');
     }
 
 }

@@ -16,11 +16,6 @@ use Fiji\Factory;
  * Application Widget
  */
 abstract class Widget {
-    
-    protected $User;
-    protected $Doc;
-    protected $App;
-	protected $Req;
 
     /**
      * Generated Unique ID of widget
@@ -44,12 +39,9 @@ abstract class Widget {
     
     /**
      * Require a Widget Name
+     * @todo should require a Fiji\App\Model parameter so each widget is a model view
      */
     public function __construct($name = null) {
-        $this->User = Factory::getUser();
-        $this->Doc = Factory::getDocument();
-        $this->App = Factory::getApplication();
-		$this->Req = Factory::getRequest();
         
         $this->name = $name;
 

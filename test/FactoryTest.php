@@ -2,14 +2,13 @@
 /**
  * Test case for Fiji\Factory
  * @author gabe@fijiwebdesign.com
- * @example Using PHPUnit in vendor/ 
- *            ./vendor/phpunit/phpunit/phpunit.php --verbose test/FactoryTest.php
+ * @example Using PHPUnit in vendor/
+ *          php  ./vendor/phpunit/phpunit/phpunit.php --verbose test/FactoryTest.php
  *          Using PHPUnit installed globally
  *            phpunit --verbose test/FactoryTest.php
  */
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../lib/Autoload.php';
+require_once __DIR__ . '/../lib/Autoload.php';
 
 use Fiji\Factory;
 
@@ -71,10 +70,10 @@ class FactoryTest extends PHPUnit_Framework_TestCase
     {
         $Config = Factory::getConfig('config\Model');
         $appName = Factory::getApplication()->getName();
-        
+
         // get translations for User models in Model config
         $classNames = $Config->get('User');
-        
+
         if (!is_array($classNames) && !is_object($classNames)) {
             $classNames = array($classNames);
         }

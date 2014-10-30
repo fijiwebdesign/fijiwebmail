@@ -35,6 +35,11 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      * Current index
      */
     protected $currentIndex = 0;
+
+    /**
+     * @var Fiji\Service\Service Service Instance
+     */
+    protected $Service;
     
     /**
      * Construct and set the service used to retrieve/store data
@@ -63,7 +68,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     public function push($data) {
         if (!$data instanceof DomainObject) {
             $object = clone($this->getDomainObject());
-            $object->setData((array) $data);
+            $object->setData($data);
             $this->objects[] = $object;
         } else {
             $this->objects[] = $data;
@@ -157,8 +162,9 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     
     /**
      * Set the Service providing data
+     * @param Fiji\Service\Service
      */
-    public function setService(\Fiji\Service\Service $Service)
+    public function setService(Service $Service)
     {
         $this->Service = $Service;
     }
@@ -227,5 +233,25 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
 		}
 		return $array;
 	}
+
+    /**
+     * Get an Array of a sinle property in each Object
+     * @param Property to retrieve
+     * @return Array 
+     */
+    public function getPropertyList($property)
+    {
+        // only retrieve properties exposed by DomainObject
+        if (!in_array($property, $this->DomainObject->getKeys())) {
+            throw new \Exception('Property is not accessible. ');
+        }
+        
+        $array = array();
+        foreach($this->objects as $object) {
+            $array[] = $object->$property;
+        }
+        
+        return $array;
+    }
     
 }

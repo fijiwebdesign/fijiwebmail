@@ -26,8 +26,7 @@
         
         
         <!-- JS Libs -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="public/js/libs/jquery.js"><\/script>')</script>
+        <script src="templates/chromatron/js/libs/jquery.js"></script>
         <script src="templates/chromatron/js/libs/modernizr.js"></script>
         <script src="templates/chromatron/js/libs/selectivizr.js"></script>
         

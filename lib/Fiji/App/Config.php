@@ -29,6 +29,14 @@ class Config extends DomainObject implements \IteratorAggregate
         // make each property an instance of Fiji\App\Config for easy access
         $this->setArraysToConfig();
     }
+
+    /**
+     * Namespace the object name to config so it doesn't class when stored
+     */
+    public function getName()
+    {
+        return strtolower(str_replace('\\', '_', get_class($this)));
+    }
     
     /**
      * Get a config value by name
@@ -66,7 +74,9 @@ class Config extends DomainObject implements \IteratorAggregate
     {
         foreach($this as $name => $value) {
             if (is_array($value)) {
-                $this->$name = new Config($value);
+                $this->$name = new Config();
+                $this->$name->setStrictOnlyKeys(false); // allow arbitrary keys
+                $this->$name->setData($value);
             }
         }
     }

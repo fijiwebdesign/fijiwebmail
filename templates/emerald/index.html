@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" class="high">
+  
+<!-- This file is just for demo pourposes, can be safely ignored -->
+  
+
+<!-- Mirrored from 208.68.38.122/themes/emerald/ by HTTrack Website Copier/3.x [XR&CO'2013], Sun, 27 Jul 2014 22:20:19 GMT -->
+<head>
+  
+<meta charset="utf-8">
+
+<!-- Always force latest IE rendering engine or request Chrome Frame -->
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+<meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+
+<!-- Apple Touch -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/apple-touch-icon-57-precomposed.png">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="images/favicon.png">
+
+<!-- Use title if it's in the page YAML frontmatter -->
+<title>Emerald</title>
+
+<script type="text/javascript">
+    var polyfilter_scriptpath = "polyfills/filters/index.html";
+    window.polyfilter_skip_stylesheets = true
+</script>
+
+
+
+  <link href="stylesheets/splash.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="high emerald-default index">
+
+
+<!-- This file is just for demo pourposes, can be safely ignored -->
+
+<div class="splash-center">
+  <div class="gauge">
+    <div class="gauge-center"></div>
+    <div class="gauge-indicator"></div>
+  </div>
+</div>
+
+  
+<!--[if lte IE 9]>
+<script type="text/javascript">
+  window.ltie9 = true;
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    if(window.Loaded) {
+        var cb = function(){
+            Turbolinks.visit('htmls/dashboard.html');
+        };
+        setTimeout(cb, 2000);
+    }
+    window.onload = function(){
+        var protocol = window.location.protocol ||  document.location.protocol;
+        if('file:' == protocol){
+            window.location.href = 'htmls/dashboard.html';
+        }
+        if(window.ltie9){
+          var css = [
+            "stylesheets/application.css",
+            "stylesheets/application_split2.css",
+            "stylesheets/application_split3.css"
+          ];
+        } else {
+          var css = ["stylesheets/application.css"];
+        }
+        var js = [
+          "javascripts/application.js",
+          "javascripts/demo.js",
+          "javascripts/init.js"
+        ];
+        var head = document.getElementsByTagName('head')[0];
+        var i = 0;
+        var node;
+        var nodes = [];
+        for(i = 0; i < css.length; i++) {
+            node = document.createElement('link');
+            node.setAttribute("rel", 'stylesheet');
+            node.setAttribute("type", 'text/css');
+            node.setAttribute("href", css[i]);
+            head.appendChild(node);
+        }
+        for(i = 0; i < js.length; i++) {
+            node = document.createElement('script');
+            node.setAttribute("rel", 'stylesheet');
+            node.setAttribute("type", 'text/javascript');
+            node.setAttribute("src", js[i]);
+            nodes.push(node);
+        }
+        for(i = 0; i < nodes.length - 1; i++) {
+            (function(i) {
+                nodes[i].onload = function() {
+                    head.appendChild(nodes[i+1]);
+                };
+            })(i);
+        }
+        head.appendChild(nodes[0]);
+        function changeBg(){
+          var css = "<style> body { background-image: none !important; } </style>";
+          $css = $(css);
+          head.appendChild($css[0]);
+        }
+        function redirect() {
+            if(window.Loaded) {
+                // var $document = $(document);
+                // var $body = $('html');
+                // $document.one('page:fetch', function() {
+                //   $body.addClass('warp-speed');
+                // });
+                if(window.ltie9){
+                  Turbolinks.visit('htmls/dashboard.html');
+                  setTimeout(changeBg, 1000);
+                } else {
+                  $('.gauge').one(
+                          'webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                          function(){
+                              Turbolinks.visit('htmls/dashboard.html');
+                              setTimeout(changeBg, 1000);
+                          });
+                  $('.gauge').addClass('animated bounceOutUp');
+                }
+            } else {
+                setTimeout(redirect, 100);
+            }
+        }
+        if(!window.location.href.match(/\?keep/)) {
+            redirect();
+        }
+    };
+</script>
+
+
+<div id="mq"></div>
+<div id="emvars"></div>
+
+</body>
+
+<!-- Mirrored from 208.68.38.122/themes/emerald/ by HTTrack Website Copier/3.x [XR&CO'2013], Sun, 27 Jul 2014 22:20:29 GMT -->
+</html>
+

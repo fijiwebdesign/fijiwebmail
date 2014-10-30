@@ -149,7 +149,7 @@ class calendar extends Controller
 		//var_dump($_POST);
 		
 		$Event = Factory::createModel('Event');
-		$Event->setData($_POST, true); // maps post vars to model properties
+		$Event->setData($_POST); // maps post vars to model properties
 		$Event->user_id = $this->User->getId();
 		
 		$successMsg = 'Event Saved!';
