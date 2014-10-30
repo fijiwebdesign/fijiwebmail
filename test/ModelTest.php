@@ -38,15 +38,29 @@ class ModelTest extends PHPUnit_Framework_TestCase
     {
         $Actual = Factory::createModel($className);
 
+        // set the properties from external context
         $Actual->public = 'public';
         $Actual->private = 'private';
         $Actual->protected = 'protected';
         $Actual->nonExistent = 'blabla';
 
+        // rules for availability of properties in external context
         $this->assertEquals('public', $Actual->public);
         $this->assertNull($Actual->private); // should not be set
         $this->assertEquals('protected', $Actual->protected); // accessed through __set() and __get()
         $this->assertEquals('blabla', $Actual->nonExistent); // dynamic public properties are ok
+
+        // set the properties directly within the class context
+        $Actual->_set('public', 'public');
+        $Actual->_set('private', 'private');
+        $Actual->_set('protected', 'protected');
+        $Actual->_set('nonExistent', 'blabla');
+
+        // all properties should exist inside the class context
+        $this->assertEquals('public', $Actual->_get('public')); // accessed directly
+        $this->assertEquals('private', $Actual->_get('private')); // accessed directly
+        $this->assertEquals('protected', $Actual->_get('protected')); // accessed directly
+        $this->assertEquals('blabla', $Actual->_get('nonExistent')); // dynamic public properties available inside model through __get()
 
     }
 
@@ -247,6 +261,22 @@ class ModelMock extends Model {
     public function _isset($name)
     {
         return isset($name);
+    }
+
+    /**
+     * Get the value directly inside model
+     */
+    public function _get($name)
+    {
+        return $this->$name;
+    }
+
+    /**
+     * Set the value directly inside model
+     */
+    public function _set($name, $value)
+    {
+        return $this->$name = $value;
     }
 
 }
