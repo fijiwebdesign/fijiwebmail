@@ -82,10 +82,6 @@ abstract class Model extends DomainObject
         if (method_exists($this, $method)) {
             return $this->$method($value);
         }
-        // dynamically set a reference 
-        if ($value instanceof Model || $value instanceof ModelCollection) {
-            $this->References[$name] = get_class($value);
-        }
         // references can only be models or ModelCollections
         if (in_array($name, array_keys($this->References))) {
             if (!($value instanceof Model || $value instanceof ModelCollection)) {
@@ -94,6 +90,10 @@ abstract class Model extends DomainObject
         }
         // dynamic properties
         if (!property_exists($this, $name)) {
+            // dynamically set a reference 
+            if ($value instanceof Model || $value instanceof ModelCollection) {
+                $this->References[$name] = get_class($value);
+            }
             return $this->DynamicProps[$name] = $value;
         }
         return $this->$name = $value;
