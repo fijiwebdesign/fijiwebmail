@@ -52,17 +52,30 @@ class Factory
    	   $className = self::translateClassName($className, 'Model');
        return self::getSingleton($className ? $className : 'Fiji\App\Model\User');
    }
-   
+
    /**
-    * Retrieve current user session
+    * Retrieve the User Session
+    * @todo Create a Interface
     */
-   static function getUserSession()
+   static function getUserSession($expiresSecs = 3600)
    {
-       return self::getSingleton('Zend_Session_Namespace', array('Fiji::User'));
+      return self::getSession('user', $expiresSecs);
+   }
+
+   /**
+    * Retrieve the Session
+    * @todo Create a Interface
+    */
+   static function getSession($namespace = 'app', $expiresSecs = 3600)
+   {
+      $Session = Factory::getSingleton('Zend\Session\Container', array($namespace));
+      $Session->setExpirationSeconds($expiresSecs);
+      return $Session;
    }
    
    /**
     * Create a model instance
+    * @return Fiji\App\Model
     */
    static function createModel($className, Array $params = array())
    {
@@ -71,10 +84,11 @@ class Factory
    
    /**
     * Create a model collection instance
+    * @return Fiji\App\ModelCollection
     */
-   static function createModelCollection($className)
+   static function createModelCollection($className, $collectionClassName = null)
    {
-       return self::createInstance('Fiji\\App\\ModelCollection', 
+       return self::createInstance(($collectionClassName ? $collectionClassName : 'Fiji\\App\\ModelCollection'), 
            array(is_object($className) ? $className : self::createModel($className)));
    }
    
@@ -162,6 +176,7 @@ class Factory
     * Translates classNames to intended class in a cascading fashion
     * Each class has translations configured in config\{classParent}. 
     * eg: config\Model or config\User or config\Widget
+    * @todo simplify, modularize. Should have a setTranslation(). This is too dependent on config internals
     */
    static public function translateClassName($className, $classParent)
    {
@@ -192,12 +207,38 @@ class Factory
    /**
     * Retrieve widget
     */
-   static function getWidget($className = null, $params = array())
+   static function getWidget($className, $params = array())
    {
-   	   if (!$className) {
-   	   	    throw new Exception('Widget name must be defined in parameters.');
-   	   }
        return self::getSingleton(self::translateClassName($className, 'Widget'), $params);
+   }
+
+   /**
+    * Create a widget
+    */
+   static function createWidget($className, $params = array())
+   {
+       return self::createInstance(self::translateClassName($className, 'Widget'), $params);
+   }
+
+   /**
+    * Retrieve the permissions
+    */
+   static function getPermissions($resource, $className = 'Fiji\App\AccessControl\Model\Permissions')
+   {
+      $PermsCollection = self::getConfig('data\Permissions');
+      $PermsCollection->find(array('resource' => $resource));
+      $perms = isset($PermsCollection[0]) ? $PermsCollection[0]->toArray() : array();
+      return self::createInstance($className, array($perms));
+   }
+
+   /**
+    * Retrieve the access control instance for a resource
+    */
+   static function getAccessControl($resource, $className = 'Fiji\App\AccessControl\GroupAccessControl')
+   {
+      $User = self::getUser();
+      $Perms = self::getPermissions($resource);
+      return self::createInstance($className, array($User, $Perms));
    }
    
 }
