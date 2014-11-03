@@ -88,21 +88,7 @@ class RedBean implements DataProvider
      * @return Array
      */
     public function findOne(DomainObject $DomainObject, $query = array()) {
-        $tableName = $this->getTableName($DomainObject);
-        $idName = $DomainObject->getIdKey();
-
-        // @todo support all mysql queries
-        $where = array();
-        $query = is_array($query) ? $query : array();
-        $_query = array();
-        foreach($query as $name => $value) {
-            $_query[':' . $name] = $value;
-            $where[] = "`$name` = :$name";
-        }
-        $where = implode(' AND ', $where);
-
-        $bean = R::findOne($tableName, $where, $_query);
-        return $bean ? $this->getBeanProperties($bean) : array();
+        return $this->find($DomainObject, $query, 0, 1);
     }
 
     /**
@@ -122,6 +108,11 @@ class RedBean implements DataProvider
             $where[] = "`$name` = :$name";
         }
         $where = implode(' AND ', $where);
+
+        if ($limit == 1 && $start == 0) {
+            $bean = R::findOne($tableName, $where, $_query);
+            return $bean ? $this->getBeanProperties($bean) : array();
+        }
 
         $beans = R::find($tableName, $where, $query);
 
@@ -199,12 +190,12 @@ class RedBean implements DataProvider
         $data = $bean->getProperties();
         foreach($data as $name => $value) {
             // this is an array
-            if (strpos($name, '_json_') === 0) {
+            if (strpos($name, '_php_') === 0) {
                 // do not overwrite real (exposed) property.
                 // @important this allows arbitrary data types per property. 
                 // saving should handle property type strictness.
-                if ($value && !isset($data[substr($name, 6)])) {
-                    $data[substr($name, 6)] = json_decode($value);
+                if ($value && !isset($data[substr($name, 5)])) {
+                    $data[substr($name, 5)] = unserialize($value);
                 }
                 unset($data[$name]); // remove this as it's soley storage 
             }
@@ -227,7 +218,7 @@ class RedBean implements DataProvider
             if (!is_null($value)) {
                 if (is_array($value) || is_object($value)) {
                     // arrays are saved as one to one relations
-                    $this->saveArray($DomainObject, $bean, $name, $value);
+                    $this->saveComplexDataType($DomainObject, $bean, $name, $value);
                 } else {
                     // save scalar values directly
                     $bean->$name = $value;
@@ -241,10 +232,10 @@ class RedBean implements DataProvider
     /**
      * Save an array
      */
-    protected function saveArray(DomainObject $DomainObject, OODBBean $bean, $name, $value)
+    protected function saveComplexDataType(DomainObject $DomainObject, OODBBean $bean, $name, $value)
     {
-        $arrName = '_json_' . $name;
-        $bean->$arrName = json_encode($value);
+        $arrName = '_php_' . $name;
+        $bean->$arrName = serialize($value);
     }
 
     /**

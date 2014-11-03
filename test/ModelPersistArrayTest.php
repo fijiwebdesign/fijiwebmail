@@ -30,8 +30,16 @@ class ModelPersistArrayTest extends PHPUnit_Framework_TestCase
         $Model1 = Factory::createModel($className1);
         $Model2 = Factory::createModel($className2);
 
+        // array data to save
+        $arr = array(
+            'view'  => array('everyone'),
+            'add'   => array('registered'),
+            'edit'  => array('owner', 'moderator', 'admin'),
+            'delete'=> array('admin')
+        );
+
         // Model1 needs data to save
-        $Model1->public = array('a', 'b');
+        $Model1->public = $arr;
 
         // save $Model1 to save the reference as well
         $Model1->save(); // should save our reference
@@ -52,13 +60,8 @@ class ModelPersistArrayTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($Model1, $Model);
 
             // ensure array was persisted
-            $this->assertEquals(array('a', 'b'), $Model->public);
+            $this->assertEquals($arr, $Model->public);
         }
-
-        
-
-        
-
 
     }
 
