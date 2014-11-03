@@ -173,7 +173,7 @@ abstract class Model extends DomainObject
     /**
      * Trigger onFind()
      */
-    public function find($query)
+    public function find($query = null)
     {
         if ($result = $this->onFind($query) !== false) {
             $model = parent::find($query);

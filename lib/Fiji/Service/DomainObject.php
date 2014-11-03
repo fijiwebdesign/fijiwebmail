@@ -125,7 +125,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
      * Load data to model given the query
      * @var $id Unique domain object ID
      */
-    public function find($query)
+    public function find($query = null)
     {
         $this->clearData();
         $this->setData($this->getService()->findOne($this, $query));
