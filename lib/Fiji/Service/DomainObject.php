@@ -63,13 +63,14 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
 
     /**
      * Set data from Array
-     * @param Array $options
+     * @param Array $data Normalized data array to set as properties of this object
      */
-    public function setData(Array $options = array())
+    public function setData(Array $data = array())
     {
         // set new data
-        foreach($options as $name => $value) {
-            if (!$this->strictOnlyKeys || in_array($name, $this->getKeys())) {
+        $keys = $this->getKeys();
+        foreach($data as $name => $value) {
+            if (!$this->strictOnlyKeys || in_array($name, $keys)) {
                 // set from external so we trigger $this->__set()
             	Service::setDomainObjectProperty($this, $name, $value);
 			}

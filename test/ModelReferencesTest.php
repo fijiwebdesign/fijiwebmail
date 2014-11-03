@@ -102,6 +102,34 @@ class ModelReferencesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Only allow setting of Fiji\App\Model or Fiji\App\ModelCollection as References
+     * @dataProvider provider
+     */
+    public function testReference__unset($className1, $className2)
+    {
+        $Model1 = Factory::createModel($className1);
+        $Model2 = Factory::createModel($className2);
+
+        // we have the reference in index
+        $this->assertTrue(isset($Model1->References['ModelMock2']));
+
+        unset($Model1->ModelMock2);
+
+        // allow setting References from outside
+        $Model1->ModelMock2 = $Model2;
+
+        unset($Model1->ModelMock2);
+
+        // assert ref was removed
+        $this->assertEquals(null, $Model1->ModelMock2);
+        $this->assertFalse(isset($Model1->ModelMock2));
+
+        // assert the reference was removed from index
+        $this->assertFalse(isset($Model1->References['ModelMock2']));
+
+    }
+
+    /**
      * Test lazy loading a Reference
      * @dataProvider provider
      */
