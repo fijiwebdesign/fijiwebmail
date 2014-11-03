@@ -83,7 +83,7 @@ class App extends Config
     public function __construct()
     {
         // dynamic options
-        $this->baseUrl = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+        $this->baseUrl = str_replace('?' . @$_SERVER['QUERY_STRING'], '', @$_SERVER['REQUEST_URI']);
         $this->basePath = realpath('/../');
     }
 
