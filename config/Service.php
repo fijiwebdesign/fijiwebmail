@@ -27,7 +27,7 @@ class Service extends Config
     /**
      * Type of database
      */
-    public $dbtype = 'sqlite';
+    public $dbtype = 'sqlite'; // sqlite or mysql etc.
 
     /**
      * Path to create database file in case of $dbtype = sqlite
@@ -45,9 +45,9 @@ class Service extends Config
 
     public function __construct()
     {
-        $this->path = sys_get_temp_dir() . '/.db/'; // .db/ directory in temp directory eg: /tmp/.db
+        $this->path = sys_get_temp_dir() . '/.db/'. $this->database . '.sqlite'; // .db/ directory in temp directory eg: /tmp/.db
         // Important: This is unsafe as it is in web accessible directory. Needs to be secured if you use this or use it for development.
-        //$this->path = realpath(__DIR__ . '/../.db/'); // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
+        //$this->path = (__DIR__ . '/../.db/' . $this->database . '.sqlite'); // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
     }
 
 }
