@@ -11,11 +11,11 @@ http://www.fijicloudmail.com/
 
 The app is in rapid development and will be broken most the time. 
 
-**Install**
+*Install*
 
 You can either use composer or install the required libraries manually.
 
-****Using Composer****
+***Using Composer***
 
 ```
 git pull https://github.com/fijiwebdesign/fijiwebmail
