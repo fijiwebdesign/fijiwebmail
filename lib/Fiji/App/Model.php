@@ -124,23 +124,25 @@ abstract class Model extends DomainObject
     /**
      * Custom property unset
      * @example unset($this->foo) will work as intended
+     * @return null
      */
     public function __unset($name)
     {
         // call custom unset method
         $method = 'unset' . ucfirst($name);
         if (method_exists($this, $method)) {
-            return $this->$method($name);
+            $this->$method($name);
         }
         // references need to be removed from references map
         if (in_array($name, array_keys($this->References))) {
             unset($this->References[$name]);
         }
         // unset dynamic properties
-        if (!property_exists($this, $name)) {
+        if (!property_exists($this, $name) && isset($this->DynamicProps[$name])) {
             unset($this->DynamicProps[$name]);
+        } else {
+            unset($this->$name);
         }
-        unset($this->$name);
     }
 
     /**

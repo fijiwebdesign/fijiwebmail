@@ -65,6 +65,35 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Allow unsetting of protected and dynamic properties 
+     * @dataProvider provider
+     */
+    public function testUnset($className, Array $params = array())
+    {
+        $Model = Factory::createModel($className);
+
+        // assert property is not set
+        $this->assertFalse(isset($Model->public));
+        $this->assertFalse(isset($Model->protected));
+        $this->assertFalse(isset($Model->non_existent));
+
+        // we have set the property
+        $Model->public = 'hi';
+        $Model->protected = 'there';
+        $Model->non_existent = 'pretty lady';
+
+        unset($Model->public); // unset property
+        unset($Model->protected); // unset property
+        unset($Model->non_existent); // unset property
+
+        // assert property was unset
+        $this->assertFalse(isset($Model->public));
+        $this->assertFalse(isset($Model->protected));
+        $this->assertFalse(isset($Model1->non_existent));
+
+    }
+
+    /**
      * Model methods __isset() works as intended
      * @dataProvider provider
      */

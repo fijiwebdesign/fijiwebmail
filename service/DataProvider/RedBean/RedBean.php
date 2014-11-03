@@ -15,6 +15,7 @@ use Fiji\Factory;
 use Fiji\Service\DataProvider;
 use Fiji\Service\DomainObject, Fiji\Service\DomainCollection;
 use Fiji\App\Config;
+use RedBeanPHP\OODBBean;
 use Exception;
 
 use R;
@@ -78,7 +79,7 @@ class RedBean implements DataProvider
 
         $bean = R::load($tableName, $id);
 
-        return $bean->getProperties();
+        return $this->getBeanProperties($bean);
     }
 
     /**
@@ -101,7 +102,7 @@ class RedBean implements DataProvider
         $where = implode(' AND ', $where);
 
         $bean = R::findOne($tableName, $where, $_query);
-        return $bean ? $bean->getProperties() : array();
+        return $bean ? $this->getBeanProperties($bean) : array();
     }
 
     /**
@@ -127,7 +128,7 @@ class RedBean implements DataProvider
         $list = array();
         if ($beans) {
             foreach($beans as $bean) {
-                $list[] = $bean->getProperties();
+                $list[] = $this->getBeanProperties($bean);
             }
         }
 
@@ -166,15 +167,8 @@ class RedBean implements DataProvider
      */
     public function saveOne(DomainObject $DomainObject, $saveRefs = true) {
 
-        $tableName = $this->getTableName($DomainObject);
-        $bean = R::xdispense($tableName); // limited to alpha
-
-        // copy DomainObject properties to bean
-        foreach($DomainObject as $name => $value) {
-            if (!is_null($value)) {
-                $bean->$name = $value;
-            }
-        }
+        // create our bean with our specific structure
+        $bean = $this->createBean($DomainObject);
 
         // save references
         if ($saveRefs) {
@@ -197,9 +191,66 @@ class RedBean implements DataProvider
     }
 
     /**
+     * Retrieve the data in the bean
+     * @todo Implement same logic in $this->find() so we can search array properties
+     */
+    protected function getBeanProperties(OODBBean $bean)
+    {
+        $data = $bean->getProperties();
+        foreach($data as $name => $value) {
+            // this is an array
+            if (strpos($name, '_json_') === 0) {
+                // do not overwrite real (exposed) property.
+                // @important this allows arbitrary data types per property. 
+                // saving should handle property type strictness.
+                if ($value && !isset($data[substr($name, 6)])) {
+                    $data[substr($name, 6)] = json_decode($value);
+                }
+                unset($data[$name]); // remove this as it's soley storage 
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Create a bean from the DomainObject
+     * @param DomainObject
+     * @return OODBBean
+     */
+    protected function createBean(DomainObject $DomainObject)
+    {
+        $tableName = $this->getTableName($DomainObject);
+        $bean = R::xdispense($tableName); // limited to alpha
+
+        // copy DomainObject properties to bean
+        foreach($DomainObject as $name => $value) {
+            if (!is_null($value)) {
+                if (is_array($value) || is_object($value)) {
+                    // arrays are saved as one to one relations
+                    $this->saveArray($DomainObject, $bean, $name, $value);
+                } else {
+                    // save scalar values directly
+                    $bean->$name = $value;
+                }
+            }
+        }
+
+        return $bean;
+    }
+
+    /**
+     * Save an array
+     */
+    protected function saveArray(DomainObject $DomainObject, OODBBean $bean, $name, $value)
+    {
+        $arrName = '_json_' . $name;
+        $bean->$arrName = json_encode($value);
+    }
+
+    /**
      * Save the references
      */
-    protected function saveRefs(DomainObject $DomainObject, $bean)
+    protected function saveRefs(DomainObject $DomainObject, OODBBean $bean)
     {
         foreach($DomainObject->References as $ref => $class) {
             $Refs = $DomainObject->$ref;
@@ -211,13 +262,7 @@ class RedBean implements DataProvider
             // Set bean relation for all DomainObjects in DomainCollection
             foreach($Refs as $Ref) {
                 // get a bean for each DomainObject
-                $refBean = R::xdispense($this->getTableName($Ref));
-                // copy Ref DomainObject properties to Ref Bean
-                foreach($Ref as $name => $value) {
-                    if (!is_null($value)) {
-                        $refBean->$name = $value;
-                    }
-                }
+                $refBean = $this->createBean($Ref);
                 $bean->{$refLinkName}[] = $refBean;
                 $Ref->_refBean = $refBean; // so we can reference later
             }
@@ -227,7 +272,7 @@ class RedBean implements DataProvider
     /**
      * Copy the saved bean ids to the referenced DomainObject
      */
-    protected function augmentRefIds($DomainObject, $bean)
+    protected function augmentRefIds(DomainObject $DomainObject, OODBBean $bean)
     {
         // update DomainObject reference ids with saved ref Bean ids
         foreach($DomainObject->References as $ref => $class) {
