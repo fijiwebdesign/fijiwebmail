@@ -77,6 +77,41 @@ class ModelPersistenceTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals($ModelMock2->public, $Model2->public);
     }
 
+    /**
+     * Test Updating a Model
+     * @dataProvider provider
+     */
+    public function testUpdate($className1, $className2)
+    {
+        $Model1 = Factory::createModel($className1);
+        $Model2 = Factory::createModel($className2);
+
+        // Model1 needs data to save
+        $Model1->public = 'test1';
+        $Model1->save();
+
+        // update model
+        $Model1->public = 'updated';
+        $Model1->save();
+
+        // find same model in db
+        $Model = Factory::createModel(get_class($Model1))
+            ->findById($Model1->id);
+
+        $this->assertEquals('updated', $Model1->public);
+
+        $Model3 = Factory::createModel(get_class($Model1))
+            ->findById($Model1->id)
+            ->setData(array('public' => 'updated2')) // update the data
+            ->save();
+
+        $Model = Factory::createModel(get_class($Model1))
+            ->findById($Model1->id);
+
+        $this->assertEquals('updated2', $Model->public);
+
+    }
+
     public function provider()
     {
         return array(
