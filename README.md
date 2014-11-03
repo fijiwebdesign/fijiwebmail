@@ -14,7 +14,7 @@ Fiji Webmail aims to deliver a high end webmail client with support for all majo
 
 **Webmail Customization**
 
-It would be an alternative to PHP email clietn such as RoundCube, SquirelMail and Horde Mail with an aim to deliver more features and provide more flexibility and easy customization. It uses Boostrap templates which allow you to fully customize the theme. 
+It would be an alternative to PHP email client such as RoundCube, SquirelMail or Horde Mail with an aim to deliver modern features and provide more flexibility and easy customization. It uses Boostrap templates which allow you to fully customize the theme. 
 
 http://www.fijicloudmail.com/
 
