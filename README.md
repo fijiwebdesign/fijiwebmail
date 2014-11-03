@@ -22,13 +22,12 @@ http://www.fijicloudmail.com/
 
 The app is in rapid development and is unstable. Appropriate for development only.
 
-**Install**
+Installation
+------------
 
-You can either use composer or install the required libraries manually.
+Clone the repository to get the latest development code or download a release from the releases. Fiji Webmail depends on Zend Framework 2. You can download these dependencies using Composer. Alternatively you can manually install Zend Framework and set it's location in the Fiji Webmail App config file. 
 
 ***Install Using Composer***
-
-Clone Fiji Webmail git repository and run `composer install`
 
 ```
 git clone https://github.com/fijiwebdesign/fijiwebmail
@@ -36,12 +35,11 @@ cd fijiwebmail
 php composer.phar install
 ```
 
-Use `composer install` if you have composer installed globally.
+Use `composer install` if you have composer installed globally. Composer install and usage: https://getcomposer.org/
 
-Composer install and usage: https://getcomposer.org/
+***Manually Install***
 
-***Manually include Zend Framework***
-
+* `git clone https://github.com/fijiwebdesign/fijiwebmail` or download a stable release
 * Download Zend Framework 2.x from http://framework.zend.com/
 * Edit the Fiji Webmail main config file: `config/App.php`. 
 * Change the line: `public $zendPath = '/var/lib/zf2/library/Zend/';` to reflect your Zend Framework library path.
