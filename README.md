@@ -17,13 +17,15 @@ You can either use composer or install the required libraries manually.
 
 ***Install Using Composer***
 
+Clone Fiji Webmail git repository and run `composer install`
+
 ```
-git pull https://github.com/fijiwebdesign/fijiwebmail
+git clone https://github.com/fijiwebdesign/fijiwebmail
 cd fijiwebmail
 php composer.phar install
 ```
 
-or `composer install` if you have composer installed globally.
+Use `composer install` if you have composer installed globally.
 
 Composer install and usage: https://getcomposer.org/
 
