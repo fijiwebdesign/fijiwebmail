@@ -43,14 +43,17 @@ Composer install and usage: https://getcomposer.org/
 ***Manually include Zend Framework***
 
 * Download Zend Framework 2.x from http://framework.zend.com/
-* Edit the config file: `config/App.php`
+* Edit the Fiji Webmail main config file: `config/App.php`. 
 * Change the line: `public $zendPath = '/var/lib/zf2/library/Zend/';` to reflect your Zend Framework library path.
 
 **Admin Login**
 
 When you first view Fiji Webmail in the browser you will be asked to log in. Use the credentials:
-Username: `admin`
-Password: `admin`
+
+* Username: `admin` 
+* Password: `admin`
+
+*Change this password by going to your user settings (link next to your avatar)*
 
 **Secure your application**
 
