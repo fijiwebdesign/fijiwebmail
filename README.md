@@ -1,9 +1,20 @@
-Fiji Cloud Webmail
-==================
+Fiji Webmail
+============
 
-Fiji Cloud Webmail is a beautiful open source webmail client supporting the latest IMAP4 protocol.
+Fiji  Webmail is a beautiful, modern open source webmail client supporting the latest IMAP4 protocol.
 
-Fiji Cloud Webmail is developed because the current options of webmail clients is not that great. We aim to deliver a high end webmail client that you can integrate into your website and have your email users use with minimal configuration.
+Fiji Webmail aims to deliver a high end webmail client with support for all major email servers that you can integrate into your website and have your email users use with minimal configuration.
+
+**Features**
+
+* Webmail client with modern features such as theaded email conversations, custom labels or tags, custom folders
+* Address Book of all contacts found in emails
+* Calendar and Tasks lists
+* Boostrap templates for full customization of all Apps
+
+**Webmail Customization**
+
+It would be an alternative to PHP email clietn such as RoundCube, SquirelMail and Horde Mail with an aim to deliver more features and provide more flexibility and easy customization. It uses Boostrap templates which allow you to fully customize the theme. 
 
 http://www.fijicloudmail.com/
 
