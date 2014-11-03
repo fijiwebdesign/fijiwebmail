@@ -1,5 +1,5 @@
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -9,8 +9,8 @@
 
 /** Logo */
 .navigation-block header h1 a {
-    background-image: url(../images/logo_blue_80px.png);
-    height:80px;
+    background-image: url(../images/logo_blue_80px.png) !important;
+    height:80px !important;
 }
 
 #copyright {
@@ -36,7 +36,7 @@ nav.main-navigation a.current > [class^="icon-"] {
  * 	Navigation
  */
 .side-note-compose {
-    text-align: center;    
+    text-align: center;
 }
 
 .side-note-compose .btn-compose {
@@ -50,7 +50,7 @@ nav.main-navigation a.current > [class^="icon-"] {
     margin-left: 5px;
     margin-right: 5px;
 }
-    
+
 .mail-mailbox .subject {
     width: 55%;
     text-overflow: ellipsis;
@@ -102,7 +102,7 @@ nav.main-navigation a.current > [class^="icon-"] {
 .mail-mailbox .message-header ul > li a {
     border-radius: 0;
 }
-    
+
 .mail-mailbox .message-header ul > li:first-child a {
     border-radius: 4px 0 0 4px;
 }
@@ -189,7 +189,7 @@ nav.main-navigation a.current > [class^="icon-"] {
 
 .mail-pagination .pagination-data {
     float: left;
-    display: block;  
+    display: block;
     height: 27px;
     line-height: 27px;
 }
@@ -198,7 +198,7 @@ nav.main-navigation a.current > [class^="icon-"] {
     font-weight: bold;
 }
 
-.mail-mailbox .mailbox .mail-checkbox, 
+.mail-mailbox .mailbox .mail-checkbox,
 .mail-mailbox .tools-selector input[type=checkbox] {
     -webkit-appearance: none;
     appearance: none;
