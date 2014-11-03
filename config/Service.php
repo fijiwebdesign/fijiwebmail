@@ -35,19 +35,35 @@ class Service extends Config
     public $path = '/tmp/.db/';
 
     /**
-     *
+     * Database Host domain
      */
     public $host = 'localhost';
+
+    /**
+     * Database User
+     */
     public $user = 'root';
+
+    /**
+     * Database Password
+     */
     public $password = '';
+
+    /**
+     * Database name
+     */
     public $database = 'fiji_webmail';
+
+    /**
+     * Optional prefix for table names
+     */
     public $tablePrefix = 'fiji_';
 
     public function __construct()
     {
-        $this->path = sys_get_temp_dir() . '/.db/'. $this->database . '.sqlite'; // .db/ directory in temp directory eg: /tmp/.db
+        //$this->path = sys_get_temp_dir() . '/.db/'. $this->database . '.sqlite'; // .db/ directory in temp directory eg: /tmp/.db
         // Important: This is unsafe as it is in web accessible directory. Needs to be secured if you use this or use it for development.
-        //$this->path = (__DIR__ . '/../.db/' . $this->database . '.sqlite'); // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
+        $this->path = realpath(__DIR__ . '/../') . "/." . $this->database . '.sqlite'; // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
     }
 
 }
