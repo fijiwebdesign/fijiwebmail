@@ -64,6 +64,15 @@ interface DataProvider
      */
     public function delete(DomainCollection $DomainCollection);
     
-    
+    /**
+     * Retrieves a referenced DomainObject or DomainCollection
+     * @param Fiji\Service\DomainObject Parent Domain Object
+     * @param Fiji\Service\DomainCollection | Fiji\Service\DomainObject Referenced Object
+     * @param String $RefObject property name in $DomainObject
+     *
+     * @return Fiji\Service\DomainCollection | Fiji\Service\DomainObject
+     *
+     */
+    public function findReference(DomainObject $DomainObject, $RefObject, $name);
 
 }

@@ -186,6 +186,15 @@ abstract class Model extends DomainObject
                 //$array[$name] = $this->$name->toArray();
             }
         }
+        // include dynamic properties if Model is Dynamic
+        if (!$this->strictOnlyKeys) {
+            foreach($this->DynamicProps as $name => $value) {
+                if (isset($this->$name)) {
+                    $array[$name] = $value;
+                }
+            }
+        }
+        
         return $array;
     }
 

@@ -16,6 +16,7 @@ use Fiji\Factory;
 /**
  * Service handles the retrieve/store of data for domain object models
  * A Service is not tied to a data storage. Each storage has it's own data provider
+ * @todo Intercept all data and create an Entity Map. Or should this be implemented in specific DataProvider's UnitOfWork or Service?
  */
 class Service
 {
@@ -117,10 +118,14 @@ class Service
 
     /**
      * Retrieves a referenced DomainObject or DomainCollection
+     * @param Fiji\Service\DomainObject Parent Domain Object
+     * @param Fiji\Service\DomainCollection | Fiji\Service\DomainObject Referenced Object
+     * @param String $RefObject property name in $DomainObject
+     *
      * @return Fiji\Service\DomainCollection | Fiji\Service\DomainObject
      *
      */
-    public function findReference($DomainObject, $RefObject, $name)
+    public function findReference(DomainObject $DomainObject, $RefObject, $name)
     {
         return $this->DataProvider->findReference($DomainObject, $RefObject, $name);
     }
