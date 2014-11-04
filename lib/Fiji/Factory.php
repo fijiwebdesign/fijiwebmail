@@ -89,7 +89,7 @@ class Factory
    static function createModelCollection($className, $collectionClassName = null)
    {
        return self::createInstance(($collectionClassName ? $collectionClassName : 'Fiji\\App\\ModelCollection'), 
-           array(is_object($className) ? $className : self::createModel($className)));
+           array($className));
    }
    
    /**
@@ -234,7 +234,7 @@ class Factory
    /**
     * Retrieve the access control instance for a resource
     */
-   static function getAccessControl($resource, $className = 'Fiji\App\AccessControl\GroupAccessControl')
+   static function getAccessControl($resource, $className = 'Fiji\App\AccessControl\RoleBasedControl')
    {
       $User = self::getUser();
       $Perms = self::getPermissions($resource);

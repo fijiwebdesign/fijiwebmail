@@ -43,9 +43,9 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     
     /**
      * Construct and set the service used to retrieve/store data
-     * @param $Model {Fiji\Service\DomainObject} DomainObject Instance
+     * @param $Model String|Fiji\Service\DomainObject DomainObject Instance
      */
-    public function __construct(DomainObject $DomainObject)
+    public function __construct($DomainObject)
     {
         $this->DomainObject = $DomainObject;
     }
@@ -60,19 +60,40 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
             $this->push($value);
         }
     }
+
+    /**
+     * Set data to DomainObject collection
+     * @param Array $data
+     * @todo remove default parameter value for $data since it already requires an array. Refactor overloading functions to meet new method signiture. 
+     */
+    public function setDynamic(Array $data = array())
+    {
+        foreach($data as $value) {
+            $this->push($value, true);
+        }
+    }
     
     /**
      * Push an object to the collection
      * @param Array|DomainObject $data Object to add to collection
+     * @param Bool Flag to make the pushed Objects dynamic (arbitrary properties)
      */
-    public function push($data) {
+    public function push($data, $dynamic = false)
+    {
         if (!$data instanceof DomainObject) {
-            $object = clone($this->getDomainObject());
+            $class = $this->getDomainObject();
+            $object = new $class;
+            if ($dynamic) {
+                $object->setDynamic();
+            }
             $object->setData($data);
-            $this->objects[] = $object;
         } else {
-            $this->objects[] = $data;
+            $object = $data;
+            if ($dynamic) {
+                $object->setDynamic();
+            }
         }
+        $this->objects[] = $object;
     }
     
     /**
@@ -105,6 +126,10 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      */
     public function getDomainObject()
     {
+        // lazy load domain object from name
+        if (is_string($this->DomainObject)) {
+            $this->DomainObject = Factory::createInstance($this->DomainObject);
+        }
         return $this->DomainObject;
     }
     
@@ -241,11 +266,6 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      */
     public function getPropertyList($property)
     {
-        // only retrieve properties exposed by DomainObject
-        if (!in_array($property, $this->DomainObject->getKeys())) {
-            throw new \Exception('Property is not accessible. ');
-        }
-        
         $array = array();
         foreach($this->objects as $object) {
             $array[] = $object->$property;
