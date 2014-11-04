@@ -34,6 +34,7 @@ class Collection extends ModelCollection
         $Model = Factory::createModel($this->Model);
         parent::__construct($Model);
         
+        // @todo we need to lazy load data
         $this->setData($this->data);
     }
     

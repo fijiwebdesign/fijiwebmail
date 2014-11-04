@@ -159,6 +159,16 @@ abstract class Model extends DomainObject
     }
 
     /**
+     * Do not allow modifying the ID once it's set
+     */
+    public function setId($value)
+    {
+        if (!isset($this->id)) {
+            parent::setId($value);
+        }
+    }
+
+    /**
      * Trigger onFindById()
      */
     public function findById($id)

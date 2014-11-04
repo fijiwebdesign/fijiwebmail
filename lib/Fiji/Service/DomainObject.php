@@ -64,6 +64,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     /**
      * Set data from Array
      * @param Array $data Normalized data array to set as properties of this object
+     * @see self::setDynamic()
      */
     public function setData(Array $data = array())
     {
@@ -84,7 +85,8 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     public function clearData()
     {
         // clear storables
-        foreach($this->getKeys() as $key) {
+        $keys = $this->getKeys();
+        foreach($keys as $key) {
             if(isset($this->$key) && !is_null($this->$key)) {
                 $this->$key = null;
             }
@@ -107,6 +109,19 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     public function setStrictOnlyKeys($flag = true)
     {
         $this->strictOnlyKeys = $flag;
+        return $this;
+    }
+
+    /**
+     * Allow setting arbitrary values and optionally set the given values from an Array
+     * @param Array $data Arbitrary data array to set as properties of this object
+     */
+    public function setDynamic(Array $data = array())
+    {
+        $this->setStrictOnlyKeys(false);
+        if ($data) {
+            $this->setData($data);
+        }
         return $this;
     }
 
