@@ -75,7 +75,7 @@ class User extends Model
     public function __construct()
     {
         // add references
-        $this->RoleCollection = Factory::createModelCollection('Fiji\App\AccessControl\Model\Role');
+        $this->setReference('RoleCollection', 'Fiji\App\AccessControl\Model\Role');
 
         // @todo We need a session interface
         $this->Session = Factory::getUserSession($this->expiresSecs);

@@ -92,11 +92,22 @@ abstract class Model extends DomainObject
         if (!property_exists($this, $name)) {
             // dynamically set a reference 
             if ($value instanceof Model || $value instanceof ModelCollection) {
-                $this->References[$name] = get_class($value);
+                $this->setReference($name, get_class($value));
             }
             return $this->DynamicProps[$name] = $value;
         }
         return $this->$name = $value;
+    }
+
+    /**
+     * Set a property as a reference to another class
+     * @param String $name Property Name to make a reference
+     * @param String $class Reference Class name
+     */
+    public function setReference($name, $class)
+    {
+        $this->References[$name] = $class;
+        return $this;
     }
 
     /**
@@ -156,6 +167,26 @@ abstract class Model extends DomainObject
             return call_user_func_array(array($this, $method), $params);
         }
         return isset($params[0]) ? $params[0] : null;
+    }
+
+    /**
+     * Get an Array of Domain Object Properties
+     * @return Array Associative key/value pairs
+     *
+     * @todo implement references but make sure DataProvider doesn't save it
+     *       May need to create a toData() for this?
+     */
+    public function toArray()
+    {
+        // exposed properties
+        $array = parent::toArray();
+        // convert references to their ids
+        foreach($this->References as $name => $class) {
+            if (isset($this->$name)) {
+                //$array[$name] = $this->$name->toArray();
+            }
+        }
+        return $array;
     }
 
     /**
