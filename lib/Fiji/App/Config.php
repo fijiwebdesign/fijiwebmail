@@ -17,6 +17,12 @@ use Fiji\Service\DomainObject;
  */
 class Config extends DomainObject implements \IteratorAggregate
 {
+
+    /**
+     * @var Bool Allow setting arbitrary keys
+     */
+    protected $strictOnlyKeys = false;
+
     /**
      * Construct our Configuration
      * @param Fiji\App\Service $Service 

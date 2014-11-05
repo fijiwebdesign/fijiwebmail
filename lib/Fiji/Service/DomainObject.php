@@ -21,32 +21,32 @@ use Fiji\Service\Service;
 abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
-     * Model Id key/attribute name
+     * @var String Model Id key/attribute name
      */
     protected $idKey = 'id';
 
     /**
-     * Name of object
+     * @var String Namespace of object
      */
     protected $objectName = null;
 
     /**
-     * Attributes of Domain Object
+     * @var Array Attributes of Domain Object
      */
     protected $keys = array();
 
     /**
-     * Service interface
+     * @var Fiji\Service\Service Service interface
      */
     protected $Service;
 
     /**
-     * @var Unique ID of domain object instance
+     * @var Int Unique ID of domain object instance
      */
     protected $id;
 
     /**
-     * @var Only the keys given by $this->getKeys() can be set
+     * @var Bool Only the keys given by $this->getKeys() can be set
      */
     protected $strictOnlyKeys = true;
 
