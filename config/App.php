@@ -83,11 +83,7 @@ class App extends Config
     public function __construct()
     {
         // dynamic options
-<<<<<<< HEAD
-        $this->baseUrl = str_replace('?' . @$_SERVER['QUERY_STRING'], '', @$_SERVER['REQUEST_URI']);
-=======
         $this->baseUrl = str_replace('?' . @$_SERVER['QUERY_STRING'], '', @$_SERVER['REQUEST_URI']); // suppress errors for cli mode
->>>>>>> Emerald
         $this->basePath = realpath('/../');
     }
 
