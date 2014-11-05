@@ -53,7 +53,7 @@ class App extends Config
     /**
      * Base URL of our app. Can be set dynamically via $_SERVER['REQUEST_URI']
      */
-    public $baseUrl = '/webmail/';
+    public $baseUrl = '/fijiwebmail/';
 
     /**
      * Base Application Folder. Can be set dynamically via realpath('/../')
