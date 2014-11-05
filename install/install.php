@@ -39,12 +39,19 @@ if ($base_url = $Config->get('baseUrl')) {
 function createUsers() {
     $UserCollection = Factory::createInstance('data\Users');
 
+    //echo "<h3>createUsers UserCollection[0]->RoleCollection</h3>";
+    //var_dump($UserCollection[0]->RoleCollection);
+
     foreach($UserCollection as $User) {
         // find user with matching username
         $SavedUser = Factory::createModel(get_class($User))->find(array('username' => $User->username));
         // user exists
         if ($SavedUser->id) {
-            echo "<p>Skipped user {$User->username}. Already exists in storage.</p>";
+            echo "<p>User {$User->username}. Already exists in storage.</p>";
+
+            $SavedUser->setDynamic($User->toArray());
+            $SavedUser->save();
+            echo "<p>User {$User->name} updated.</p>";
             continue;
         }
         $User->save();
@@ -57,8 +64,12 @@ function createRoles() {
     $RoleCollection = Factory::createInstance('data\Roles');
     foreach($RoleCollection as $Role) {
         // Role with the same title exists in storage
-        if (Factory::createModel(get_class($Role))->find(array('name' => $Role->name))->id) {
-            echo "<p>Skipped role {$Role->name}. Already exists in storage.</p>";
+        $SavedRole = Factory::createModel(get_class($Role))->find(array('name' => $Role->name));
+        if ($SavedRole->id) {
+            echo "<p>Role {$Role->name}. Already exists in storage.</p>";
+            $SavedRole->setData($Role->toArray());
+            $SavedRole->save();
+            echo "<p>Role {$Role->name} updated.</p>";
             continue;
         }
         $Role->save();
