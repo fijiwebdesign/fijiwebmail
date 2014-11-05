@@ -111,8 +111,8 @@ jQuery(function() {
     
     // preload compose email form 
     setTimeout(function() {
-        loadComposeEmailModalBody(composeEmailUrl);
-    }, 50);
+        loadComposeEmailModalBody(composeEmailUrl); // @todo fix bug, reloads jquery
+    }, 500);
 });
 
 </script>

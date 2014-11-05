@@ -29,26 +29,10 @@
         
         
         <!-- JS Libs -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="public/js/libs/jquery.js"><\/script>')</script>
+        <script src="templates/chromatron/js/libs/jquery.js"></script>
         <script src="templates/chromatron/js/libs/modernizr.js"></script>
         <script src="templates/chromatron/js/libs/selectivizr.js"></script>
-        
-        <script type="text/javascript">
-            //var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-22557155-2"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();
-        </script>
-        
-        <style type="text/css">
-            
-            body { 
-                background-color: #fff;
-                background-image: none;    
-            }
-            
-            
-        </style>
-        
-        
+ 
     </head>
     <body>
         <?php echo $Doc->content; ?>

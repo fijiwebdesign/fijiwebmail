@@ -43,7 +43,7 @@ class Auth extends \Fiji\App\Controller
         $status = $this->Request->getVar('status', '');
         
         require( __DIR__ . '/../view/login/form.php');
-        die;
+        
     }
     
     public function login()

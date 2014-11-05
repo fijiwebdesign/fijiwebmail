@@ -51,12 +51,17 @@ class message extends Controller
         $this->Req = Factory::getRequest();
         $this->Doc = Factory::getDocument();
 		
-		// we need a session
+		//make sure user is logged in
         if (!$this->User->isAuthenticated()) {
-            // set our return path and redirect to login page
             $this->App->setReturnUrl($this->Req->getUri());
-            $this->App->redirect('?app=auth');
+            $this->App->redirect('?app=auth', 'Please login to access your email.');
         }
+        // user imap configs
+        $options = $this->User->imapOptions;
+        if (!$options) {
+            throw new \Exception('Error accessing your email account');
+        }
+        $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
         
         // url params
         $this->folder = $this->Req->getVar('folder');
@@ -65,13 +70,6 @@ class message extends Controller
         
         // configs
         $this->Config = Factory::getSingleton('config\Mail');
-        // user imap configs
-        $options = $this->User->imapOptions;
-        if (!$options) {
-        	$this->App->setReturnUrl($this->Req->getUri());
-            $this->App->redirect('?app=auth');
-        }
-        $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
         
         if ($this->folder) {
             $this->Imap->selectFolder($this->folder);

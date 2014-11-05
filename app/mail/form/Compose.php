@@ -43,10 +43,15 @@ class Compose
         $this->Req = Factory::getRequest();
         // configs @todo
         $this->Config = Factory::getSingleton('config\Mail');
+        //make sure user is logged in
+        if (!$this->User->isAuthenticated()) {
+            $this->App->setReturnUrl($this->Req->getUri());
+            $this->App->redirect('?app=auth', 'Please login to access your email.');
+        }
         // user imap configs
         $options = $this->User->imapOptions;
         if (!$options) {
-            $this->App->redirect('?app=auth');
+            throw new \Exception('Error accessing your email account');
         }
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
     }

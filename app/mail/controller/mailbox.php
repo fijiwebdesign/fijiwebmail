@@ -51,7 +51,7 @@ class mailbox extends Controller
         $view = trim($this->Req->getVar('view', 'mailbox'));
         $this->searchQuery = trim($this->Req->getVar('q'));
         
-        //makesure user is logged in
+        //make sure user is logged in
         if (!$this->User->isAuthenticated()) {
             $this->App->setReturnUrl($this->Req->getUri());
             $this->App->redirect('?app=auth', 'Please login to access your email.');
