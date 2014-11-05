@@ -225,18 +225,18 @@ class Factory
     */
    static function getPermissions($resource, $className = 'Fiji\App\AccessControl\Model\Permissions')
    {
-      $PermsCollection = self::getConfig('data\Permissions');
-      $PermsCollection->find(array('resource' => $resource));
-      $perms = isset($PermsCollection[0]) ? $PermsCollection[0]->toArray() : array();
-      return self::createInstance($className, array($perms));
+      return self::createModel($className)->find(array('resource' => $resource));
    }
 
    /**
     * Retrieve the access control instance for a resource
+    * @param String Resource namespace
+    * @param Model User requesting access
+    * @param String Access Control implementation class name
     */
-   static function getAccessControl($resource, $className = 'Fiji\App\AccessControl\RoleBasedControl')
+   static function getAccessControl($resource, Model $User = null, $className = 'Fiji\App\AccessControl\RoleBasedAccessControl')
    {
-      $User = self::getUser();
+      $User = isset($User) ? $User : self::getUser();
       $Perms = self::getPermissions($resource);
       return self::createInstance($className, array($User, $Perms));
    }

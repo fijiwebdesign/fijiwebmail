@@ -24,7 +24,7 @@ class Settings extends Collection
     protected $Model = 'app\settings\model\Settings';
     
     /**
-     * Widgets in Collection
+     * Our settings files
      */
     protected $data = array(
         array(

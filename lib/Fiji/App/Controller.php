@@ -19,12 +19,35 @@ use ReflectionClass, ReflectionMethod;
  */
 abstract class Controller
 {
-    
+    /**
+     * @var {Fiji\App\Model\User}
+     */
     protected $User;
+
+    /**
+     * @var {Fiji\App\Application}
+     */
     protected $App;
+
+    /**
+     * @var {Fiji\App\View}
+     */
     protected $View;
+
+    /**
+     * @var {Fiji\App\Request}
+     */
     protected $Req;
+
+    /**
+     * @var {Fiji\App\Document}
+     */
     protected $Doc;
+
+    /**
+     * @var {Fiji\App\AccessControl\AccessControl}
+     */
+    protected $AccessControl;
     
     public function __construct(View $View = null, $execute = true)
     {        
@@ -34,6 +57,7 @@ abstract class Controller
             $View : Factory::getView('Fiji\App\View', $this->App);
         $this->Req = Factory::getRequest();
         $this->Doc = Factory::getDocument();
+        $this->AccessControl = Factory::getAccessControl(get_class($this));
         
         // requests
         $view = $this->Req->getAlphaNum('view', 'index', 'trim');
@@ -47,8 +71,11 @@ abstract class Controller
     /**
      * Execute the method of controller
      */
-    public function execute($method)
+    protected function execute($method)
     {
+        if ($this->onExecute($method) === false) {
+            return false;
+        }
         if (in_array($method, get_class_methods($this))) {
             try {
                 $this->$method();
@@ -61,6 +88,16 @@ abstract class Controller
             var_dump(get_class_methods($this));
             throw new controllerException('Method doesn\'t exist!');
         }
+    }
+
+    /**
+     * Event triggered when executing a method. Return false to prevent execution.
+     * @param String Controller method
+     * @return Bool False will stop execution
+     */
+    protected function onExecute($method)
+    {
+        return true;
     }
     
     /**

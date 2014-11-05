@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -17,9 +17,9 @@ use Fiji\Factory;
  * user authentication against default service
  */
 class Authentication {
-    
+
     protected $User;
-    
+
     public function __construct(User $User)
     {
         $this->User = $User;
@@ -27,6 +27,8 @@ class Authentication {
 
     /**
      * Authenticate the User
+     * @param String Username supplied by user
+     * @param String Plain text password supplied by user
      */
     public function authenticate($username, $password)
     {
@@ -39,9 +41,9 @@ class Authentication {
         }
         return false;
     }
-    
+
     /**
-     * Log the user out. 
+     * Log the user out.
      * @return Bool log out status. TRUE For successfully logging user out. FALSE for error.
      */
     public function logout()
@@ -51,12 +53,14 @@ class Authentication {
     }
 
     /**
-     * Retrieve password
+     * Retrieve password hash given password and secret
+     * @param String Plain text password supplied by user
+     * @param String Secret (password hash seed) for the user with associated username and password
      */
     public function getPasswordHash($password, $secret)
     {
         return sha1($password . $secret);
     }
-    
-    
+
+
 }
