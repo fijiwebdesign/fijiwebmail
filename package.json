@@ -1,0 +1,39 @@
+{
+    "name" : "fijiwebmail",
+    "title" : "Fiji Webmail",
+    "version" : "0.1.0",
+    "homepage": "http://fijicloudmail.com/",
+    "author": {
+        "name": "Gabirieli Lalasava",
+        "email": "gabe@fijiwebdesign.com"
+    },
+    "keywords": [
+        "team mail",
+        "team email",
+        "webmail",
+        "email",
+        "mail",
+        "imap",
+        "smtp",
+        "collaborative email",
+        "operational transformation",
+        "ot",
+        "concurrent",
+        "collaborative",
+        "database",
+        "server"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fijiwebdesign/fijiwebmail"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-phpcs": "~0.2.3",
+        "grunt-php": "~1.1.1",
+        "grunt-phplint" : "~0.0.5",
+        "grunt-contrib-watch" : "~0.6.1",
+        "grunt-phpunit" : "~0.3.6",
+        "grunt-php-analyzer" : "0.1.0"
+    }
+}

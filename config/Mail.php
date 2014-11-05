@@ -12,6 +12,9 @@ namespace config;
 
 use Fiji\App\Config;
 
+/**
+ * Gobal Email Server Configuration
+ */
 class Mail extends Config
 {
     /**

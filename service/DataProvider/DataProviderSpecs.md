@@ -6,6 +6,7 @@ A self optimizing DataProvider for an "Object Data Mapper" (ODM).
 !! Note: This is a theoretical document. Actual framework may not reflect the this document. At this time, all namespaces start with Fiji\.  
 
 **What is Object Data Mapper**
+
 The ODM is an interface that exposes a storage backend to a Object Data Model. So it maps SQL, No-SQL, Object Database, or Document Database, XML etc. to Objects. 
 It's a layer above ORM. 
 

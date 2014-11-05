@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -9,10 +9,20 @@
  */
 
 error_reporting(E_ALL & ~E_USER_DEPRECATED);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 register_shutdown_function( "check_for_fatal" );
 set_error_handler( "log_error" );
 set_exception_handler( "log_exception" );
+
+function log_dump($obj, $title = false)
+{
+    if ($title) {
+        echo '<h3>' . $title . '</h3>';
+    }
+    echo '<pre>';
+    var_dump($obj);
+    echo '</pre>';
+}
 
 function log_debug($str)
 {

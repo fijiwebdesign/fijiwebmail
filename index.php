@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -8,17 +8,24 @@
  * @package   Fiji_Mail
  */
 
+// display any errors autoloading Fiji Framework
+error_reporting(E_ALL);
+ini_set('display_errors', true);
+
 use Fiji\Factory;
 
 // autoloading Fiji classes
 require_once 'lib/Autoload.php';
 
 // our base application configuration
-$Config = Factory::getSingleton('config\\App');
+$Config = Factory::getConfig();
 
 // developement mode requires finer error reporting
 if ($Config->get('mode') == config\App::MODE_DEV) {
     require 'dev.php';
+// do not display errors in production
+} else {
+    ini_set('display_errors', false);
 }
 
 // necessary file paths
@@ -39,7 +46,7 @@ if ($base_url = $Config->get('baseUrl')) {
 $app = $Req->getAlphaNum('app', $Config->get('defaultApp'));
 
 // main content
-// @todo Move this to application. 
+// @todo Move this to application.
 // @example Factory::getApplication($app)->execute()
 // 			\__ app\mail\http()->execute()
 //				\__ app\mail\controller\mail()->execute() etc..
@@ -48,7 +55,7 @@ if ($app) {
     require( 'app/' . $app . '/index.php');
     $Doc->content = ob_get_clean();
 }
- 
+
 $siteTemplate = $Req->get('siteTemplate');
 
 $template = $Config->get('template', 'chromatron');
