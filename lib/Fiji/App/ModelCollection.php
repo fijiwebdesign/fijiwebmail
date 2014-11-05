@@ -30,7 +30,7 @@ class ModelCollection extends DomainCollection
         }
 		
 		// loadData...() calls will trigger $this->DomainObject's loadData...() call
-		if (stristr($method, 'loadData')) {
+		if (stristr($method, 'loadData') || stristr($method, 'setData')) {
             foreach((array) $params[0] as $data) {
             	$model = clone($this->getDomainObject());
 				$model->$method($data);

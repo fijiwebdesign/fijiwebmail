@@ -44,7 +44,7 @@ class Settings extends \Fiji\App\Model
         // set properties other than $this->Properties
         parent::setData($array);
 
-        // $this->Properties is set as ModelCollection with data from ReflectorProperties fo the $namespace config class
+        // $this->Properties is set as ModelCollection with data from ReflectorProperties for the $namespace config class
         $Config = Factory::getConfig($this->namespace);
 
         $Reflector = new ReflectionClass($Config);
