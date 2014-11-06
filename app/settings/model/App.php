@@ -24,17 +24,17 @@ class App extends \config\App
      * Date the App Config is saved
      * @todo fix so we can have protected $date which get's saved to storage
      */
-    //protected $date;
+    public $date;
 
     /**
      * User Id that saved
      */
-    //protected $user_id;
+    public $user_id;
 
     /**
      * Map name to storage
      */
-    public function getName()
+    public function getObjectName()
     {
         return 'config_app';
     }
@@ -42,23 +42,12 @@ class App extends \config\App
     /**
      * Set the properties of application configuration
      */
-    public function onSave()
+    public function save()
     {
-        // need an interface to push storable keys to our DomainObject. This is too much of a hack.
-        //$this->keys = parent::getKeys();
-        //$this->keys = array_merge($this->keys, array('date', 'user_id'));
-
-        $User = Factory::getUser();
+        unset($this->id);
         $this->date = time();
-        $this->user_id = $User->id;
-    }
+        $this->user_id = Factory::getUser()->id;
 
-    /**
-     * Adds our new date and user_id as storable keys
-     */
-    public function getKeys()
-    {
-      $keys = parent::getKeys();
-      return array_merge($keys, array('date', 'user_id'));
+        parent::save();
     }
 }

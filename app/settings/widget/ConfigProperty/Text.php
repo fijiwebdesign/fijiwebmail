@@ -36,12 +36,13 @@ class Text extends Widget
     {
         $value = htmlentities($this->Model->getValueJson(), ENT_QUOTES, 'utf-8');
         $name =  htmlentities($this->Model->name, ENT_QUOTES, 'utf-8');
+        $description = htmlentities($this->Model->description, ENT_QUOTES, 'utf-8');
         echo '
         <div class="control-group">
             <label class="control-label" for="input">' . $this->Model->title . '</label>
             <div class="controls">
                 <input id="' . $name .  '" name="' . $name . '" class="input-xlarge" type="text" value="' . $value . '">
-                <p class="help-block">' . $this->Model->description . '</p>
+                <p class="help-block">' . $description . '</p>
             </div>
         </div>';
     }
