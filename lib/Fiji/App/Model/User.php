@@ -103,7 +103,7 @@ class User extends Model
      */
     public function getPersistKeys()
     {
-        return array('id', 'username', 'name', 'email', 'password', 'imapOptions');
+        return array('id', 'username', 'name', 'email', 'password', 'serect');
     }
 
     /**
@@ -161,11 +161,11 @@ class User extends Model
 
     /**
      * Returns the user messages saved in this or previous sessions
-     * @return Array | Bool
+     * @return Array
      */
     public function getNotifications()
     {
-        return isset($this->Session->msgs) ? $this->Session->msgs : false;
+        return isset($this->Session->msgs) ? $this->Session->msgs : array();
     }
 
     /**

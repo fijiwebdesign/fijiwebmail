@@ -16,7 +16,8 @@ use Fiji\Factory;
 /**
  * user authentication against default service
  */
-class Authentication {
+class Authentication
+{
 
     protected $User;
 

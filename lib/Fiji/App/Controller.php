@@ -50,7 +50,8 @@ abstract class Controller
     protected $AccessControl;
     
     public function __construct(View $View = null, $execute = true)
-    {        
+    {
+        // @todo lazy load these
         $this->User = Factory::getUser();
         $this->App = Factory::getApplication($this);
         $this->View = $View ? 

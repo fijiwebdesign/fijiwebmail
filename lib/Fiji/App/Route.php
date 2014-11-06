@@ -12,26 +12,35 @@ namespace Fiji\App;
 
 use Fiji\Factory;
 use Fiji\App\Config;
+use Fiji\App\Controller;
+use Fiji\App\Request;
+use Fiji\App\Model\User;
 
 /**
  * Application control
  */
-class Route {
+class Route
+{
     
     /**
      * @var Fiji\App\Request
      */
-    public $Req;
+    protected $Req;
     
     /**
      * @var Fiji\App\User
      */
-    public $User;
+    protected $User;
+
+    /**
+     * @var Fiji\App\Controller
+     */
+    protected $Controller;
     
     public function __construct(Config $Config = null) {
-        $this->Req = Factory::getRequest();
-        $this->User = Factory::getUser();
-        $this->Config = $Config ? $Config : Factory::getConfig();
+        if ($Config) {
+            $this->setConfig($Config);
+        }
     }
     
     /**
@@ -48,7 +57,7 @@ class Route {
         }
     }
     
-    public function setController()
+    public function setController(Controller $Controller)
     {
         $this->Controller = $Controller;
     }
@@ -59,6 +68,29 @@ class Route {
             $this->Controller = Factory::getController();
         }
         return $this->Controller;
+    }
+
+    public function getUser()
+    {
+        return Factory::getUser();
+    }
+
+    public function getReq()
+    {
+        return Factory::getRequest();
+    }
+
+    public function getConfig()
+    {
+        if (!isset($this->Config)) {
+            $this->Config = Factory::getConfig();
+        }
+        return $this->Config;
+    }
+
+    public function setConfig(Config $Config)
+    {
+        $this->Config = $Config;
     }
     
     /**
