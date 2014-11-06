@@ -95,6 +95,16 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         }
         $this->objects[] = $object;
     }
+
+    /**
+     * Shortcut to set() or get() the sort order. 
+     * @param Array $sort Optional. Set $sort or get the sort if $sort is empty. 
+     */
+    public function sort(Array $sort = array())
+    {
+        $sort ? $this->getDomainObject()->setSort($sort) : $this->getDomainObject()->getSort($sort);
+        return $this;
+    }
     
     /**
      * Load data to DomainObject collection given the query
@@ -103,6 +113,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     public function find($query = null)
     {
         $this->setData($this->getService()->find($this->getDomainObject(), $query));
+        return $this;
     }
     
     /**
@@ -272,6 +283,72 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         }
         
         return $array;
+    }
+
+    /**
+     * Filters Objects in Collection by a field. 
+     * Does not retrieve from storage. Only existing objects are filtered.
+     * @param $query Array 
+     * @return \Fiji\App\ModelCollection
+     *
+     * @todo write tests
+     */
+    public function filter($query)
+    {
+        $clone = new ModelCollection($this->DomainObject);
+        foreach($this->objects as $object)
+        {
+            $match = true;
+            foreach($query as $name => $value)
+            {
+                if ($object->$name != $value) {
+                    $match = false;
+                    break;
+                }
+            }
+            if ($match) {
+                $clone->push($object);
+            }
+        }
+        return $clone;
+    }
+
+    /**
+     * Custom method calls
+     * @todo separate these out to make it more apparent
+     * @todo write tests
+     */
+    public function __call($method, $params = array())
+    {
+        
+        // $this->loadData*() calls will create a DomainObject for each array in the first param and call it's loadData*() property 
+        if (strpos($method, 'loadData') === 0 || strpos($method, 'setData') === 0) {
+            $dataArr = isset($params[0]) ? $params[0] : array();
+            foreach((array) $dataArr as $data) {
+                $Model = clone($this->getDomainObject());
+                $Model->$method($data);
+                $this->push($Model);
+            }
+            return $this;
+        }
+
+        // $this->updateData*() calls will trigger updateData*() call on each DomainObject in Collection
+        if (strpos($method, 'updateData') === 0) {
+            $dataArr = isset($params[0]) ? $params[0] : array();
+            foreach($this as $i => $Model) {
+                $data = isset($dataArr[0]) ? $dataArr[0] : array();
+                $Model->$method($data);
+            }
+            return $this;
+        }
+
+        // call the method of each DomainObject in collection with the given params
+        if (method_exists($this->getDomainObject(), $method)) {
+            foreach($this as $i => $Model) {
+               call_user_func_array(array($Model, $method), $params);
+            }
+            return $this;
+        }
     }
     
 }

@@ -21,7 +21,7 @@ class Config extends DomainObject implements \IteratorAggregate
     /**
      * @var Bool Allow setting arbitrary keys
      */
-    protected $strictOnlyKeys = false;
+    protected $strictOnlyKeys = true;
 
     /**
      * Construct our Configuration
@@ -31,7 +31,7 @@ class Config extends DomainObject implements \IteratorAggregate
     public function __construct(Array $options = array())
     {
         parent::__construct($options);
-        
+
         // make each property an instance of Fiji\App\Config for easy access
         $this->setArraysToConfig();
     }
@@ -52,6 +52,39 @@ class Config extends DomainObject implements \IteratorAggregate
     public function get($name, $default = null)
     {
         return isset($this->$name) ? $this->$name : $default;
+    }
+
+    /**
+     * Set data from Array
+     * @param Array $data Arbitrary associative array of property => value to set
+     *
+     * @see parent::setData()
+     */
+    public function setData(Array $data = array())
+    {
+        // set each directly as parent::setData() has too much logic
+        foreach($data as $name => $value) {
+            $this->$name = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * Set arbitrary properties
+     */
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
+    public function __isset($name)
+    {
+        return isset($this->$name);
+    }
+
+    public function __get($name)
+    {
+        return isset($this->$name) ? $this->$name : null;
     }
     
     /**
@@ -79,12 +112,24 @@ class Config extends DomainObject implements \IteratorAggregate
     public function setArraysToConfig()
     {
         foreach($this as $name => $value) {
-            if (is_array($value)) {
+            if (is_array($value) && $this->isArrayHasIndex($value)) {
                 $this->$name = new Config();
                 $this->$name->setStrictOnlyKeys(false); // allow arbitrary keys
                 $this->$name->setData($value);
             }
         }
+    }
+
+    /**
+     * Is the Array has at least one index
+     */
+    protected function isArrayHasIndex($array){
+        foreach($array as $key => $value) {
+            if ($key === (int) $key) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

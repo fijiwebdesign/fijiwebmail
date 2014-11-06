@@ -16,29 +16,11 @@ use Fiji\Service\DomainCollection;
 
 /**
  * ModelCollection
+ *
+ * @todo Make these onFind() etc. Events dynamic (can be set from outside class inheritence scope)
  */
 class ModelCollection extends DomainCollection
 {
-    
-    /**
-     * Custom method calls
-     */
-    public function __call($method, $params = array())
-    {
-        if (method_exists($this, $method)) {
-            return call_user_func_array(array($this, $method), $params);
-        }
-		
-		// loadData...() calls will trigger $this->DomainObject's loadData...() call
-		if (stristr($method, 'loadData') || stristr($method, 'setData')) {
-            foreach((array) $params[0] as $data) {
-            	$model = clone($this->getDomainObject());
-				$model->$method($data);
-				$this->push($model);
-				//var_dump(array($model, $method, $data));
-            }
-        }
-    }
     
     /**
      * Trigger onFind()
@@ -78,21 +60,8 @@ class ModelCollection extends DomainCollection
      */
     public function filter($query)
     {
-        $clone = new ModelCollection($this->DomainObject);
-        foreach($this->objects as $object)
-        {
-            $match = true;
-            foreach($query as $name => $value)
-            {
-                if ($object->$name != $value) {
-                    $match = false;
-                    break;
-                }
-            }
-            if ($match) {
-                $clone->push($object);
-            }
+        if ($this->onFilter($query) !== false) {
+            return parent::filter($query);
         }
-        return $clone;
     }
 }

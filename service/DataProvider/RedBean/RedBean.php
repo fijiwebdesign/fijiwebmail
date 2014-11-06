@@ -79,7 +79,7 @@ class RedBean implements DataProvider
 
         $bean = R::load($tableName, $id);
 
-        return $this->getBeanProperties($bean);
+        return $this->getBeanProperties($bean, $DomainObject);
     }
 
     /**
@@ -87,15 +87,15 @@ class RedBean implements DataProvider
      * @var $query Mixed (Array|\Fiji\Service\Query|String)
      * @return Array
      */
-    public function findOne(DomainObject $DomainObject, $query = array()) {
-        return $this->find($DomainObject, $query, 0, 1);
+    public function findOne(DomainObject $DomainObject, $query = array(), $sort = array()) {
+        return $this->find($DomainObject, $query, $sort, 0, 1);
     }
 
     /**
      * Find Domain Objects matching query
      * @todo impose limit and lazy load
      */
-    public function find(DomainObject $DomainObject, $query = array(), $start = 0, $limit = 10) {
+    public function find(DomainObject $DomainObject, $query = array(), $sort = array(), $start = 0, $limit = 10) {
         $tableName = $this->getTableName($DomainObject);
         $idName = $DomainObject->getIdKey();
 
@@ -109,17 +109,27 @@ class RedBean implements DataProvider
         }
         $where = implode(' AND ', $where);
 
-        if ($limit == 1 && $start == 0) {
-            $bean = R::findOne($tableName, $where, $_query);
-            return $bean ? $this->getBeanProperties($bean) : array();
+        // set sorting ie. query order by
+        if ($sort = $sort ? $sort : $DomainObject->getSort()) {
+            $DomainObject->setSort($sort); // remember sort
+            $_sort = array();
+            foreach($sort as $col => $order) {
+                $_sort[] = "`$col` $order";
+            }
+            $where .= (empty($query) ? ' 1 = 1' : '') . ' ORDER BY ' . implode(',', $_sort);
         }
 
-        $beans = R::find($tableName, $where, $query);
+        if ($limit == 1 && $start == 0) {
+            $bean = R::findOne($tableName, $where, $_query);
+            return $bean ? $this->getBeanProperties($bean, $DomainObject) : array();
+        }
+
+        $beans = R::find($tableName, $where, $_query);
 
         $list = array();
         if ($beans) {
             foreach($beans as $bean) {
-                $list[] = $this->getBeanProperties($bean);
+                $list[] = $this->getBeanProperties($bean, $DomainObject);
             }
         }
 
@@ -185,7 +195,7 @@ class RedBean implements DataProvider
      * Retrieve the data in the bean
      * @todo Implement same logic in $this->find() so we can search array properties
      */
-    protected function getBeanProperties(OODBBean $bean)
+    protected function getBeanProperties(OODBBean $bean, DomainObject $DomainObject)
     {
         $data = $bean->getProperties();
         foreach($data as $name => $value) {
@@ -197,7 +207,23 @@ class RedBean implements DataProvider
                 if ($value && !isset($data[substr($name, 5)])) {
                     $data[substr($name, 5)] = unserialize($value);
                 }
-                unset($data[$name]); // remove this as it's soley storage 
+                unset($data[$name]); // remove this as it's soley storage
+
+            // this may be named differently in DomainObject and auto converted by redBean on save
+            // @todo this is dangerous. Fix redBean or impose restriction programatically on DomainObject property names
+            } elseif (strpos($name, '_') !== false && !isset($DomainObject->$name)) {
+                // copy data to other possible names.
+                $_name = str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+                if (!isset($data[$_name]) && $DomainObject->property_exists($_name)) {
+                    $data[$_name] = $value;
+                    unset($data[$name]);
+                } else {
+                    $_name[0] = strtolower($_name[0]);
+                    if (!isset($data[$_name])  && $DomainObject->property_exists($_name)) {
+                        $data[$_name] = $value;
+                        unset($data[$name]);
+                    }
+                }
             }
         }
         return $data;

@@ -78,6 +78,56 @@ class ModelPersistenceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Finding a Model
+     * @dataProvider provider
+     */
+    public function testFind($className1, $className2)
+    {
+        $Model1 = Factory::createModel($className1);
+
+        // Save our Model
+        $Model1->setData(array('public' => 'testFind'))->save();
+
+        // test finding with no arguments
+        $this->assertTrue(Factory::createModel($className1)->find()->id > 0);
+
+        // test find by id
+        $this->assertEquals($Model1->id, Factory::createModel($className1)->findById($Model1->id)->id);
+
+        // test find by property
+        $this->assertEquals($Model1->id, Factory::createModel($className1)->find(array('public' => 'testFind'))->id);
+    }
+
+    /**
+     * Test Finding a Model from sorted query
+     * @dataProvider provider
+     */
+    public function testSort($className1, $className2)
+    {
+        $Model1 = Factory::createModel($className1);
+
+        // Save our Model
+        $Model1->setData(array('public' => 'testSort'))->save();
+
+        // test finding sorted DESC query with no arguments
+        $this->assertEquals(Factory::createModel($className1)->sort(array('id' => 'DESC'))->find()->id, $Model1->id);
+
+        // // test finding sorted ASC query with no arguments
+        $this->assertTrue(Factory::createModel($className1)->sort(array('id' => 'ASC'))->find()->id > 0);
+
+        // test sorted find by id
+        $this->assertEquals($Model1->id, Factory::createModel($className1)->sort(array('id' => 'ASC'))->findById($Model1->id)->id);
+
+        // test sorted find by property
+        $this->assertEquals($Model1->id, Factory::createModel($className1)->sort(array('id' => 'DESC'))->find(array('public' => 'testSort'))->id);
+
+        // test sorted by two properties on find by property
+        $this->assertEquals($Model1->id, Factory::createModel($className1)
+            ->sort(array('id' => 'DESC', 'public' => 'ASC'))
+            ->find(array('public' => 'testSort'))->id);
+    }
+
+    /**
      * Test Updating a Model
      * @dataProvider provider
      */
