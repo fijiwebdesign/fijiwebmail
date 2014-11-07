@@ -8,12 +8,11 @@
  *            phpunit --verbose test/PermissionsTest.php
  */
 
-require_once __DIR__ . '/../lib/Autoload.php';
-
 // mocks Factory, Service and Models
-require_once __DIR__ . '/bootstrap/Mocks.php';
+require_once __DIR__ . '/bootstrap/Autoload.php';
 
 use Fiji\App\Model;
+use Fiji\Factory;
 
 class PermissionsTest extends PHPUnit_Framework_TestCase
 {

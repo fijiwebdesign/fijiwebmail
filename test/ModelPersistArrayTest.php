@@ -8,11 +8,10 @@
  *            phpunit --verbose test/ModelPersistArrayTest.php
  */
 
-// autoload phpunit, ZendFramework and FijiFramework classes
-require_once __DIR__ . '/../lib/Autoload.php';
-
 // mocks Factory, Service and Models
-require_once __DIR__ . '/bootstrap/Mocks.php';
+require_once __DIR__ . '/bootstrap/Autoload.php';
+
+use Fiji\Factory;
 
 /**
  * Test the Model Persistence of Arrays properties

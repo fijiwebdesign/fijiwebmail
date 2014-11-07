@@ -133,6 +133,14 @@ class Config extends DomainObject implements \IteratorAggregate
     }
 
     /**
+     * Return Object name
+     */
+    public function getObjectName()
+    {
+        return str_replace('\\', '_', strtolower(get_class($this)));
+    }
+
+    /**
      * IteratorAggregate Interface
      */
     public function getIterator() {

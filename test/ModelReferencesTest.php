@@ -8,11 +8,10 @@
  *            phpunit --verbose test/ModelReferencesTest.php
  */
 
-// autoload phpunit, ZendFramework and FijiFramework classes
-require_once __DIR__ . '/../lib/Autoload.php';
-
 // mocks Factory, Service and Models
-require_once __DIR__ . '/bootstrap/Mocks.php';
+require_once __DIR__ . '/bootstrap/Autoload.php';
+
+use Fiji\Factory;
 
 /**
  * Test the References are being lazy loaded and work correctly when __isset(), __get(), __set()
@@ -26,7 +25,7 @@ class ModelReferencesTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $Service = new Service;
+        $Service = new config\Service;
         $Service->clearStorage();
     }
 
@@ -35,7 +34,7 @@ class ModelReferencesTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $Service = new Service;
+        $Service = new config\Service;
         //$Service->clearStorage();
     }
 

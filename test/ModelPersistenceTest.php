@@ -8,11 +8,10 @@
  *            phpunit --verbose test/ModelPersistenceTest.php
  */
 
-// autoload phpunit, ZendFramework and FijiFramework classes
-require_once __DIR__ . '/../lib/Autoload.php';
-
 // mocks Factory, Service and Models
-require_once __DIR__ . '/bootstrap/Mocks.php';
+require_once __DIR__ . '/bootstrap/Autoload.php';
+
+use Fiji\Factory;
 
 /**
  * Test the Model Persistence in storage
@@ -26,7 +25,7 @@ class ModelPersistenceTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $Service = new Service;
+        $Service = new config\Service;
         $Service->clearStorage();
     }
 

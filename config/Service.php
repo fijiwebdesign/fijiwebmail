@@ -11,7 +11,6 @@
 namespace config;
 
 use Fiji\App\Config;
-use Fiji\Factory;
 
 /**
  * Base Storage Configuration

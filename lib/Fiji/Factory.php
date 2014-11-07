@@ -161,7 +161,12 @@ class Factory
 
         if (!isset($Configs[$className])) {
             // load saved configuration
-            //$Config->sort(array('id' => 'DESC'))->find();
+            $SavedConfig = Factory::createModel($className);
+            $SavedConfig->sort(array('id' => 'DESC'))->find();
+            // overwrite current config with saved if found
+            if ($SavedConfig->id) {
+                $Config->setDynamic($SavedConfig->toArray());
+            }
             $Configs[$className] = $Config;
         }
         return $Configs[$className];
@@ -186,29 +191,29 @@ class Factory
     */
    static public function translateClassName($className, $classParent)
    {
-           if (class_exists($className)) {
-               return $className;
+        if (class_exists($className)) {
+           return $className;
         }
-           $Config = self::getConfig('config\\Factory');
-           $appName = self::getApplication()->getName();
 
-          // get specific translation for this class or the default set of translations
+        $Config = self::getConfig('config\\Factory');
+        $appName = self::getApplication()->getName();
 
-          $classNames = $Config->get($className, $Config->get(str_replace('\\', '_', $classParent) . '_' . $className, array()));
+        // get specific translation for this class or the default set of translations
+        $classNames = $Config->get(str_replace('\\', '_', $classParent) . '_' . $className, $Config->get($classParent));
+        
+        if (!is_array($classNames) && !is_object($classNames)) {
+            $classNames = array($classNames);
+        }
+        // try each class path for existence of model class
+        foreach($classNames as $_className) {
+            $_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
+            if (class_exists($_className)) {
+                $className = $_className;
+                break;
+            }
+        }
 
-          if (!is_array($classNames) && !is_object($classNames)) {
-              $classNames = array($classNames);
-          }
-          // try each class path for existence of model class
-          foreach($classNames as $_className) {
-              $_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
-              if (class_exists($_className)) {
-                  $className = $_className;
-                  break;
-              }
-          }
-
-          return $className;
+        return $className;
    }
 
    /**

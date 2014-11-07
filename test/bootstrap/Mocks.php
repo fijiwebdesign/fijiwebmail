@@ -11,7 +11,6 @@
  * @package   Fiji_App
  */
 
-use Fiji\Factory as FijiFactory;
 use Fiji\App\Model;
 
 /**
@@ -84,72 +83,5 @@ class ModelMock3 extends Model
         'RefCollection' => 'ModelMock1',
         'RefCollection2' => 'ModelMock1'
     );
-
-}
-
-
-/**
- * Service Configuration for in memory data persistence
- *
- */
-class Service extends Fiji\App\Config
-{
-    public $dataProvider = 'service\\DataProvider\\RedBean\\RedBean';
-    /**
-     * Use in memory database for testing
-     */
-    public $dbtype = 'sqlite';
-    public $path = ':memory:';
-    public $database = 'fiji_webmail';
-    public $tablePrefix = 'fiji_';
-
-    public function __construct()
-    {
-        // so we can view db in dev because :memory" db isn't across session
-        ///$this->path = (__DIR__ . '/../.db/test.db');
-        //echo "db: " . $this->path . PHP_EOL;
-        parent::__construct();
-    }
-
-    public function clearStorage()
-    {
-        if ($this->path !== ':memory:') {
-            @unlink($this->path);
-        }
-    }
-
-}
-
-/**
- * Mock our factory so we can mock data provider for our models
- * @todo We should have Factory::setCreateModel(function() {});
- *       to make Factory extensible without changing namespace.
- *       or we could set an autoloader for Fiji\Factory poiting to this
- */
-class Factory extends FijiFactory
-{
-
-    /**
-     * Create a model instance
-     */
-    static function createModel($className, Array $params = array())
-    {
-        $Model = parent::createModel($className, $params);
-        $DataProvider = self::getDataProvider();
-        $Service = self::getService($DataProvider);
-        $Model->setService($Service);
-        return $Model;
-    }
-
-    /**
-     * Retrieve a Fiji\App\DataProvider Instance
-     */
-    static public function getDataProvider(Fiji\App\Config $Config = null)
-    {
-        $Config = new Service;
-        $dataProvider = $Config->get('dataProvider');
-
-        return self::getSingleton($dataProvider, array($Config));
-    }
 
 }
