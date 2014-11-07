@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -15,11 +15,11 @@ use Exception;
 
 class Factory
 {
-    
+
     static $instances = array();
-   
+
    /**
-    * Retrieve a single instance of a class. 
+    * Retrieve a single instance of a class.
     * The class namespace and parameters are unique to each instance.
     * @param $className String Class Name
     * @param $params Array parameters to pass to class constructor
@@ -32,7 +32,7 @@ class Factory
         }
         return self::$instances[$classKey];
    }
-   
+
    /**
     * Create an instance of the class
     * @param $className String Class Name
@@ -43,13 +43,13 @@ class Factory
         $refl = new ReflectionClass($className);
         return $refl->newInstanceArgs($params);
    }
-   
+
    /**
     * Retrieve current user
     */
    static function getUser($className = 'User')
    {
-   	   $className = self::translateClassName($className, 'Model');
+          $className = self::translateClassName($className, 'Model');
        return self::getSingleton($className ? $className : 'Fiji\App\Model\User');
    }
 
@@ -72,7 +72,7 @@ class Factory
       $Session->setExpirationSeconds($expiresSecs);
       return $Session;
    }
-   
+
    /**
     * Create a model instance
     * @return Fiji\App\Model
@@ -81,17 +81,17 @@ class Factory
    {
        return self::createInstance(self::translateClassName($className, 'Model'), $params);
    }
-   
+
    /**
     * Create a model collection instance
     * @return Fiji\App\ModelCollection
     */
    static function createModelCollection($className, $collectionClassName = null)
    {
-       return self::createInstance(($collectionClassName ? $collectionClassName : 'Fiji\\App\\ModelCollection'), 
+       return self::createInstance(($collectionClassName ? $collectionClassName : 'Fiji\\App\\ModelCollection'),
            array($className));
    }
-   
+
    /**
     * Create a View Singleton
     */
@@ -99,7 +99,7 @@ class Factory
    {
        return self::getSingleton($className, array($App));
    }
-   
+
    /**
     * Create an Application Singleton
     */
@@ -107,7 +107,7 @@ class Factory
    {
        return self::getSingleton('Fiji\\App\\Application', array($Controller));
    }
-   
+
    /**
     * Create a Document Singleton
     */
@@ -115,7 +115,7 @@ class Factory
    {
        return self::getSingleton('Fiji\\App\\Document');
    }
-   
+
    /**
     * Retrieve a Fiji\App\Service Instance
     */
@@ -124,10 +124,10 @@ class Factory
        if (!$DataProvider) {
            $DataProvider = self::getDataProvider();
        }
-       
+
        return self::getSingleton('Fiji\\Service\\Service', array($DataProvider));
    }
-   
+
    /**
     * Retrieve a Fiji\App\DataProvider Instance
     */
@@ -138,10 +138,10 @@ class Factory
            $Config = Factory::getSingleton('config\\Service');
        }
        $dataProvider = $Config->get('dataProvider');
-       
+
        return self::getSingleton($dataProvider, array($Config));
    }
-   
+
    /**
     * Retrieve the Application request
     */
@@ -149,16 +149,22 @@ class Factory
    {
        return Factory::getSingleton('Fiji\App\Request', array($requestData));
    }
-   
+
    /**
     * Retrieve the Configuration
     */
-   static public function getConfig($className = null, $options = array())
+   static public function getConfig($className = 'config\\App', $options = array())
    {
-       if ($className) {
-           return Factory::createInstance($className, array($options));
-       }
-       return Factory::getSingleton('config\\App', array($options));
+        static $Configs = array();
+
+        $Config = Factory::createModel($className, array($options));
+
+        if (!isset($Configs[$className])) {
+            // load saved configuration
+            //$Config->sort(array('id' => 'DESC'))->find();
+            $Configs[$className] = $Config;
+        }
+        return $Configs[$className];
    }
 
    /**
@@ -171,39 +177,40 @@ class Factory
       $AuthenticationClass = $Config->get('Authentication');
       return self::getSingleton($AuthenticationClass, array($User));
    }
-   
+
    /**
     * Translates classNames to intended class in a cascading fashion
-    * Each class has translations configured in config\{classParent}. 
+    * Each class has translations configured in config\{classParent}.
     * eg: config\Model or config\User or config\Widget
     * @todo simplify, modularize. Should have a setTranslation(). This is too dependent on config internals
     */
    static public function translateClassName($className, $classParent)
    {
-   		if (class_exists($className)) {
-       		return $className;
+           if (class_exists($className)) {
+               return $className;
         }
-   		$Config = self::getConfig('config\\' . $classParent);
-   		$appName = self::getApplication()->getName();
-		
-  		// get specific translation for this class or the default set of translations
-  		$classNames = $Config->get($className, $Config->get('defaultClass'));
-  		
-  		if (!is_array($classNames) && !is_object($classNames)) {
-  		    $classNames = array($classNames);
-  		}
-  		// try each class path for existence of model class
-  		foreach($classNames as $_className) {
-  			$_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
-  			if (class_exists($_className)) {
-  				$className = $_className;
-  				break;
-  			}
-  		}
-  		
-  		return $className;
+           $Config = self::getConfig('config\\Factory');
+           $appName = self::getApplication()->getName();
+
+          // get specific translation for this class or the default set of translations
+
+          $classNames = $Config->get($className, $Config->get(str_replace('\\', '_', $classParent) . '_' . $className, array()));
+
+          if (!is_array($classNames) && !is_object($classNames)) {
+              $classNames = array($classNames);
+          }
+          // try each class path for existence of model class
+          foreach($classNames as $_className) {
+              $_className = str_replace(array('{App}', '{' . $classParent . '}'), array($appName, $className), $_className);
+              if (class_exists($_className)) {
+                  $className = $_className;
+                  break;
+              }
+          }
+
+          return $className;
    }
-   
+
    /**
     * Retrieve widget
     */
@@ -240,6 +247,5 @@ class Factory
       $Perms = self::getPermissions($resource);
       return self::createInstance($className, array($User, $Perms));
    }
-   
-}
 
+}

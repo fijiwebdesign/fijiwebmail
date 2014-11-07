@@ -10,8 +10,14 @@
 
 require_once __DIR__ . '/../lib/Autoload.php';
 
+// mocks Factory, Service and Models
+require_once __DIR__ . '/bootstrap/Mocks.php';
+
 use Fiji\Factory;
 
+/**
+ * @todo Mock configuration. Currently dependent on config\Factory
+ */
 class FactoryTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -66,29 +72,13 @@ class FactoryTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @todo Mock configuration. Currently dependent on config\Factory
+     */
     public function providerUntranslated()
     {
-        $Config = Factory::getConfig('config\Model');
-        $appName = Factory::getApplication()->getName();
-
-        // get translations for User models in Model config
-        $classNames = $Config->get('User');
-
-        if (!is_array($classNames) && !is_object($classNames)) {
-            $classNames = array($classNames);
-        }
-        // try each class path for existence of model class
-        $className = 'User';
-        foreach($classNames as $_className) {
-            $_className = str_replace(array('{App}', '{Model}'), array($appName, $className), $_className);
-            if (class_exists($_className)) {
-                $className = $_className;
-                break;
-            }
-        }
-
         return array(
-          array('User', array(), $className)
+          array('User', array(), 'app\mail\model\User')
         );
     }
 }
