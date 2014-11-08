@@ -44,6 +44,7 @@ if ($base_url = $Config->get('baseUrl')) {
 
 // application and page requested. App is the module, and page is the controller
 $app = $Req->getAlphaNum('app', $Config->get('defaultApp'));
+$Req->set('app', $app);
 
 // main content
 // @todo Move this to application.
