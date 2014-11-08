@@ -46,11 +46,12 @@ class Settings extends Widget
     {
         echo '<form class="form-horizontal" method="post" action="?app=settings&view=save">';
         foreach($this->Model->Properties as $Property) {
-            if ($Property->type != 'text') {
-                // @todo handle
-                continue;
+            $className = 'app\\settings\\widget\\ConfigProperty\\' . ucfirst($Property->type);
+            if (!class_exists($className)) {
+                // @todo create all the Property type render's
+                $className = 'app\\settings\\widget\\ConfigProperty\\Text';
             }
-            $PropertyWidget = Factory::createWidget('app\\settings\\widget\\ConfigProperty\\' . ucfirst($Property->type), array($Property));
+            $PropertyWidget = Factory::createWidget($className, array($Property));
             $PropertyWidget->render();
         }
         echo '<input type="hidden" name="namespace" value="' . $this->Model->namespace . '">';

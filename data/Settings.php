@@ -28,7 +28,7 @@ class Settings extends Collection
      */
     protected $data = array(
         array(
-            'namespace' => 'app\\settings\\model\\App', // extends config\\App
+            'namespace' => 'config\\App',
             'title' => 'Global App',
             'isUser' => false,
             'icon' => 'awe-app'

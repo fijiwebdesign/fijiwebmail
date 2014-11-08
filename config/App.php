@@ -21,6 +21,11 @@ class App extends Config
     const MODE_PROD = 'prod';
 
     /**
+     * Site Name
+     */
+    public $SiteName = 'Fiji Cloud Mail';
+
+    /**
      * Error Reporting
      * @var Int
      * @type checkbox
@@ -33,6 +38,9 @@ class App extends Config
      */
     public $secret = '3scjDSs8*D@dszpxcSDsdoijdDsz';
 
+    /**
+     * Support Email Address
+     */
     public $supportEmail = 'info@fijiwebdesign.com';
 
     // zend framework library path
@@ -45,18 +53,20 @@ class App extends Config
     //          cd /www/var/webmail/
     //          composer install
     /**
+     * Path to Zend Famework Library
+     * Only needed if you manually install Zend Famework
      * @type directory
      * @validate file_exists $zendPath
      */
     public $zendPath = '/var/lib/zf2/library/Zend/';
 
     /**
-     * Base URL of our app. Can be set dynamically via $_SERVER['REQUEST_URI']
+     * Base URL of our app.
      */
     public $baseUrl = '/fijiwebmail/';
 
     /**
-     * Base Application Folder. Can be set dynamically via realpath('/../')
+     * Base Application Folder
      */
     public $basePath;
 

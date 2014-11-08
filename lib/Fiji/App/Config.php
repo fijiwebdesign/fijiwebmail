@@ -11,6 +11,7 @@
 namespace Fiji\App;
 
 use Fiji\Service\DomainObject;
+use Fiji\Factory;
 
 /**
  * Configuration Object
@@ -138,6 +139,16 @@ class Config extends DomainObject implements \IteratorAggregate
     public function getObjectName()
     {
         return str_replace('\\', '_', strtolower(get_class($this)));
+    }
+
+    /**
+     * Record the user and time the configuration was saved
+     */
+    public function save()
+    {
+        $this->date = time();
+        $this->user_id = Factory::getUser()->id;
+        parent::save();
     }
 
     /**
