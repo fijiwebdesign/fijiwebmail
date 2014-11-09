@@ -56,7 +56,6 @@ class App extends Config
      * Path to Zend Famework Library
      * Only needed if you manually install Zend Famework
      * @type directory
-     * @validate file_exists $zendPath
      */
     public $zendPath = '/var/lib/zf2/library/Zend/';
 
