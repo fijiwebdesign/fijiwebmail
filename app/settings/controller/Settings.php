@@ -99,12 +99,11 @@ class Settings extends Controller
      */
     public function user()
     {
-        $User = Factory::getUser();
 
         $SettingsCollection = Factory::getSingleton('data\SettingsUser');
 
         if (count($SettingsCollection) == 0) {
-            throw new Exception('No settings have been saved to storage. See: data\Settings for sample.');
+            throw new Exception('No settings have been configured. See: data\SettingsUser.');
         }
 
         // get an alternative view
@@ -112,7 +111,7 @@ class Settings extends Controller
         $View->set('header', 'Settings');
         $View->set('SettingsCollection', $SettingsCollection);
 
-        $View->display('index');
+        $View->display('user');
     }
 
     /**
@@ -122,26 +121,58 @@ class Settings extends Controller
     {
         $Request = Factory::getRequest();
         $App = Factory::getApplication();
-        $User = Factory::getUser();
 
         $namespace = $Request->get('namespace');
 
         // validate we are given a config model
-        if (!$namespace || !is_subclass_of($namespace, 'Fiji\\App\\Config')) {
-            throw new Exception('Invalid Settings Namespace. Must inherit from: Fiji\App\Config.');
+        $namespaces = Factory::getSingleton('data\Settings')->getPropertyList('namespace');
+        if (!in_array($namespace, $namespaces)) {
+            throw new Exception('Invalid Settings Namespace!');
         }
 
-        $ConfigModel = Factory::createModel($namespace);
+        $this->saveConfig($namespace);
+
+        $App->redirect($App->getReturnUrl('?app=settings'), 'Settings saved!');
+    }
+
+    /**
+     * Save the settings
+     */
+    public function userSave()
+    {
+        $Request = Factory::getRequest();
+        $App = Factory::getApplication();
+
+        $namespace = $Request->get('namespace');
+
+        // validate we are given a config model
+        $namespaces = Factory::getSingleton('data\SettingsUser')->getPropertyList('namespace');
+        if (!in_array($namespace, $namespaces)) {
+            throw new Exception('Invalid Settings Namespace!');
+        }
+
+        $this->saveConfig($namespace);
+
+        $App->redirect($App->getReturnUrl('?app=settings&view=user'), 'Your settings have been saved!');
+    }
+
+    /**
+     * Save the settings
+     */
+    protected function saveConfig($namespace)
+    {
+
+        $ConfigModel = Factory::createModel($namespace)->find();
 
         foreach($ConfigModel->toArray() as $name => $value) {
-            $ConfigModel->$name = $Request->get($name, $value);
+            if (!is_null($value = $this->Req->get($name, $value))) {
+                $ConfigModel->$name = $value;
+            }
         }
 
         if ($ConfigModel->save() === false) {
-            throw new Exception('Error saving settings.');
+            throw new Exception('Error saving configuration: ' . $namespace);
         }
-
-        $App->redirect($App->getReturnUrl('?app=settings'), 'Settings saved!');
     }
 
 }

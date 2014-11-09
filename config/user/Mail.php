@@ -10,26 +10,44 @@
 
 namespace config\user;
 
+use Fiji\App\Config;
+
 /**
- * Custom user mail accounts configuration
+ * Your Mailbox Configuration
  */
-class Mail extends \config\Mail
+class Mail extends Config
 {
+
+    /**
+     * Email
+     * @example user@domain.com
+     */
+    public $email;
+
+    /**
+     * Password
+     * @type password
+     */
+    public $password;
     
     /**
-     * IMAP Server settings
+     * IMAP Server
      */
     public $authServer = array(
         'host'     => 'localhost',
         'port'     => 143,
-        'ssl'      => ''
+        'ssl'      => 'tls'
     );
     
     /**
-     * Settings for sending email
-     * Options as smtp|sendmail|mail
+     * Send email using
+     * Options are smtp, sendmail, mail
      */
     public $mailTransport = 'smtp';
+
+    /**
+     * SMTP Email Server
+     */
     public $mailTransportOptions = array(
         'name'=> 'localhost',
         'host'=> 'localhost',
@@ -43,11 +61,8 @@ class Mail extends \config\Mail
     );
 
     /**
-     * Messages to how per page in mailbox view
+     * Messages per page
      */
     public $messagesPerPage = 10;
     
 }
-
-
-

@@ -17,6 +17,7 @@ use Exception;
 use ReflectionProperty;
 use Fiji\App\Model;
 use Fiji\App\Config;
+use Fiji\Service\DomainObject;
 
 /**
  * ConfigProperty Model
@@ -72,7 +73,7 @@ class ConfigProperty extends \Fiji\App\Model
     /**
      * Add data from the Config Model
      */
-    public function addDataFromConfigModel(Config $ConfigModel)
+    public function addDataFromConfigModel(DomainObject $ConfigModel)
     {
         $this->value = isset($ConfigModel->{$this->name}) ? $ConfigModel->{$this->name} : $this->value;
     }

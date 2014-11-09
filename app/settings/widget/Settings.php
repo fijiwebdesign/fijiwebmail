@@ -44,7 +44,6 @@ class Settings extends Widget
 
     public function renderForm()
     {
-        echo '<form class="form-horizontal" method="post" action="?app=settings&view=save">';
         foreach($this->Model->Properties as $Property) {
             $className = 'app\\settings\\widget\\ConfigProperty\\' . ucfirst($Property->type);
             if (!class_exists($className)) {
@@ -55,8 +54,6 @@ class Settings extends Widget
             $PropertyWidget->render();
         }
         echo '<input type="hidden" name="namespace" value="' . $this->Model->namespace . '">';
-        echo '<button type="submit" class="btn btn-primary" name="save">Save</button>';
-        echo '</form>';
     }
 
     /**

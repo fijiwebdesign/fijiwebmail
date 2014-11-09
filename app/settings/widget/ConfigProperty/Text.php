@@ -34,7 +34,8 @@ class Text extends Widget
      */
     public function render($format = 'html')
     {
-        $value = htmlentities($this->Model->getValueJson(), ENT_QUOTES, 'utf-8');
+        $value = $this->Model->getValueJson();
+        $value = htmlentities($value == 'null' ? '' : $value, ENT_QUOTES, 'utf-8');
         $name =  htmlentities($this->Model->name, ENT_QUOTES, 'utf-8');
         $description = htmlentities($this->Model->description, ENT_QUOTES, 'utf-8');
         echo '

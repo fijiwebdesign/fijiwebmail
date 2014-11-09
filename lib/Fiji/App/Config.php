@@ -34,6 +34,8 @@ class Config extends DomainObject implements \IteratorAggregate
         parent::__construct($options);
 
         // make each property an instance of Fiji\App\Config for easy access
+        // @todo remove this. Use __get() to return Config Objects so it's lazy loaded
+        // it may be better to remove this altogether and have accessor know their config data structure?
         $this->setArraysToConfig();
     }
 

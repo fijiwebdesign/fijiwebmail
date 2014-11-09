@@ -40,12 +40,15 @@ foreach($SettingsCollection as $Settings) {
     <section class="tab-content">
       
     <?php foreach($SettingsWidgets as $SettingsWidget) : ?>
+        <form class="form-horizontal" method="post" action="?app=settings&view=save">
         <div class="tab-pane" id="<?php echo htmlentities($SettingsWidget->getNamespace()); ?>">
             <fieldset>
             <legend><?php echo htmlentities($SettingsWidget->getDescription()); ?></legend>
             <?php $SettingsWidget->renderForm(); ?>
+            <button type="submit" class="btn btn-primary btn-large" name="save">Save</button>
             </fieldset>
         </div>
+        </form>
     <?php endforeach; ?>
 
     </section>

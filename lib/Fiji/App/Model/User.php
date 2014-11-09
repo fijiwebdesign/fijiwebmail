@@ -17,6 +17,7 @@ use Fiji\App\Model;
 /**
  * Allows user management
  *
+ * @todo move session to a Model that uses a DataProvider handling PHP session interface
  * @todo parent::getKeys() should also look for getters eg: __get{Key}()
  *          This way we can make keys protected properties and have a getter that is visible as a model key
  * @todo Move the getPersistentKeys() out and use separate configs per service.
@@ -57,15 +58,14 @@ class User extends Model
     protected $password;
 
     /**
-     * @var Object Imap Options
-     * @todo move to Model
+     * @var Mailboxes owned by user
      */
-    protected $imapOptions;
+    protected $MailboxCollection;
 
     /**
      * @var String User Secret used for hasing password
      */
-    public $secret;
+    protected $secret;
 
     /**
      * @var Fiji\App\ModelCollection of Fiji\App\AccessControl\Model\Role user belongs to
@@ -76,8 +76,9 @@ class User extends Model
     {
         // add references
         $this->setReference('RoleCollection', 'Fiji\App\AccessControl\Model\Role');
+        $this->setReference('MailboxCollection', 'config\user\Mail');
 
-        // @todo We need a session interface
+        // @todo We need a session interface.
         $this->Session = Factory::getUserSession($this->expiresSecs);
 
         // ensure autheticated user is loaded
@@ -88,6 +89,21 @@ class User extends Model
             }
         }
 
+    }
+
+    /**
+     * Sync with session on save
+     */
+    public function save()
+    {
+        // ensure autheticated user is loaded
+        if ($this->isAuthenticated()) {
+            // get from session
+            foreach($this->getPersistKeys() as $key) {
+                    $this->Session->$key = $this->$key;
+            }
+        }
+        parent::save();
     }
 
     /**
@@ -103,7 +119,7 @@ class User extends Model
      */
     public function getPersistKeys()
     {
-        return array('id', 'username', 'name', 'email', 'password', 'serect');
+        return array('id', 'username', 'name', 'email', 'password', 'secret');
     }
 
     /**
