@@ -78,6 +78,7 @@ class SettingsList extends Widget
         foreach($this->Model->Properties as $Property) {
             echo '<th>' . $Property->title . '</th>';
         }
+        echo '<th>&nbsp;</th>';
     }
 
     /**
@@ -85,6 +86,16 @@ class SettingsList extends Widget
      */
     public function renderTableData()
     {
+        // links
+        $links = isset($this->Model->links) ? $this->Model->links : array();
+        $defaultLink = isset($links['default'][1]) ? $links['default'][1] : '?app=settings&view=default&id={id}';
+        $defaultText = isset($links['default'][0]) ? $links['default'][0] : 'Edit';
+        $editLink = isset($links['edit'][1]) ? $links['edit'][1] : '?app=settings&view=edit&id={id}';
+        $editText = isset($links['edit'][0]) ? $links['edit'][0] : 'Edit';
+        $deleteLink = isset($links['delete'][1]) ? $links['delete'][1] : '?app=settings&view=delete&id={id}';
+        $deleteText = isset($links['delete'][0]) ? $links['delete'][0] : 'Edit';
+
+        // build table body from collection, model and property data
         foreach($this->Collection as $Model) {
             echo '<tr>';
             foreach($this->Model->Properties as $Property) {
@@ -94,6 +105,13 @@ class SettingsList extends Widget
                 }
                 echo '<td>' . $Model->{$Property->name} . '</td>';
             }
+            echo '<td class="toolbar">
+				<div class="btn-group">
+					<a class="btn btn-flat" title="Make Default" href="' . str_replace('{id}', $Model->id, $defaultLink) . '"><span class="awe-pushpin"></span></a>
+					<a class="btn btn-flat" title="Edit" href="' . str_replace('{id}', $Model->id, $editLink) . '"><span class="awe-wrench"></span></a>
+					<a class="btn btn-flat" title="Delete" href="' . str_replace('{id}', $Model->id, $deleteLink) . '"><span class="awe-remove"></span></a>
+				</div>
+			</td>';
             echo '</tr>';
         }
     }

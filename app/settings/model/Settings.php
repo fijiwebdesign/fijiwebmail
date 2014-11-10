@@ -40,7 +40,7 @@ class Settings extends \Fiji\App\Model
      * The Configuration these settings apply to
      * @param Fiji\App\Config;
      */
-    protected $Config;
+    protected $ConfigModel;
 
     /**
      * Is this a collection of settings
@@ -54,7 +54,10 @@ class Settings extends \Fiji\App\Model
 
     public function getConfigModel()
     {
-        return Factory::createModel($this->namespace);
+        if (!$this->ConfigModel) {
+            $this->ConfigModel = Factory::createModel($this->namespace);
+        }
+        return $this->ConfigModel;
     }
 
     /**

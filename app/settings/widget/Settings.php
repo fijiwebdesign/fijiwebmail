@@ -64,6 +64,7 @@ class Settings extends Widget
      */
     public function renderFormElements()
     {
+
         foreach($this->Model->Properties as $Property) {
             $className = 'app\\settings\\widget\\ConfigProperty\\' . ucfirst($Property->type);
             if (!class_exists($className)) {
@@ -73,7 +74,10 @@ class Settings extends Widget
             $PropertyWidget = Factory::createWidget($className, array($Property));
             $PropertyWidget->render();
         }
-        echo '<input type="hidden" name="namespace" value="' . $this->Model->namespace . '">';
+        if ($id = $this->Model->getConfigModel()->id) {
+            echo '<input type="hidden" name="' . $this->Model->getConfigModel()->getIdKey() . '" value="' . intval($id) . '">';
+        }
+        echo '<input type="hidden" name="namespace" value="' . htmlentities($this->Model->namespace, ENT_QUOTES, 'utf-8') . '">';
     }
 
     /**

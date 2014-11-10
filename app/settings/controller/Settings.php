@@ -22,27 +22,9 @@ use Fiji\App\View;
  */
 class Settings extends Controller
 {
-    /**
-     * @var {Fiji\App\Model\User}
-     */
-    protected $User;
-
-    /**
-     * @var {Fiji\App\Application}
-     */
-    protected $App;
-
-    /**
-     * @var {Fiji\App\AccessControl}
-     */
-    protected $AccessControl;
 
     public function __construct(View $View = null)
     {
-        $this->User = Factory::getUser();
-        $this->App = Factory::getApplication($this);
-        $this->Doc = Factory::getDocument();
-        $this->AccessControl = Factory::getAccessControl(get_class($this));
 
         if (!$this->User->isAuthenticated()) {
             $this->App->setReturnUrl('?app=settings');
@@ -129,7 +111,7 @@ class Settings extends Controller
                 // see if we have data from storage
                 $Config = $Settings->getConfigModel();
                 $Config->sort(array('id' => 'DESC'))->find();
-                if (isset($Config->id)) {
+                if ($Config->id) {
                     $Settings->Properties->addDataFromConfigModel($Config);
                 }
                 $SettingsWidgets[] = Factory::getWidget('app\settings\widget\Settings', array($Settings));
@@ -138,7 +120,7 @@ class Settings extends Controller
 
         // get an alternative view
         $View = Factory::getView('app\settings\view\Settings');
-        $View->set('header', 'Settings');
+        $View->set('header', 'Your Settings');
         $View->set('SettingsCollection', $SettingsCollection);
         $View->set('SettingsWidgets', $SettingsWidgets);
 
@@ -146,30 +128,35 @@ class Settings extends Controller
     }
 
     /**
-     * Add a mailbox for this user
+     * Add or edit a mailbox for this user
      */
-    public function addMailbox()
+    public function mailbox()
     {
-
+        // get settings for config\user\Mail
         $SettingsCollection = Factory::getSingleton('data\SettingsUser')
             ->filter(array('namespace' => 'config\\user\\Mail'));
+
+        // make sure we have settings
         if (!$Settings = isset($SettingsCollection[0]) ? $SettingsCollection[0] : null) {
             throw new Exception('Settings for mailbox required to be defined in data\SettingsUser not found.');
         }
 
-        // remove values from properties @todo don't load from model in first place. See: app\settings\model\Settings::setData()
-        //$Settings->Properties->clearData(array('value'));
-        foreach($Settings->Properties as $Property) {
-            if ($Property->name == 'email' || $Property->name == 'password') {
-                $Property->value = null;
+        // set data from storage if we have an id
+        if ($mailbox_id = $this->Req->get('id')) {
+            $Config = $Settings->getConfigModel()->findById($mailbox_id);
+            if ($Config->id) {
+                $Settings->Properties->addDataFromConfigModel($Config);
+            } else {
+                throw new Exception('The mailbox you want to edit was not found!');
             }
         }
 
+        // create our settings wiget from config\user\Mail
         $SettingsWidget = Factory::getWidget('app\settings\widget\Settings', array($Settings));
 
         // get an alternative view
         $View = Factory::getView('app\settings\view\Settings');
-        $View->set('header', 'Settings');
+        $View->set('header', 'Mailbox Settings');
         $View->set('Settings', $Settings);
         $View->set('SettingsWidget', $SettingsWidget);
 
@@ -181,10 +168,7 @@ class Settings extends Controller
      */
     public function save()
     {
-        $Request = Factory::getRequest();
-        $App = Factory::getApplication();
-
-        $namespace = $Request->get('namespace');
+        $namespace = $this->Req->get('namespace');
 
         // validate we are given a config model
         $namespaces = Factory::getSingleton('data\Settings')->getPropertyList('namespace');
@@ -194,7 +178,7 @@ class Settings extends Controller
 
         $this->saveConfig($namespace);
 
-        $App->redirect($App->getReturnUrl('?app=settings'), 'Settings saved!');
+        $this->App->redirect($this->App->getReturnUrl('?app=settings'), 'Settings saved!');
     }
 
     /**
@@ -202,10 +186,7 @@ class Settings extends Controller
      */
     public function userSave()
     {
-        $Request = Factory::getRequest();
-        $App = Factory::getApplication();
-
-        $namespace = $Request->get('namespace');
+        $namespace = $this->Req->get('namespace');
 
         // validate we are given a config model
         $namespaces = Factory::getSingleton('data\SettingsUser')->getPropertyList('namespace');
@@ -213,20 +194,24 @@ class Settings extends Controller
             throw new Exception('Invalid Settings Namespace!');
         }
 
-        $this->saveConfig($namespace);
+        $this->saveConfig($namespace, $this->Req->get('id'));
 
-        $App->redirect($App->getReturnUrl('?app=settings&view=user'), 'Your settings have been saved!');
+        $this->App->redirect($this->App->getReturnUrl('?app=settings&view=user'), 'Your settings have been saved!');
     }
 
     /**
      * Save the settings
      */
-    protected function saveConfig($namespace)
+    protected function saveConfig($namespace, $id = null)
     {
+        $ConfigModel = Factory::createModel($namespace);
 
-        $ConfigModel = Factory::createModel($namespace)->find();
+        // set data from storage if we have an id
+        if ($id && !$ConfigModel->findById($id)) {
+            throw new Exception('The mailbox you want to save was not found!');
+        }
 
-        foreach($ConfigModel->toArray() as $name => $value) {
+        foreach($ConfigModel as $name => $value) {
             if (!is_null($value = $this->Req->get($name, $value))) {
                 $ConfigModel->$name = $value;
             }
@@ -235,6 +220,26 @@ class Settings extends Controller
         if ($ConfigModel->save() === false) {
             throw new Exception('Error saving configuration: ' . $namespace);
         }
+    }
+
+    /**
+     * Delete a mailbox
+     */
+    public function deleteMailbox()
+    {
+
+        $ConfigModel = Factory::createModel('config\user\Mail');
+
+        // set data from storage if we have an id
+        if (!$ConfigModel->findById($this->Req->get('id'))) {
+            throw new Exception('The mailbox you want to delete was not found!');
+        }
+
+        if ($ConfigModel->delete() === false) {
+            throw new Exception('Error deleting mailbox ');
+        }
+
+        $this->App->redirect($this->App->getReturnUrl('?app=settings&view=user&config=config_user_Mail'), 'Mailbox deleted!');
     }
 
 }

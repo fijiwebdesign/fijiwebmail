@@ -42,9 +42,11 @@ class SettingsUser extends Collection
             'isUser' => false,
             'icon' => 'awe-app',
             'links' => array(
-                'edit'  => array('Edit Mailbox', '?app=settings&view=editMail'),
-                'add'   => array('Add Mailbox', '?app=settings&view=addMailbox'),
-                'save'   => array('Save', '?app=settings&view=userSave')
+                'edit'  => array('Edit Mailbox', '?app=settings&view=mailbox&id={id}'),
+                'default'  => array('Default Mailbox', '?app=settings&view=defaultMailbox&id={id}'),
+                'delete'  => array('Delete Mailbox', '?app=settings&view=deleteMailbox&id={id}'),
+                'add'   => array('Add Mailbox', '?app=settings&view=mailbox'),
+                'save'   => array('Save Mailbox', '?app=settings&view=userSave')
             ),
             'isCollection' => true, // multiple configs can be saved
         ),

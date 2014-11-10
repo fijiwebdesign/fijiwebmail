@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -16,17 +16,17 @@ use Fiji\Factory;
 /**
  * Configuration Object
  */
-class Config extends DomainObject implements \IteratorAggregate
+class Config extends DomainObject
 {
 
     /**
      * @var Bool Allow setting arbitrary keys
      */
-    protected $strictOnlyKeys = true;
+    protected $strictOnlyKeys = false;
 
     /**
      * Construct our Configuration
-     * @param Fiji\App\Service $Service 
+     * @param Fiji\App\Service $Service
      * @param Array $options
      */
     public function __construct(Array $options = array())
@@ -40,13 +40,13 @@ class Config extends DomainObject implements \IteratorAggregate
     }
 
     /**
-     * Namespace the object name to config so it doesn't class when stored
+     * Namespace the object name to config so it doesn't clash with models when stored
      */
     public function getName()
     {
         return strtolower(str_replace('\\', '_', get_class($this)));
     }
-    
+
     /**
      * Get a config value by name
      * @param String $name
@@ -77,7 +77,17 @@ class Config extends DomainObject implements \IteratorAggregate
      */
     public function __set($name, $value)
     {
+        $this->keys[$name] = $name;
         $this->$name = $value;
+    }
+
+    /**
+     * Unset arbitrary properties
+     */
+    public function __unset($name)
+    {
+        unset($this->keys[$name]);
+        unset($this->$name);
     }
 
     public function __isset($name)
@@ -89,14 +99,14 @@ class Config extends DomainObject implements \IteratorAggregate
     {
         return isset($this->$name) ? $this->$name : null;
     }
-    
+
     /**
      * Serialize Config class to array
      */
     public function toArray()
     {
         $keys = $this->getKeys();
-        
+
         $array = array();
         foreach($keys as $name) {
             $value = $this->$name;
@@ -105,7 +115,7 @@ class Config extends DomainObject implements \IteratorAggregate
             }
             $array[$name] = $this->$name;
         }
-        
+
         return $array;
     }
 
@@ -148,18 +158,11 @@ class Config extends DomainObject implements \IteratorAggregate
      */
     public function save()
     {
-        $this->date = time();
-        $this->user_id = Factory::getUser()->id;
+        $this->setData(array(
+            'date' => time(),
+            'user_id' => Factory::getUser()->id
+        ));
+
         parent::save();
     }
-
-    /**
-     * IteratorAggregate Interface
-     */
-    public function getIterator() {
-        return new \ArrayIterator($this);
-    }
 }
-
-
-

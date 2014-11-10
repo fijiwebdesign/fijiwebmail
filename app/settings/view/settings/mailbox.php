@@ -36,6 +36,8 @@ use Fiji\Factory;
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.edit-password').click();
+    if (!$('#email').val()) {
+        $('.edit-password').click();
+    }
 });
 </script>

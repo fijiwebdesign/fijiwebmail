@@ -10,7 +10,7 @@ namespace Fiji\App;
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  * @package   Fiji_App
  */
- 
+
 use Fiji\Factory;
 use ReflectionClass, ReflectionMethod;
 
@@ -22,53 +22,94 @@ abstract class Controller
     /**
      * @var {Fiji\App\Model\User}
      */
-    protected $User;
+    //protected $User;
 
     /**
      * @var {Fiji\App\Application}
      */
-    protected $App;
+    //protected $App;
 
     /**
      * @var {Fiji\App\View}
      */
-    protected $View;
+    //protected $View;
 
     /**
      * @var {Fiji\App\Request}
      */
-    protected $Req;
+    //protected $Req;
 
     /**
      * @var {Fiji\App\Document}
      */
-    protected $Doc;
+    //protected $Doc;
 
     /**
      * @var {Fiji\App\AccessControl\AccessControl}
      */
-    protected $AccessControl;
-    
+    //protected $AccessControl;
+
     public function __construct(View $View = null, $execute = true)
     {
-        // @todo lazy load these
-        $this->User = Factory::getUser();
-        $this->App = Factory::getApplication($this);
-        $this->View = $View ? 
-            $View : Factory::getView('Fiji\App\View', $this->App);
-        $this->Req = Factory::getRequest();
-        $this->Doc = Factory::getDocument();
-        $this->AccessControl = Factory::getAccessControl(get_class($this));
-        
         // requests
         $view = $this->Req->getAlphaNum('view', 'index', 'trim');
-        
+
         // call the controllers correct method
         if ($execute) {
             $this->execute($view);
         }
     }
-    
+
+    /**
+     * Get the User
+     */
+    public function getUser()
+    {
+        return Factory::getUser();
+    }
+
+    /**
+     * Get the Input/Request
+     */
+    public function getReq()
+    {
+        return Factory::getRequest();
+    }
+
+    /**
+     * Get the Document
+     */
+    public function getDoc()
+    {
+        return Factory::getDocument();
+    }
+
+    /**
+     * Get the AccessControl
+     */
+    public function getAccessControl()
+    {
+        return Factory::getAccessControl(get_class($this));
+    }
+
+    /**
+     * Get the Application
+     */
+    public function getApp()
+    {
+        return Factory::getApplication($this);
+    }
+
+    /**
+     * Lazy Load using Factory
+     */
+    public function __get($name) {
+        $method = array($this, 'get' . ucfirst($name));
+        if (is_callable($method)) {
+            return call_user_func($method);
+        }
+    }
+
     /**
      * Execute the method of controller
      */
@@ -100,7 +141,7 @@ abstract class Controller
     {
         return true;
     }
-    
+
     /**
      * Set the View
      */
@@ -108,15 +149,18 @@ abstract class Controller
     {
         $this->View = $View;
     }
-    
+
     /**
      * Return the view
      */
     protected function getView($name = null)
     {
+        if (!isset($this->View)) {
+            $this->View = Factory::getView('Fiji\App\View', $this->App);
+        }
         return $this->View;
     }
-    
+
     /**
      * Allow applications to discover methods of this controller
      * @todo HTML should be in View (formatting in JSON etc.)
@@ -125,11 +169,11 @@ abstract class Controller
     {
         $ref = new ReflectionClass($this);
         $refFuncs = $ref->getMethods(ReflectionMethod::IS_PUBLIC);
-        
+
         $app = $this->getName();
-        
+
         echo '<h2>' . ucfirst($app) . '</h2>';
-        
+
         echo '<ul>';
         foreach($refFuncs as $refFunc) {
             if ($refFunc->class == get_class($this) && $refFunc->name != '__construct') {
@@ -139,9 +183,9 @@ abstract class Controller
             }
         }
         echo '</ul>';
-            
+
     }
-    
+
     /**
      * @todo We need to instantiate a custom Application class extending Fiji\App\Application
      * @todo make Fiji\App\Application abstract
