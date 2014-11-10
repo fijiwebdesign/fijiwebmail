@@ -42,6 +42,16 @@ class Settings extends \Fiji\App\Model
      */
     protected $Config;
 
+    /**
+     * Is this a collection of settings
+     */
+    public $isCollection;
+
+    /**
+     * The links to actions
+     */
+    public $links;
+
     public function getConfigModel()
     {
         return Factory::createModel($this->namespace);
@@ -72,11 +82,5 @@ class Settings extends \Fiji\App\Model
         $this->Properties = Factory::createModelCollection('app\settings\model\ConfigProperty')
             ->setDataFromReflectionProperty($ReflectorProperties); // set default data from class annotations and values
 
-        // see if we have data from storage
-        $Config->sort(array('id' => 'DESC'))->find();
-
-        if (isset($Config->id)) {
-            $this->Properties->addDataFromConfigModel($Config);
-        }
     }
 }

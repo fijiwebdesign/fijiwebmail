@@ -84,10 +84,23 @@ class Settings extends Controller
                 . 'Please make sure this file exists and correctly contains the settings meta data.');
         }
 
+        // create the widgets
+        $SettingsWidgets = array();
+        foreach($SettingsCollection as $Settings) {
+            // see if we have data from storage
+            $Config = $Settings->getConfigModel();
+            $Config->sort(array('id' => 'DESC'))->find();
+            if (isset($Config->id)) {
+                $Settings->Properties->addDataFromConfigModel($Config);
+            }
+            $SettingsWidgets[] = Factory::getWidget('app\settings\widget\Settings', array($Settings));
+        }
+
         // get an alternative view
         $View = Factory::getView('app\settings\view\Settings');
         $View->set('header', 'Settings');
         $View->set('SettingsCollection', $SettingsCollection);
+        $View->set('SettingsWidgets', $SettingsWidgets);
 
         $View->display('index');
 
@@ -106,12 +119,61 @@ class Settings extends Controller
             throw new Exception('No settings have been configured. See: data\SettingsUser.');
         }
 
+        // create the widgets
+        $SettingsWidgets = array();
+        foreach($SettingsCollection as $Settings) {
+            if (isset($Settings->isCollection) && $Settings->isCollection) {
+                $Collection = Factory::createModelCollection($Settings->namespace)->find(array('user_id' => Factory::getUser()->id));
+                $SettingsWidgets[] = Factory::getWidget('app\settings\widget\SettingsList', array($Settings, $Collection));
+            } else {
+                // see if we have data from storage
+                $Config = $Settings->getConfigModel();
+                $Config->sort(array('id' => 'DESC'))->find();
+                if (isset($Config->id)) {
+                    $Settings->Properties->addDataFromConfigModel($Config);
+                }
+                $SettingsWidgets[] = Factory::getWidget('app\settings\widget\Settings', array($Settings));
+            }
+        }
+
         // get an alternative view
         $View = Factory::getView('app\settings\view\Settings');
         $View->set('header', 'Settings');
         $View->set('SettingsCollection', $SettingsCollection);
+        $View->set('SettingsWidgets', $SettingsWidgets);
 
         $View->display('user');
+    }
+
+    /**
+     * Add a mailbox for this user
+     */
+    public function addMailbox()
+    {
+
+        $SettingsCollection = Factory::getSingleton('data\SettingsUser')
+            ->filter(array('namespace' => 'config\\user\\Mail'));
+        if (!$Settings = isset($SettingsCollection[0]) ? $SettingsCollection[0] : null) {
+            throw new Exception('Settings for mailbox required to be defined in data\SettingsUser not found.');
+        }
+
+        // remove values from properties @todo don't load from model in first place. See: app\settings\model\Settings::setData()
+        //$Settings->Properties->clearData(array('value'));
+        foreach($Settings->Properties as $Property) {
+            if ($Property->name == 'email' || $Property->name == 'password') {
+                $Property->value = null;
+            }
+        }
+
+        $SettingsWidget = Factory::getWidget('app\settings\widget\Settings', array($Settings));
+
+        // get an alternative view
+        $View = Factory::getView('app\settings\view\Settings');
+        $View->set('header', 'Settings');
+        $View->set('Settings', $Settings);
+        $View->set('SettingsWidget', $SettingsWidget);
+
+        $View->display('mailbox');
     }
 
     /**

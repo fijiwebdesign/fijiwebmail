@@ -98,21 +98,19 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
 
     /**
      * Clear the data from the model
+     * @param Array List of properties to clear
      */
-    public function clearData()
+    public function clearData(Array $keys = null)
     {
         // clear storables
-        $keys = $this->getKeys();
+        $keys = $keys ? $keys : $this->getKeys();
         foreach($keys as $key) {
             if(isset($this->$key) && !is_null($this->$key)) {
-                $this->$key = null;
-            }
-        }
-        // clear references
-        foreach($this->References as $name => $class) {
-            // __isset() and __set() invoked if property doesn't exist. Even within the same class!
-            if (property_exists($this, $name) && isset($this->$name)) {
-                $this->$name = null;
+                if (is_array($this->$key)) {
+                    $this->$key = array();
+                } else {
+                    $this->$key = null;
+                }
             }
         }
 
@@ -145,7 +143,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     /**
      * Set the sorting order for queries
      * @param Array $sort Associative array(column => order, ...) to sort by. Order may be ASC|DESC
-     * 
+     *
      * @example $this->setSort(array('id' => 'ASC', 'name' => 'DESC'))
      */
     public function setSort(Array $sort = array())
@@ -163,8 +161,8 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     }
 
     /**
-     * Shortcut to set() or get() the sort. 
-     * @param Array $sort Optional. Set $sort or get the sort if $sort is empty. 
+     * Shortcut to set() or get() the sort.
+     * @param Array $sort Optional. Set $sort or get the sort if $sort is empty.
      */
     public function sort(Array $sort = array())
     {
@@ -220,7 +218,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         $obj = stristr($name, 'Collection') ?
             Factory::createModelCollection($className) : Factory::createModel($className);
         // make sure we use the same service for the reference
-        $obj->setService($this->getService()); 
+        $obj->setService($this->getService());
         $obj->setData($obj->getService()->findReference($this, $obj, $name));
         return $obj;
     }
@@ -413,7 +411,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
             // check if property exists since isset() returns true if it doesn't
             if (!property_exists($this, $name) || !isset($this->$name)) {
                 // @note if !property_exists($this, $name) then $this->$name resolves to $this->DynamipProps[$name]
-                $this->$name = $this->findReference($name); 
+                $this->$name = $this->findReference($name);
             }
         }
         // get a dynamically set property
@@ -442,7 +440,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         }
         // dynamic properties
         if (!property_exists($this, $name)) {
-            // dynamically set a reference 
+            // dynamically set a reference
             if ($value instanceof DomainObject || $value instanceof DomainCollection) {
                 $this->setReference($name, get_class($value));
             }
@@ -475,7 +473,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
 
     /**
      * Custom property_exist()
-     * PHP's built in property_exists() cannot detect properties exposed by __get(). 
+     * PHP's built in property_exists() cannot detect properties exposed by __get().
      * Call this method to correct check if the property exists and will be returned by __get()
      *
      * @example $this->property_exists('foo') will work as intended while property_exists($this, 'foo') doesn't

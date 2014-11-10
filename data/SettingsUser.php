@@ -31,13 +31,22 @@ class SettingsUser extends Collection
             'namespace' => 'config\\user\\User',
             'title' => 'Your Account',
             'isUser' => false,
-            'icon' => 'awe-app'
+            'icon' => 'awe-app',
+            'links' => array(
+                'save'   => array('Save', '?app=settings&view=userSave')
+            ),
         ),
         array(
             'namespace' => 'config\\user\\Mail',
-            'title' => 'Mailboxes',
+            'title' => 'Your Mailboxes',
             'isUser' => false,
-            'icon' => 'awe-app'
+            'icon' => 'awe-app',
+            'links' => array(
+                'edit'  => array('Edit Mailbox', '?app=settings&view=editMail'),
+                'add'   => array('Add Mailbox', '?app=settings&view=addMailbox'),
+                'save'   => array('Save', '?app=settings&view=userSave')
+            ),
+            'isCollection' => true, // multiple configs can be saved
         ),
     );
 

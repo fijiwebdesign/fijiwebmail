@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -17,7 +17,7 @@ use Fiji\App\Config;
  */
 class Mail extends Config
 {
-    
+
     /**
      * IMAP Server settings
      */
@@ -26,14 +26,13 @@ class Mail extends Config
         'port'     => 143,
         'ssl'      => 'tls'
     );
-    
+
     /**
      * Settings for sending email
      * Options as smtp|sendmail|mail
      */
     public $mailTransport = 'smtp';
     public $mailTransportOptions = array(
-        'name'=> 'localhost',
         'host'=> 'localhost',
         'port' => 25,
         'connection_class'  => 'login',
@@ -43,8 +42,8 @@ class Mail extends Config
             'ssl' => 'tls'
          ),
     );
-    
-    
+
+
     /**
      * Default Email folders
      * @note Only sub folders of INBOX are creatable on our Postfix/Dovecot setup
@@ -57,10 +56,10 @@ class Mail extends Config
         'spam' => 'INBOX.Spam',
         'trash' => 'INBOX.Trash'
     );
-	
+
 	/**
 	 * Messages to how per page in mailbox view
 	 */
     public $messagesPerPage = 10;
-  
+
 }

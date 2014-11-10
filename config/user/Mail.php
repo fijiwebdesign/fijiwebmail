@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -13,7 +13,7 @@ namespace config\user;
 use Fiji\App\Config;
 
 /**
- * Your Mailbox Configuration
+ * Your Mailbox Settings
  */
 class Mail extends Config
 {
@@ -29,7 +29,7 @@ class Mail extends Config
      * @type password
      */
     public $password;
-    
+
     /**
      * IMAP Server
      */
@@ -38,7 +38,7 @@ class Mail extends Config
         'port'     => 143,
         'ssl'      => 'tls'
     );
-    
+
     /**
      * Send email using
      * Options are smtp, sendmail, mail
@@ -49,20 +49,15 @@ class Mail extends Config
      * SMTP Email Server
      */
     public $mailTransportOptions = array(
-        'name'=> 'localhost',
         'host'=> 'localhost',
         'port' => 25,
         'connection_class'  => 'login',
-        'connection_config' => array(
-            'username' => '',
-            'password' => '',
-            'ssl' => 'tls'
-         ),
+        'ssl' => 'tls',
     );
 
     /**
      * Messages per page
      */
     public $messagesPerPage = 10;
-    
+
 }

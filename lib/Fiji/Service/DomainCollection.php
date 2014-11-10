@@ -10,13 +10,13 @@ namespace Fiji\Service;
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  * @package   Fiji_App
  */
- 
+
 use Fiji\Factory;
 
 /**
  * A Collection of Domain Objects
  * Can be accessed like an array
- * 
+ *
  * @todo test ArrayAccess
  */
 class DomainCollection implements \ArrayAccess, \Countable, \Iterator
@@ -25,12 +25,12 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      * Domain Object to fetch
      */
     protected $DomainObject;
-    
+
     /**
      * List of objects in collection
      */
     protected $objects = array();
-    
+
     /**
      * Current index
      */
@@ -40,7 +40,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      * @var Fiji\Service\Service Service Instance
      */
     protected $Service;
-    
+
     /**
      * Construct and set the service used to retrieve/store data
      * @param $Model String|Fiji\Service\DomainObject DomainObject Instance
@@ -49,7 +49,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         $this->DomainObject = $DomainObject;
     }
-    
+
     /**
      * Set data to DomainObject collection
      * @param Array $data
@@ -64,7 +64,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     /**
      * Set data to DomainObject collection
      * @param Array $data
-     * @todo remove default parameter value for $data since it already requires an array. Refactor overloading functions to meet new method signiture. 
+     * @todo remove default parameter value for $data since it already requires an array. Refactor overloading functions to meet new method signiture.
      */
     public function setDynamic(Array $data = array())
     {
@@ -72,7 +72,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
             $this->push($value, true);
         }
     }
-    
+
     /**
      * Push an object to the collection
      * @param Array|DomainObject $data Object to add to collection
@@ -97,15 +97,15 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     }
 
     /**
-     * Shortcut to set() or get() the sort order. 
-     * @param Array $sort Optional. Set $sort or get the sort if $sort is empty. 
+     * Shortcut to set() or get() the sort order.
+     * @param Array $sort Optional. Set $sort or get the sort if $sort is empty.
      */
     public function sort(Array $sort = array())
     {
         $sort ? $this->getDomainObject()->setSort($sort) : $this->getDomainObject()->getSort($sort);
         return $this;
     }
-    
+
     /**
      * Load data to DomainObject collection given the query
      * @var $query
@@ -115,7 +115,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         $this->setData($this->getService()->find($this->getDomainObject(), $query));
         return $this;
     }
-    
+
     /**
      * Delete the Domain Objects from service
      */
@@ -123,7 +123,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         $this->getService()->delete($this);
     }
-    
+
     /**
      * Save the Domain Objects to service
      */
@@ -131,7 +131,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         $this->getService()->save($this);
     }
-    
+
     /**
      * Return the DomainObject
      */
@@ -143,7 +143,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         }
         return $this->DomainObject;
     }
-    
+
     /**
      * Return the IDs of each Domain Object in Collection
      */
@@ -155,7 +155,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         }
         return $ids;
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -163,7 +163,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return isset($this->objects[$i]);
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -171,7 +171,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return isset($this->objects[$i]) ? $this->objects[$i] : null;
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -179,7 +179,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         $this->push($value);
     }
-    
+
     /**
      * ArrayAccess interface
      */
@@ -187,7 +187,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         unset($this->objects[$i]);
     }
-    
+
     /**
      * Retrieve the Service
      */
@@ -195,7 +195,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return isset($this->Service) ? $this->Service : Factory::getService();
     }
-    
+
     /**
      * Set the Service providing data
      * @param Fiji\Service\Service
@@ -204,7 +204,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         $this->Service = $Service;
     }
-    
+
     /**
      * Countable interface
      */
@@ -212,7 +212,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return count($this->objects);
     }
-    
+
     /**
      * Iterator interface
      */
@@ -220,7 +220,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return $this->objects[$this->currentIndex];
     }
-    
+
     /**
      * Iterator interface
      */
@@ -231,9 +231,9 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
             return $this->objects[$this->currentIndex];
         }
         return false;
-        
+
     }
-    
+
     /**
      * Iterator interface
      */
@@ -241,7 +241,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return $this->currentIndex;
     }
-    
+
     /**
      * Iterator interface
      */
@@ -249,7 +249,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return isset($this->objects[$this->currentIndex]);
     }
-    
+
     /**
      * Iterator interface
      */
@@ -257,7 +257,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return $this->currentIndex = 0;
     }
-	
+
 	/**
 	 * Return an Array representation of this collection
 	 */
@@ -273,7 +273,7 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
     /**
      * Get an Array of a sinle property in each Object
      * @param Property to retrieve
-     * @return Array 
+     * @return Array
      */
     public function getPropertyList($property)
     {
@@ -281,21 +281,21 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
         foreach($this->objects as $object) {
             $array[] = $object->$property;
         }
-        
+
         return $array;
     }
 
     /**
-     * Filters Objects in Collection by a field. 
+     * Filters Objects in Collection by a field.
      * Does not retrieve from storage. Only existing objects are filtered.
-     * @param $query Array 
+     * @param $query Array
      * @return \Fiji\App\ModelCollection
      *
      * @todo write tests
      */
     public function filter($query)
     {
-        $clone = new ModelCollection($this->DomainObject);
+        $clone = new self($this->DomainObject);
         foreach($this->objects as $object)
         {
             $match = true;
@@ -320,8 +320,8 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
      */
     public function __call($method, $params = array())
     {
-        
-        // $this->loadData*() calls will create a DomainObject for each array in the first param and call it's loadData*() property 
+
+        // $this->loadData*() calls will create a DomainObject for each array in the first param and call it's loadData*() property
         if (strpos($method, 'loadData') === 0 || strpos($method, 'setData') === 0) {
             $dataArr = isset($params[0]) ? $params[0] : array();
             foreach((array) $dataArr as $data) {
@@ -350,5 +350,5 @@ class DomainCollection implements \ArrayAccess, \Countable, \Iterator
             return $this;
         }
     }
-    
+
 }

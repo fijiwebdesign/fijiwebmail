@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiji Mail Server 
+ * Fiji Mail Server
  *
  * @author    gabe@fijiwebdesign.com
  * @link      http://www.fijiwebdesign.com/
@@ -13,7 +13,8 @@ namespace app\settings\widget;
 
 use Fiji\App\Widget;
 use Fiji\Factory;
-use Fiji\App\Model;
+use app\settings\model\Settings as Model;
+use Fiji\App\ModelCollection as Collection;
 
 /**
  * Generate HTML for a Settings namespace (equates to a single config file)
@@ -42,7 +43,26 @@ class Settings extends Widget
         return str_replace("\\", '_', $this->Model->namespace);
     }
 
+    /**
+     * Render the Model into a form
+     */
     public function renderForm()
+    {
+        // action links
+        $links = isset($this->Model->links) ? $this->Model->links : array();
+        $saveLink = isset($links['save'][1]) ? $links['save'][1] : '?app=settings&view=save';
+        $saveText = isset($links['save'][0]) ? $links['save'][0] : 'Save';
+
+        echo '<form class="form-horizontal" method="post" action="' . $saveLink . '">';
+        $this->renderFormElements();
+        echo '<button type="submit" class="btn btn-primary btn-large" name="save">' . $saveText . '</button>';
+        echo '</form>';
+    }
+
+    /**
+     * Render the Model Properties to form elements
+     */
+    public function renderFormElements()
     {
         foreach($this->Model->Properties as $Property) {
             $className = 'app\\settings\\widget\\ConfigProperty\\' . ucfirst($Property->type);
@@ -61,8 +81,6 @@ class Settings extends Widget
      */
     public function render($format = 'html')
     {
-        echo '<h2>' . $this->getTitle() . '</h2>';
-        echo '<p>' . $this->getDescription() . '</p>';
         $this->renderForm();
     }
 }

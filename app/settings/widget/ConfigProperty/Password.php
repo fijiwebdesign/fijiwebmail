@@ -66,7 +66,7 @@ class Password extends Widget
         <div class="widget-password control-group ' . $namespace . '">
             <label class="control-label" for="input">' . $this->Model->title . '</label>
             <div class="controls">
-            <div class="input-group">
+            <div class="input-group input-append">
                 <input id="' . $id .  '" name="' . $name . '" class="input-xlarge form-control" type="password" disabled>
                 <span class="input-group-addon">
                   <a class="btn edit-password" data-target="#' . $id . '">change</a>

@@ -10,11 +10,6 @@
 
 use Fiji\Factory;
 
-$SettingsWidgets = array();
-foreach($SettingsCollection as $Settings) {
-    $SettingsWidgets[] = Factory::getWidget('app\settings\widget\Settings', array($Settings));
-}
-
 ?>
 
 <style type="text/css">
@@ -38,21 +33,18 @@ foreach($SettingsCollection as $Settings) {
     </header>
 
     <section class="tab-content">
-      
+
     <?php foreach($SettingsWidgets as $SettingsWidget) : ?>
-        <form class="form-horizontal" method="post" action="?app=settings&view=userSave">
         <div class="tab-pane" id="<?php echo htmlentities($SettingsWidget->getNamespace()); ?>">
             <fieldset>
             <legend><?php echo htmlentities($SettingsWidget->getDescription()); ?></legend>
-            <?php $SettingsWidget->renderForm(); ?>
-            <button type="submit" class="btn btn-primary btn-large" name="save">Save</button>
+            <?php $SettingsWidget->render(); ?>
             </fieldset>
         </div>
-        </form>
     <?php endforeach; ?>
 
     </section>
-        
+
     </div>
 </article>
 
