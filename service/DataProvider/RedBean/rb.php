@@ -2124,7 +2124,7 @@ class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable
 	 *
 	 * @return mixed
 	 */
-	public function &offsetGet( $offset )
+	public function offsetGet( $offset )
 	{
 		return $this->__get( $offset );
 	}
