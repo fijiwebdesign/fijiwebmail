@@ -63,6 +63,8 @@ $(function() {
 
 <?php endif; ?>
 
+<?php if ($app == 'mail') : ?>
+
 <script>
 
 jQuery(function() {
@@ -136,6 +138,8 @@ jQuery(function() {
     <button class="btn btn-alt btn-small btn-save-email" type="submit" name="saveDraft" value="1"><i class="awe-save"></i>&nbsp;Save Draft</button>
   </div>
 </div>
+
+<?php endif; ?>
 
 <style type="text/css">
 
