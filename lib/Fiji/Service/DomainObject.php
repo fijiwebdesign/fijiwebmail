@@ -319,6 +319,30 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
     }
 
     /**
+     * Add a key to Domain Object so property is persisted on save()
+     * @return self
+     */
+    public function addKey($name)
+    {
+        $this->getKeys();
+        $this->keys[] = $name;
+        return $this;
+    }
+
+    /**
+     * Removes a key from Domain Object so property is not persisted on save()
+     * @return self
+     */
+    public function removeKey($name)
+    {
+        $this->getKeys();
+        if(($key = array_search($name, $this->keys)) !== false) {
+            unset($this->keys[$key]);
+        }
+        return $this;
+    }
+
+    /**
      * Return Domain Object values as
      * @return Array
      */
@@ -444,6 +468,10 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
             if ($value instanceof DomainObject || $value instanceof DomainCollection) {
                 $this->setReference($name, get_class($value));
             }
+            // add a persistence key for dynamic property
+            if (!$this->strictOnlyKeys) {
+                $this->addKey($name);
+            }
             return $this->DynamicProps[$name] = $value;
         }
         return $this->$name = $value;
@@ -514,6 +542,7 @@ abstract class DomainObject implements \ArrayAccess, \Countable, \IteratorAggreg
         }
         // unset dynamic properties
         if (!property_exists($this, $name) && isset($this->DynamicProps[$name])) {
+            $this->removeKey($name);
             unset($this->DynamicProps[$name]);
         } else {
             unset($this->$name);

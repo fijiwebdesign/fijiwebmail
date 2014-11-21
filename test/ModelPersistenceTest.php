@@ -68,12 +68,49 @@ class ModelPersistenceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($ModelMock2->public, $Model2->public);
 
         // find non-existent model in storage
-        // @note we shouldn't use the same model instance for two different datasets in practice. 
+        // @note we shouldn't use the same model instance for two different datasets in practice.
         //  Though it should work.
         $Model2->find(array('public' => '__none__'));
 
         // assert $Model2 is NOT the same data as $ModelMock2
         $this->assertNotEquals($ModelMock2->public, $Model2->public);
+    }
+
+    /**
+     * Test Saving dynamic properties to a model. ie. !property_exists()
+     * @dataProvider provider
+     */
+    public function testSaveDynamic($className1, $className2)
+    {
+
+        $Model1 = Factory::createModel($className1);
+        $Model2 = Factory::createModel($className2);
+
+        $Model1->setDynamic(); // make dynamic
+
+        // Model1 needs data to save
+        $Model1->non_existent = 'test1';
+        $id = $Model1->save();
+
+        // retrieve persisted model with dynamic properties
+        $Model3 = Factory::createModel($className1)
+            ->setDynamic() // make dynamic
+            ->findById($id);
+
+        $Model3->ModelMock2; // lazy load ref
+
+        // local copy is same as persisted
+        $this->assertEquals($Model1, $Model3);
+
+        // retrieve persisted model non-dynamic
+        $Model4 = Factory::createModel($className1)
+            ->findById($id);
+
+        $Model4->ModelMock2; // lazy load ref
+
+        // local copy is not same as persisted
+        $this->assertNotEquals($Model1, $Model4);
+
     }
 
     /**
