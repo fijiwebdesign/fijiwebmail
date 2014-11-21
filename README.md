@@ -40,7 +40,7 @@ Use `composer install` if you have composer installed globally. Composer install
 ***Manually Install***
 
 * `git clone https://github.com/fijiwebdesign/fijiwebmail` or download a stable release
-* Download Zend Framework 2.x from http://framework.zend.com/
+* Download Zend Framework 2.x from http://framework.zend.com/ and install locally.
 * Edit the Fiji Webmail main config file: `config/App.php`. 
 * Change the line: `public $zendPath = '/var/lib/zf2/library/Zend/';` to reflect your Zend Framework library path.
 
