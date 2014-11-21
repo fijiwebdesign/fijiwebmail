@@ -32,7 +32,7 @@ class Settings extends \Fiji\App\Model
     public $description;
 
     /**
-     *  @var {app\settings\model\ConfigProperty}
+     *  @var Fiji\App\ModelCollection[app\settings\model\ConfigProperty]
      */
     public $Properties;
 

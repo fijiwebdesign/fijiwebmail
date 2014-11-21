@@ -22,6 +22,19 @@ use Fiji\App\ModelCollection as Collection;
 class Settings extends Widget
 {
 
+    /**
+     * @var app\settings\model\Settings $Model Settings Model
+     *          contains the Configuration Model as $Model->Model of type Fiji\Service\DomainObject
+     *          contains each Configuration Model Property as $Model->Properties of type Collection[app\settings\model\ConfigProperty]
+     *          each $Model->Properties[] is loaded from ReflectionProperty with doc block comments data
+     */
+    public $Model;
+
+    /**
+     * Builds our widget
+     *
+     * @param app\settings\model\Settings $Model Settings Model
+     */
     public function __construct(Model $Model)
     {
         $this->Model = $Model;
@@ -64,7 +77,7 @@ class Settings extends Widget
      */
     public function renderFormElements()
     {
-
+        // each Property is a Reflection Property of the Config Model properties
         foreach($this->Model->Properties as $Property) {
             $className = 'app\\settings\\widget\\ConfigProperty\\' . ucfirst($Property->type);
             if (!class_exists($className)) {
@@ -74,9 +87,11 @@ class Settings extends Widget
             $PropertyWidget = Factory::createWidget($className, array($Property));
             $PropertyWidget->render();
         }
+        // Configuration Model ID if it exists so as to edit this Model
         if ($id = $this->Model->getConfigModel()->id) {
             echo '<input type="hidden" name="' . $this->Model->getConfigModel()->getIdKey() . '" value="' . intval($id) . '">';
         }
+        // Config Model namespace that is being edited/saved
         echo '<input type="hidden" name="namespace" value="' . htmlentities($this->Model->namespace, ENT_QUOTES, 'utf-8') . '">';
     }
 

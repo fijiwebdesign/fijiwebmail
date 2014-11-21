@@ -104,7 +104,7 @@ class Settings extends Controller
         // create the widgets
         $SettingsWidgets = array();
         foreach($SettingsCollection as $Settings) {
-            if (isset($Settings->isCollection) && $Settings->isCollection) {
+            if ($Settings->isCollection) {
                 $Collection = Factory::createModelCollection($Settings->namespace)->find(array('user_id' => Factory::getUser()->id));
                 $SettingsWidgets[] = Factory::getWidget('app\settings\widget\SettingsList', array($Settings, $Collection));
             } else {
@@ -145,6 +145,9 @@ class Settings extends Controller
         if ($mailbox_id = $this->Req->get('id')) {
             $Config = $Settings->getConfigModel()->findById($mailbox_id);
             if ($Config->id) {
+                if ($Config->user_id !== $this->User->id) {
+                    throw new Exception('You cannot edit this mailbox since it belongs to a different user.');
+                }
                 $Settings->Properties->addDataFromConfigModel($Config);
             } else {
                 throw new Exception('The mailbox you want to edit was not found!');
