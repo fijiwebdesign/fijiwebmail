@@ -30,7 +30,6 @@ class SettingsUser extends Collection
         array(
             'namespace' => 'config\\user\\User',
             'title' => 'Your Account',
-            'isUser' => false,
             'icon' => 'awe-app',
             'links' => array(
                 'save'   => array('Save', '?app=settings&view=userSave')
@@ -39,7 +38,6 @@ class SettingsUser extends Collection
         array(
             'namespace' => 'config\\user\\Mail',
             'title' => 'Your Mailboxes',
-            'isUser' => false,
             'icon' => 'awe-app',
             'links' => array(
                 'edit'  => array('Edit Mailbox', '?app=settings&view=mailbox&id={id}'),

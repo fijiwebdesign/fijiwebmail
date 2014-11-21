@@ -30,19 +30,16 @@ class Settings extends Collection
         array(
             'namespace' => 'config\\App',
             'title' => 'Global App',
-            'isUser' => false,
             'icon' => 'awe-app'
         ),
         array(
             'namespace' => 'config\\Mail',
             'title' => 'Mail App',
-            'isUser' => false,
             'icon' => 'awe-inbox'
         ),
         array(
             'namespace' => 'config\\Service',
             'title' => 'Storage Service',
-            'isUser' => false,
             'icon' => 'awe-'
         )
     );
