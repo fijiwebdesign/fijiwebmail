@@ -34,8 +34,8 @@ use Fiji\Factory;
 
     <section class="tab-content">
 
-    <?php foreach($SettingsWidgets as $SettingsWidget) : ?>
-        <div class="tab-pane" id="<?php echo htmlentities($SettingsWidget->getNamespace()); ?>">
+    <?php foreach($SettingsWidgets as $i => $SettingsWidget) : ?>
+        <div class="tab-pane<?php echo $i == 0 ? ' active' : ''; ?>" id="<?php echo htmlentities($SettingsWidget->getNamespace()); ?>">
             <fieldset>
             <legend><?php echo htmlentities($SettingsWidget->getDescription()); ?></legend>
             <?php $SettingsWidget->render(); ?>
@@ -53,15 +53,11 @@ $(function() {
     // Tabs
     $('.settings-tab a').click(function (e) {
         e.preventDefault();
-        //$(this).tab('show'); // not working for some reason
-        var href = $(this).attr('href').replace('#', '');
-        $('.settings-tab').removeClass('active');
-        $('.tab-pane').hide();
-        $('#' + href).show();
-        $(this).parent().addClass('active');
-        $('.tab-title').html($(this).html());
+        $(this).tab('show');
     });
-    // trigger active tab
-    $('.tabs .active > a ').trigger('click');
+    var tab = '<?php echo $tab; ?>';
+    if (tab) {
+        $('[href=#' + tab + ']').tab('show');
+    }
 });
 </script>
