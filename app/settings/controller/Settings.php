@@ -123,6 +123,7 @@ class Settings extends Controller
         $View->set('header', 'Your Settings');
         $View->set('SettingsCollection', $SettingsCollection);
         $View->set('SettingsWidgets', $SettingsWidgets);
+        $View->set('tab', $this->Req->get('tab'));
 
         $View->display('user');
     }
@@ -145,7 +146,7 @@ class Settings extends Controller
         if ($mailbox_id = $this->Req->get('id')) {
             $Config = $Settings->getConfigModel()->findById($mailbox_id);
             if ($Config->id) {
-                if ($Config->user_id !== $this->User->id) {
+                if ($Config->user_id != $this->User->id) {
                     throw new Exception('You cannot edit this mailbox since it belongs to a different user.');
                 }
                 $Settings->Properties->addDataFromConfigModel($Config);
@@ -179,7 +180,9 @@ class Settings extends Controller
             throw new Exception('Invalid Settings Namespace!');
         }
 
-        $this->saveConfig($namespace);
+        $ConfigModel = Factory::createModel($namespace);
+
+        $this->saveConfig($ConfigModel);
 
         $this->App->redirect($this->App->getReturnUrl('?app=settings'), 'Settings saved!');
     }
@@ -192,31 +195,41 @@ class Settings extends Controller
         $namespace = $this->Req->get('namespace');
 
         // validate we are given a config model
-        $namespaces = Factory::getSingleton('data\SettingsUser')->getPropertyList('namespace');
-        if (!in_array($namespace, $namespaces)) {
+        $SettingsCollection = Factory::getSingleton('data\SettingsUser')
+            ->filter(array('namespace' => $namespace));
+
+        if (count($SettingsCollection) === 0) {
             throw new Exception('Invalid Settings Namespace!');
         }
 
-        $this->saveConfig($namespace, $this->Req->get('id'));
+        $ConfigModel = Factory::createModel($namespace);
+        $Settings = $SettingsCollection[0];
 
-        $this->App->redirect($this->App->getReturnUrl('?app=settings&view=user'), 'Your settings have been saved!');
+        $this->saveConfig($ConfigModel, $this->Req->get('id'));
+
+        $namespace = Factory::getWidget('app\settings\widget\Settings', array($Settings))->getNamespace();
+
+        $this->App->redirect($this->App->getReturnUrl('?app=settings&view=user&tab=' . $namespace), 'Your settings have been saved!');
     }
 
     /**
      * Save the settings
      */
-    protected function saveConfig($namespace, $id = null)
+    protected function saveConfig($ConfigModel, $id = null)
     {
-        $ConfigModel = Factory::createModel($namespace);
-
         // set data from storage if we have an id
         if ($id && !$ConfigModel->findById($id)) {
             throw new Exception('The mailbox you want to save was not found!');
         }
 
         foreach($ConfigModel as $name => $value) {
-            if (!is_null($value = $this->Req->get($name, $value))) {
-                $ConfigModel->$name = $value;
+            if (!is_null($_value = $this->Req->get($name, $value))) {
+                // if config model value is non-scalar, assume json_encoded
+                if (isset($value) && !is_scalar($value)) {
+                    // @todo move to configProperty model. Fix dependency on associative arrays only
+                    $_value = json_decode($_value, true);
+                }
+                $ConfigModel->$name = $_value;
             }
         }
 
@@ -242,7 +255,7 @@ class Settings extends Controller
             throw new Exception('Error deleting mailbox ');
         }
 
-        $this->App->redirect($this->App->getReturnUrl('?app=settings&view=user&config=config_user_Mail'), 'Mailbox deleted!');
+        $this->App->redirect($this->App->getReturnUrl('?app=settings&view=user&tab=config_user_Mail'), 'Mailbox deleted!');
     }
 
 }
