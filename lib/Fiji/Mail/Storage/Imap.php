@@ -79,6 +79,16 @@ class Imap extends ZendImap
         }
         $this->selectFolder(isset($params->folder) ? $params->folder : 'INBOX');
     }
+
+    /**
+     * Zend\Mail\Storage::__descruct() calls logout when self is already destructed causing an error
+     */
+    public function __destruct()
+    {
+        if (isset($this) && is_callable(array($this, 'logout'))) {
+            $this->logout(); 
+        }
+    }
     
     /**
      * Cache our getSize
