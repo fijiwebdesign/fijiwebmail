@@ -253,4 +253,12 @@ class Factory
       return self::createInstance($className, array($User, $Perms));
    }
 
+   /**
+    * Retrieve the error handler
+    */
+   static function getErrorHandler()
+   {
+      return self::createInstance('Fiji\App\ErrorHandler', func_get_args());
+   }
+
 }
