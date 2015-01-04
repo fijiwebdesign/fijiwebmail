@@ -18,11 +18,28 @@ if ($Event->getId()) {
 }
 ?>
 
+<style>
+label {
+    display: inline-block;
+    width: 100px;
+}
+#form-error {
+    display: none;
+}
+#btn-delelete-event {
+    float: right    ;
+}
+</style>
+
 <article class="data-block">
     <header>
         <h2><?php echo $header; ?></h2>
     </header>
     <section>
+        <div id="form-error" class="alert alert-info alert-block fade in">
+            <button class="close">×</button>
+            <span id="form-error-body"></span>
+        </div>
         <form id="compose-event" method="post">
 		    <fieldset>
 		        <div class="control-group">
@@ -95,51 +112,119 @@ if ($Event->getId()) {
             if (!$('[name=title]').val()) {
                 return formError('Please enter a title.', event);
             }
-            if (!$('[name=start]').val()) {
+            if (!$('[name=startDate]').val()) {
                 return formError('Please enter a start date.', event);
             }
-            if (!$('[name=end]').val()) {
-                return formError('Please enter an end date.', event);
+            if (!$('[name=startTime]').val()) {
+                return formError('Please enter a start time.', event);
+            }
+            if (!$('[name=endDate]').val()) {
+                return formError('Please enter a end date.', event);
+            }
+            if (!$('[name=endTime]').val()) {
+                return formError('Please enter an end time.', event);
             }
         }
         
         // display form errors
         function formError(msg, event) {
-            event.preventDefault();
+            this.timer && clearTimeout(this.timer);
             $('#form-error-body').html(msg);
-            $('#form-error').modal('show');
+            $('#form-error').fadeIn('slow');
+            this.timer = setTimeout(function() {
+                $('#form-error').fadeOut('slow');
+            }, 4000);
+            event.preventDefault();
             return false;
         }
         
+        $('#form-error .close').click(function() {
+            $('#form-error').fadeOut('slow');
+        });
+        
         // initialize date pickers
         $('.datepicker').datepicker({
-			"autoclose": true
-		});
-		
-		// set start and end times before submitting form
-		$('#btn-send-event').bind('click', function(event) {
-			
-			var tzOffset = new Date().getTimezoneOffset() / 60;
-			if (tzOffset > 0) {
-				tzOffset = ' -' + tzOffset + '00';
-			} else {
-				tzOffset = ' +' + tzOffset + '00';
-			}
-			
-			$('[name=start]').val($('[name=startDate]').val() + ' ' + $('[name=startTime]').val() + tzOffset);
-			$('[name=end]').val($('[name=endDate]').val() + ' ' + $('[name=endTime]').val() + tzOffset);
-			
-			validateForm();
-			
-		});
-		
-		$('.timepicker').bind('focus', function() {
-			$('[data-for=' + $(this).attr('name') + ']').show();
-		});
-		
-		$('.timepicker').bind('blur', function() {
-			$('[data-for=' + $(this).attr('name') + ']').hide();
-		});
+            "autoclose": true
+        });
+        
+        function parseDate(dateStr) {
+            
+            if (!dateStr) return null;
+            
+            // add minutes
+            if (!dateStr.match(':')) {
+                dateStr = dateStr.replace(/(am|pm)?$/, ':00$1');
+            }
+            // remove am/pm so we can parse with Date.parse() native JS
+            var timestamp = Date.parse(dateStr.replace(/(am|pm)/, ''));
+            var ampm = dateStr.match(/am|pm/);
+            
+            // re-add the 12 hours to timestamp
+            if (ampm && ampm[0] == 'pm') {
+                timestamp += 12*60*60*1000;
+            }
+            
+            return timestamp/1000;
+        }
+        
+        // set start and end times before submitting form
+        $('#compose-event').bind('submit', function(event) {
+            
+            $('[name=start]').val(parseDate($('[name=startDate]').val() + ' ' + $('[name=startTime]').val()));
+            $('[name=end]').val(parseDate($('[name=endDate]').val() + ' ' + $('[name=endTime]').val()));
+            
+            validateForm(event);
+            
+        });
+        
+        $('.timepicker').bind('focus', function() {
+            $('[data-for=' + $(this).attr('name') + ']').show();
+        });
+        
+        $('.timepicker').bind('blur', function() {
+            $('[data-for=' + $(this).attr('name') + ']').hide();
+        });
+        
+        // delete event confirm
+        $('#btn-delelete-event').click(function(event) {
+            if (!confirm('Do you really want to delete this event?')) {
+                event.preventDefault();
+            }
+        });
+        
+        // parses a timestamp into date parts
+        function parseTimestamp(timestamp) {
+            var date = new Date(timestamp);
+            var d = date.getDate();
+            var m = date.getMonth() + 1;
+            var y = date.getFullYear();
+            var h = date.getHours();
+            var i = date.getMinutes();
+            var ampm = 'am';
+            if (h > 12) {
+                ampm = 'pm';
+                h = h - 12;
+            }
+            h = new String(h).length == 1 ? '0' + h : h;
+            i = new String(i).length == 1 ? '0' + i : i;
+            return {d: d, m: m, y: y, h: h, i: i, ampm: ampm};
+        }
+        
+        // set dates correctly as server timezone may be different from browser
+        var date; 
+        var start = $('[name=start]').val();
+        if (start) {
+            date = parseTimestamp(start*1000);
+            $('[name=startTime]').val(date.h + ':' + date.i + date.ampm);
+            $('[name=startDate]').val(date.m + '/' + date.d + '/' + date.y);
+        }
+        
+        var end = $('[name=end]').val();
+        if (end) {
+            date = parseTimestamp(end*1000);
+            $('[name=endTime]').val(date.h + ':' + date.i + date.ampm);
+            $('[name=endDate]').val(date.m + '/' + date.d + '/' + date.y);
+        }
         
     });
     

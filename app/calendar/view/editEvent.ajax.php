@@ -170,7 +170,7 @@ label {
 			$('[name=start]').val(parseDate($('[name=startDate]').val() + ' ' + $('[name=startTime]').val()));
 			$('[name=end]').val(parseDate($('[name=endDate]').val() + ' ' + $('[name=endTime]').val()));
 			
-			validateForm();
+			validateForm(event);
 			
 		});
 		
