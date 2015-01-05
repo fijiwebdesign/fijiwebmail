@@ -1,6 +1,6 @@
 <?php
 /**
- * Mealku Gallery Prototype
+ * Fiji Webmail
  *
  * @link      http://www.fijiwebdesign.com/
  * @copyright Copyright (c) 2010-2020 Fiji Web Design. (http://www.fijiwebdesign.com)
@@ -10,28 +10,38 @@
 
 namespace app\mail\model;
 
+use Fiji\Factory;
+
 
 /**
- * User model for Gallery
+ * User model for Mail Application
  */
 class User extends \Fiji\App\Model\User
 {
-    
+
     /**
-	 * Construct from parent
-	 */
-    public function __construct()
+     * Mailbox Configuration class
+     */
+    protected $mailboxConfigClass = 'config\user\Mail';
+
+    /**
+     * Retrieve configurations for mailbox
+     */
+    public function getDefaultMailboxConfig()
     {
-        parent::__construct();
+        $Config = Factory::getConfig($this->mailboxConfigClass);
+        $Config->find(array('user_id' => $this->id));
+        
+        return $Config;
     }
     
     /**
-     * Retrieve mailboxes for this user
+     * Retrieve mailboxes configured for this user
      */
-    public function getMailBoxes($query = array())
+    public function getMailBoxesConfig($query = array())
     {
         $query = array_merge(array('user_id' => $this->getId()), $query);
-        $mailboxList = Factory::getModelCollection('app\gallery\model\mailbox');
+        $mailboxList = Factory::createModelCollection($this->mailboxConfigClass);
         $mailboxList->find(array('user_id' => $this->id));
         
         return $mailboxList;
