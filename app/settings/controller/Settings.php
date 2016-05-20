@@ -119,16 +119,6 @@ class Settings extends Controller
             }
         }
 
-
-            echo '<pre>';
-            foreach($Collection as $Model) {
-                foreach($Model as $prop => $value) {
-                    var_dump([$prop =>  $value]);
-                }
-            }
-            
-            echo '</pre>';
-
         // get an alternative view
         $View = Factory::getView('app\settings\view\Settings');
         $View->set('header', 'Your Settings');

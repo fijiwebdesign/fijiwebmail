@@ -56,13 +56,18 @@ class mailbox extends Controller
             $this->App->setReturnUrl($this->Req->getUri());
             $this->App->redirect('?app=auth', 'Please login to access your email.');
         }
+
+        // get mail account to display
+        $account = Factory::createModel('config\user\Mail')->find();
         
         // user imap configs
-        if (!isset($this->User->imapOptions)) {
+        if (!$account->authServer || !$account->email || !$account->password) {
             $this->App->setReturnUrl($this->Req->getUri());
             $this->App->redirect('?app=settings&view=mailbox', 'Connect to your email account to use mail.');
         }
-        $options = $this->User->imapOptions;
+        $options = $account->authServer;
+        $options['user'] = $account->email;
+        $options['password'] = $account->password;
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
         // select the folder, create it if it doesn't exist
         if ($this->folder) {

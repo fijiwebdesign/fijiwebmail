@@ -94,6 +94,9 @@ class App extends Config
         // dynamic options
         $this->baseUrl = str_replace('?' . @$_SERVER['QUERY_STRING'], '', @$_SERVER['REQUEST_URI']); // suppress errors for cli mode
         $this->basePath = realpath('/../');
+
+        // set timezone
+        date_default_timezone_set('UTC');
     }
 
 }

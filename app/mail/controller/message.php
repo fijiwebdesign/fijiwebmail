@@ -56,11 +56,19 @@ class message extends Controller
             $this->App->setReturnUrl($this->Req->getUri());
             $this->App->redirect('?app=auth', 'Please login to access your email.');
         }
+        
+        // get mail account to display
+        $account = Factory::createModel('config\user\Mail')->find();
+        
         // user imap configs
-        $options = $this->User->imapOptions;
-        if (!$options) {
-            throw new \Exception('Error accessing your email account');
+        if (!$account->authServer || !$account->email || !$account->password) {
+            $this->App->setReturnUrl($this->Req->getUri());
+            $this->App->redirect('?app=settings&view=mailbox', 'Connect to your email account to use mail.');
         }
+        $options = $account->authServer;
+        $options['user'] = $account->email;
+        $options['password'] = $account->password;
+        
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
         
         // url params
