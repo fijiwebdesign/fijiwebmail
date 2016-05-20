@@ -205,15 +205,18 @@ class RedBean implements DataProvider
                 // @important this allows arbitrary data types per property. 
                 // saving should handle property type strictness.
                 if ($value && !isset($data[substr($name, 5)])) {
-                    $data[substr($name, 5)] = unserialize($value);
+                    $value = unserialize($value);
                 }
                 unset($data[$name]); // remove this as it's soley storage
+                $name = str_replace('_php_', '', $name); // remove flag
 
+            }
             // this may be named differently in DomainObject and auto converted by redBean on save
             // @todo this is dangerous. Fix redBean or impose restriction programatically on DomainObject property names
-            } elseif (strpos($name, '_') !== false && !isset($DomainObject->$name)) {
+            // will overrite isset($DomainObject->$name)
+            if (strpos($name, '____') !== false) {
                 // copy data to other possible names.
-                $_name = str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+                $_name = str_replace(' ', '', ucwords(str_replace('____', ' ', $name)));
                 if (!isset($data[$_name]) && $DomainObject->property_exists($_name)) {
                     $data[$_name] = $value;
                     unset($data[$name]);
@@ -241,6 +244,14 @@ class RedBean implements DataProvider
 
         // copy DomainObject properties to bean
         foreach($DomainObject as $name => $value) {
+
+            // redbean will convert CamelCase to underscores. 
+            // Use _____ to flag Uppercase and use getBeanProperties() to decode
+            if (strtolower($name) !== $name) {
+                // copy data to other possible names.
+                $name = strtolower(preg_replace('/([A-Z])/', '____$1', $name));
+            }
+
             if (!is_null($value)) {
                 if (is_array($value) || is_object($value)) {
                     // arrays are saved as one to one relations

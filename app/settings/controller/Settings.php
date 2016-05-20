@@ -105,7 +105,8 @@ class Settings extends Controller
         $SettingsWidgets = array();
         foreach($SettingsCollection as $Settings) {
             if ($Settings->isCollection) {
-                $Collection = Factory::createModelCollection($Settings->namespace)->find(array('user_id' => Factory::getUser()->id));
+                $Collection = Factory::createModelCollection($Settings->namespace)
+                    ->find(array('user_id' => Factory::getUser()->id));
                 $SettingsWidgets[] = Factory::getWidget('app\settings\widget\SettingsList', array($Settings, $Collection));
             } else {
                 // see if we have data from storage
@@ -117,6 +118,16 @@ class Settings extends Controller
                 $SettingsWidgets[] = Factory::getWidget('app\settings\widget\Settings', array($Settings));
             }
         }
+
+
+            echo '<pre>';
+            foreach($Collection as $Model) {
+                foreach($Model as $prop => $value) {
+                    var_dump([$prop =>  $value]);
+                }
+            }
+            
+            echo '</pre>';
 
         // get an alternative view
         $View = Factory::getView('app\settings\view\Settings');

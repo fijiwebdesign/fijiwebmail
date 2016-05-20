@@ -99,11 +99,15 @@ class SettingsList extends Widget
         foreach($this->Collection as $Model) {
             echo '<tr>';
             foreach($this->Model->Properties as $Property) {
+                $value = $Model->{$Property->name};
                 // hide passwords
                 if ($Property->type == 'password') {
-                    $Model->{$Property->name} = '******';
+                    $value = '******';
                 }
-                echo '<td>' . $Model->{$Property->name} . '</td>';
+                if (!is_scalar($value)) {
+                    $value = json_encode($value);
+                }
+                echo '<td>' . htmlentities($value) . '</td>';
             }
             echo '<td class="toolbar">
 				<div class="btn-group">

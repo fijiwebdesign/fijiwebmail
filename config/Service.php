@@ -62,7 +62,7 @@ class Service extends Config
     {
         //$this->path = sys_get_temp_dir() . '/.db/'. $this->database . '.sqlite'; // .db/ directory in temp directory eg: /tmp/.db
         // Important: This is unsafe as it is in web accessible directory. Needs to be secured if you use this or use it for development.
-        $this->path = realpath(__DIR__ . '/../') . "/." . $this->database . '.sqlite'; // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
+        $this->path = realpath(__DIR__ . '/../') . "/" . $this->database . '.sqlite'; // .db/ directory in app root directory eg: /var/www/fijiwebmail/.db/
     }
 
 }

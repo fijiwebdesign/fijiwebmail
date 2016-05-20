@@ -54,7 +54,11 @@ class Config extends DomainObject
      */
     public function get($name, $default = null)
     {
-        return isset($this->$name) ? $this->$name : $default;
+        $value = isset($this->$name) ? $this->$name : $default;
+        if (is_array($value)) {
+            $value = new Config($value);
+        }
+        return $value;
     }
 
     /**

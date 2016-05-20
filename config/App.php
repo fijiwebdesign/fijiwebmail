@@ -76,7 +76,7 @@ class App extends Config
     /**
      * Authentication Handling Class
      */
-    public $Authentication = 'Fiji\\App\\Authentication';
+    public $Authentication = 'Fiji\\App\\Authentication'; // 'app\\mail\\lib\\App\\Authentication';
 
     /**
      * Base site template

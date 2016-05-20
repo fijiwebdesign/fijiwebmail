@@ -59,7 +59,8 @@ class mailbox extends Controller
         
         // user imap configs
         if (!isset($this->User->imapOptions)) {
-            throw new \Exception('Error accessing your email account');
+            $this->App->setReturnUrl($this->Req->getUri());
+            $this->App->redirect('?app=settings&view=mailbox', 'Connect to your email account to use mail.');
         }
         $options = $this->User->imapOptions;
         $this->Imap = Factory::getSingleton('Fiji\Mail\Storage\Imap', array($options));
